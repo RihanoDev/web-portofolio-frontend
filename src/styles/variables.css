@@ -1,0 +1,54 @@
+:root {
+  /* Color Palette */
+  --color-primary: #2C3E50;
+  --color-primary-hover: #34495E;
+  --color-secondary: #7F8C8D;
+  --color-background: #ECF0F1;
+  --color-text: #2C3E50;
+  --color-text-light: #7F8C8D;
+  --color-light: #BDC3C7;
+  
+  /* Navigation Colors */
+  --color-nav-bg: rgba(44, 62, 80, 0.95);
+  --color-nav-text: #ECF0F1;
+  --color-nav-text-hover: #BDC3C7;
+  
+  /* Typography */
+  --font-primary: 'Inter', sans-serif;
+  --font-secondary: 'Poppins', sans-serif;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  --spacing-xxxl: 4rem;
+  
+  /* Container Widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  
+  /* Breakpoints */
+  --mobile: 640px;
+  --tablet: 768px;
+  --laptop: 1024px;
+  --desktop: 1280px;
+  
+  /* Container */
+  --container-padding: 1rem;
+  --container-max-width: 1200px;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+}
