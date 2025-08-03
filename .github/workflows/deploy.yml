@@ -111,6 +111,14 @@ jobs:
           # Check container status
           echo "📊 Container status:"
           docker ps | grep web-porto-frontend || true
+          
+          echo "🔍 Checking container content:"
+          docker exec web-porto-frontend ls -la /usr/share/nginx/html/ || true
+          
+          echo "📄 Checking index.html:"
+          docker exec web-porto-frontend head -20 /usr/share/nginx/html/index.html || true
+          
+          echo "📋 Container logs (last 10 lines):"
           docker logs web-porto-frontend --tail 10 || true
           
           # Test if port 80 is responding
