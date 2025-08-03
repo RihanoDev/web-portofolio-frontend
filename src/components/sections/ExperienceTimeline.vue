@@ -1,7 +1,10 @@
 <template>
   <section class="experience" id="experience">
-    <div class="container">
-      <h2 class="section-title" data-aos="fade-up">Experience</h2>
+    <div class="container mx-auto px-4">
+      <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-12 text-white" data-aos="fade-up">
+        Experience
+        <div class="w-20 h-1 bg-[#FF6B00] mx-auto mt-4 rounded-full"></div>
+      </h2>
       
       <div class="timeline">
         <div 
@@ -14,8 +17,8 @@
         >
           <div 
             class="timeline__content"
-            @mouseenter="startAnimation"
-            @mouseleave="stopAnimation"
+            @mouseenter="startAnimation(index)"
+            @mouseleave="stopAnimation(index)"
             ref="timelineContent"
           >
             <div class="timeline__date">{{ item.date }}</div>
@@ -35,10 +38,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import gsap from 'gsap'
 
-const timelineContent = ref<HTMLElement | null>(null)
+const timelineItems = ref<HTMLElement[]>([])
+
+onMounted(() => {
+  // Get all timeline items after component is mounted
+  timelineItems.value = Array.from(document.querySelectorAll('.timeline__content'))
+})
 
 const experiences = [
   {
@@ -48,11 +56,25 @@ const experiences = [
     description: 'Lead frontend development for multiple projects using Vue.js and TypeScript.',
     skills: ['Vue.js', 'TypeScript', 'GSAP']
   },
-  // Add more experiences here
+  {
+    date: '2021 - 2023',
+    title: 'Frontend Developer',
+    company: 'Startup XYZ',
+    description: 'Developed responsive UI and animations for various web apps.',
+    skills: ['JavaScript', 'Vue.js', 'Sass']
+  },
+  {
+    date: '2019 - 2021',
+    title: 'Junior Web Developer',
+    company: 'Creative Studio',
+    description: 'Worked with a team to build landing pages and UI components.',
+    skills: ['HTML', 'CSS', 'JavaScript']
+  }
+  // Tambah pengalaman lain sesuai kebutuhan
 ]
 
-const startAnimation = () => {
-  const element = timelineContent.value
+const startAnimation = (index: number) => {
+  const element = timelineItems.value[index]
   if (element) {
     gsap.to(element, {
       rotateY: 10,
@@ -64,8 +86,8 @@ const startAnimation = () => {
   }
 }
 
-const stopAnimation = () => {
-  const element = timelineContent.value
+const stopAnimation = (index: number) => {
+  const element = timelineItems.value[index]
   if (element) {
     gsap.to(element, {
       rotateY: 0,
@@ -81,13 +103,17 @@ const stopAnimation = () => {
 <style lang="scss" scoped>
 .experience {
   padding: var(--spacing-xxl) 0;
-  background: var(--color-background);
+  background: linear-gradient(to bottom, #151823, #1D2133);
+  position: relative;
+  overflow: hidden;
 }
 
 .timeline {
   position: relative;
+  width: 100%;
   max-width: 1200px;
   margin: var(--spacing-xxl) auto;
+  padding: 2rem;
 
   &::after {
     content: '';
@@ -194,4 +220,5 @@ const stopAnimation = () => {
       }
     }
   }
-}</style>
+}
+</style>

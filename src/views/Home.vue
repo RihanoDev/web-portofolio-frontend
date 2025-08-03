@@ -1,11 +1,12 @@
 <template>
   <div class="home">
     <HeroSection />
-    <TechStack />
-    <ProjectsSection />
-    <BlogSection />
-    <ExperienceSection />
-    <ContactSection />
+    <AboutSectionHome />
+    <ExperienceSectionHome />
+    <TechStackSectionHome />
+    <ProjectsSectionHome />
+    <ArticlesSectionHome />
+    <ContactHome />
   </div>
 </template>
 
@@ -14,11 +15,12 @@ import { onMounted } from 'vue'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import HeroSection from '@/components/sections/HeroSection.vue'
-import TechStack from '@/components/sections/TechStack.vue'
-import ProjectsSection from '@/components/sections/ProjectsSection.vue'
-import BlogSection from '@/components/sections/BlogSection.vue'
-import ExperienceSection from '@/components/sections/ExperienceSection.vue'
-import ContactSection from '@/components/sections/ContactSection.vue'
+import AboutSectionHome from '@/components/sections/AboutSectionHome.vue'
+import ExperienceSectionHome from '@/components/sections/ExperienceSectionHome.vue'
+import TechStackSectionHome from '@/components/sections/TechStackSectionHome.vue'
+import ProjectsSectionHome from '@/components/sections/ProjectsSectionHome.vue'
+import ArticlesSectionHome from '@/components/sections/ArticlesSectionHome.vue'
+import ContactHome from '@/components/sections/ContactHome.vue'
 
 onMounted(() => {
   AOS.init({

@@ -23,14 +23,19 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../views/Projects.vue')
   },
   {
-    path: '/blog',
-    name: 'blog',
-    component: () => import('../views/Blog.vue')
+    path: '/articles',
+    name: 'articles',
+    component: () => import('../views/Articles.vue')
   },
   {
     path: '/contact',
     name: 'contact',
     component: () => import('../views/Contact.vue')
+  },
+  {
+    path: '/resume',
+    name: 'resume',
+    component: () => import('../views/Resume.vue')
   },
   // Handle 404
   {

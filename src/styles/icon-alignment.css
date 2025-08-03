@@ -1,0 +1,52 @@
+/* Button Icon Alignment Utilities */
+
+/* For buttons and links with icons and text */
+.btn-with-icon {
+  @apply inline-flex items-center gap-2;
+}
+
+.btn-with-icon i,
+.btn-with-icon svg {
+  @apply flex-shrink-0;
+}
+
+/* For navigation items with icons */
+.nav-item-with-icon {
+  @apply inline-flex items-center gap-2;
+}
+
+.nav-item-with-icon i,
+.nav-item-with-icon svg {
+  @apply flex-shrink-0;
+}
+
+/* For list items with icons */
+.list-item-with-icon {
+  @apply inline-flex items-center gap-2;
+}
+
+.list-item-with-icon i,
+.list-item-with-icon svg {
+  @apply flex-shrink-0;
+}
+
+/* For headings with icons */
+.heading-with-icon {
+  @apply inline-flex items-center gap-2;
+}
+
+.heading-with-icon i,
+.heading-with-icon svg {
+  @apply flex-shrink-0;
+}
+
+/* For contact info with icons */
+.contact-item-with-icon {
+  @apply inline-flex items-center gap-3;
+}
+
+.contact-item-with-icon i,
+.contact-item-with-icon svg,
+.contact-item-with-icon .icon-wrapper {
+  @apply flex-shrink-0;
+}

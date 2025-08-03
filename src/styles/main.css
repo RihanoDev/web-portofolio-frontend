@@ -1,10 +1,14 @@
-/* Tailwind directives */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-/* Base styles */
-html {
-  scroll-behavior: smooth;
-}
-
+/* Main Styles */
+@import './variables.css';
+@import './focus-fix.css';
+@import './global-background.css';
+@import './tech-background.css';
+@import './buttons.css';
+@import './layout.css';
+@import './navbar.css';
+@import './footer.css';
+@import './sections.css';
+@import './responsive.css';
+@import './utilities.css';
+@import './icon-alignment.css';
+@import './interactive.css';

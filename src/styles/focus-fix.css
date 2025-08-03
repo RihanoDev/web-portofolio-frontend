@@ -1,0 +1,158 @@
+/* Remove all default focus outlines and replace with custom ones */
+*,
+*:before,
+*:after {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+*:focus,
+*:active,
+*:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Force override any browser default focus styles */
+a:focus,
+a:active,
+a:focus-visible,
+button:focus,
+button:active,
+button:focus-visible,
+input:focus,
+input:active,
+input:focus-visible,
+textarea:focus,
+textarea:active,
+textarea:focus-visible,
+select:focus,
+select:active,
+select:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5) !important;
+}
+
+/* Specifically target social buttons */
+.social-button,
+.social-button:focus,
+.social-button:active,
+.social-button:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.social-button:focus {
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5) !important;
+}
+
+/* Target all glass buttons */
+.glass-btn,
+.glass-btn:focus,
+.glass-btn:active,
+.glass-btn:focus-visible,
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus-visible,
+.btn-secondary,
+.btn-secondary:focus,
+.btn-secondary:active,
+.btn-secondary:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Navigation specific */
+.nav-item,
+.nav-item:focus,
+.nav-item:active,
+.nav-item:focus-visible,
+.nav-link,
+.nav-link:focus,
+.nav-link:active,
+.nav-link:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Router links */
+.router-link-active,
+.router-link-active:focus,
+.router-link-active:active,
+.router-link-active:focus-visible,
+.router-link-exact-active,
+.router-link-exact-active:focus,
+.router-link-exact-active:active,
+.router-link-exact-active:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Theme selector */
+.theme-selector button,
+.theme-selector button:focus,
+.theme-selector button:active,
+.theme-selector button:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Mobile menu button */
+.mobile-menu-button,
+.mobile-menu-button:focus,
+.mobile-menu-button:active,
+.mobile-menu-button:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Remove any webkit/moz specific outlines */
+*::-moz-focus-inner {
+  border: 0 !important;
+  outline: none !important;
+}
+
+*::-webkit-focus-ring {
+  outline: none !important;
+}
+
+/* Form elements specific override */
+input[type="text"],
+input[type="text"]:focus,
+input[type="text"]:active,
+input[type="email"],
+input[type="email"]:focus,
+input[type="email"]:active,
+textarea,
+textarea:focus,
+textarea:active {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: rgba(96, 165, 250, 0.8) !important;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important;
+}
+
+/* Remove blue highlight on mobile */
+a,
+button,
+input,
+textarea,
+select,
+div[role="button"],
+[tabindex] {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}

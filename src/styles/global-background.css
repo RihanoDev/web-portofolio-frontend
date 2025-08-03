@@ -1,0 +1,326 @@
+/* Global Unified Background System with Theme Support */
+
+/* CSS Variables - will be updated by theme system */
+:root {
+  --color-primary: #1A1E2E;
+  --color-secondary: #252A3F;
+  --color-tertiary: #2A3041;
+  --color-accent: #FF6B00;
+  --color-text-primary: #E2E8F0;
+  --color-text-secondary: #B0B3C7;
+  --gradient-primary: linear-gradient(135deg, #FF6B00, #FF8E3C);
+  --gradient-secondary: linear-gradient(135deg, #1A1E2E, #252A3F);
+  
+  /* RGB values for alpha transparency */
+  --color-primary-rgb: 26, 30, 46;
+  --color-secondary-rgb: 37, 42, 63;
+  --color-tertiary-rgb: 42, 48, 65;
+  --color-accent-rgb: 255, 107, 0;
+}
+
+/* Base background setup with interactive elements */
+html, body {
+  background-color: var(--color-primary) !important;
+  color: var(--color-text-primary) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Global floating icons background layer */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(var(--color-accent-rgb), 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(var(--color-accent-rgb), 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(var(--color-accent-rgb), 0.05) 0%, transparent 50%);
+  z-index: -3;
+  animation: backgroundFloat 20s ease-in-out infinite;
+}
+
+/* Interactive background elements */
+html::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(var(--color-accent-rgb), 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(var(--color-accent-rgb), 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(var(--color-accent-rgb), 0.03) 0%, transparent 60%);
+  z-index: -2;
+  animation: backgroundFloat 25s ease-in-out infinite reverse;
+}
+
+html::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(45deg, transparent 48%, rgba(var(--color-accent-rgb), 0.015) 49%, rgba(var(--color-accent-rgb), 0.015) 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(var(--color-accent-rgb), 0.015) 49%, rgba(var(--color-accent-rgb), 0.015) 51%, transparent 52%);
+  background-size: 80px 80px;
+  z-index: -1;
+  animation: backgroundMove 35s linear infinite;
+}
+
+/* Background animations */
+@keyframes backgroundFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(10px) rotate(-1deg);
+  }
+}
+
+@keyframes backgroundMove {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  100% {
+    transform: translateX(60px) translateY(60px);
+  }
+}
+
+/* Enhanced floating icon animations */
+@keyframes floatSoft {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-15px) rotate(2deg) scale(1.05);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-1deg) scale(1.02);
+  }
+  75% {
+    transform: translateY(-12px) rotate(1deg) scale(1.08);
+  }
+}
+
+@keyframes floatWild {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  20% {
+    transform: translateY(-25px) rotate(5deg) scale(1.1);
+  }
+  40% {
+    transform: translateY(-10px) rotate(-3deg) scale(1.05);
+  }
+  60% {
+    transform: translateY(-18px) rotate(2deg) scale(1.12);
+  }
+  80% {
+    transform: translateY(-5px) rotate(-1deg) scale(1.03);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(var(--color-accent-rgb), 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(var(--color-accent-rgb), 0.6));
+  }
+}
+
+/* Apply new animations to floating elements */
+.floating-icon-soft {
+  animation: floatSoft 4s ease-in-out infinite;
+}
+
+.floating-icon-wild {
+  animation: floatWild 3s ease-in-out infinite;
+}
+
+.floating-icon-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Universal section background reset */
+section {
+  background: transparent !important;
+}
+
+/* Card backgrounds - unified styling with glass effect */
+.card, 
+.timeline-card,
+.project-card,
+.tech-card,
+[class*="bg-[#"] {
+  background-color: rgba(var(--color-secondary-rgb), 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card:hover,
+.timeline-card:hover,
+.project-card:hover,
+.tech-card:hover {
+  background-color: rgba(var(--color-tertiary-rgb), 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Glassmorphism utility classes */
+.glass {
+  background: rgba(var(--color-secondary-rgb), 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+  background: rgba(var(--color-secondary-rgb), 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Text color adjustments */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-primary) !important;
+}
+
+p, span, div {
+  color: var(--color-text-secondary);
+}
+
+/* Button unified styling */
+.btn-primary {
+  background: var(--gradient-primary) !important;
+  border: none;
+  color: white !important;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(var(--color-accent-rgb), 0.3);
+  filter: brightness(1.1);
+}
+
+/* Link colors */
+a {
+  color: var(--color-accent);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-accent);
+  filter: brightness(1.2);
+}
+
+/* Form inputs with glassmorphism */
+input, textarea, select {
+  background-color: rgba(var(--color-secondary-rgb), 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: var(--color-text-primary) !important;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.1) !important;
+  background-color: rgba(var(--color-secondary-rgb), 0.7) !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--color-secondary-rgb), 0.8);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-tertiary);
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgba(var(--color-accent-rgb), 0.3);
+  color: var(--color-text-primary);
+}
+
+/* Focus outline */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Utility classes for theming */
+.bg-primary {
+  background-color: var(--color-primary) !important;
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary) !important;
+}
+
+.bg-tertiary {
+  background-color: var(--color-tertiary) !important;
+}
+
+.bg-accent {
+  background-color: var(--color-accent) !important;
+}
+
+.text-primary {
+  color: var(--color-text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--color-text-secondary) !important;
+}
+
+.text-accent {
+  color: var(--color-accent) !important;
+}
+
+.border-primary {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.border-accent {
+  border-color: var(--color-accent) !important;
+}
+
+/* Gradient backgrounds */
+.bg-gradient {
+  background: var(--gradient-primary) !important;
+}
+
+.bg-gradient-secondary {
+  background: var(--gradient-secondary) !important;
+}

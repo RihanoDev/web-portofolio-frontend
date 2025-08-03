@@ -12,5 +12,6 @@ export default defineConfig({
   },
   css: {
     postcss: './postcss.config.cjs'
-  }
+  },
+  assetsInclude: ['**/*.pdf']
 })

@@ -251,6 +251,62 @@
   resize: vertical;
 }
 
+/* Section Dividers */
+.section {
+  position: relative;
+}
+
+.section-divider {
+  position: relative;
+  margin: 3rem 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 2px;
+}
+
+/* Tech Stack Section Specific */
+.tech-stack-section {
+  position: relative;
+}
+
+.tech-stack-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+/* Experience Section Specific */
+.experience-section {
+  position: relative;
+}
+
+.experience-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-title {

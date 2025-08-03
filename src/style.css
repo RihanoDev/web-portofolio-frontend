@@ -186,7 +186,7 @@
   }
 
   .btn-primary {
-    background: var(--gradient-primary);
+    background: var(--accent);
     color: var(--color-text-inverse);
     box-shadow: var(--shadow-glow);
   }
@@ -268,10 +268,7 @@
 
   .section-title {
     @apply text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary);
   }
 
   .section-subtitle {
@@ -322,7 +319,7 @@
     transform: translateX(-50%);
     width: 0;
     height: 2px;
-    background: var(--gradient-primary);
+    background: var(--accent);
     transition: width 0.3s ease;
   }
 
@@ -348,10 +345,7 @@
 
   /* Utility Classes */
   .text-gradient {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent);
   }
 
   .bg-grid {
@@ -403,15 +397,15 @@
 
   /* Modern Gradient Backgrounds */
   .bg-gradient-hero {
-    background: var(--gradient-hero);
+    background: var(--surface);
   }
 
   .bg-gradient-primary {
-    background: var(--gradient-primary);
+    background: var(--accent);
   }
 
   .bg-gradient-surface {
-    background: var(--gradient-surface);
+    background: var(--surface);
   }
 
   /* Shadow Utilities */

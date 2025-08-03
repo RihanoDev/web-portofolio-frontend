@@ -1,17 +1,30 @@
 :root {
-  /* Color Palette */
-  --color-primary: #2C3E50;
-  --color-primary-hover: #34495E;
-  --color-secondary: #7F8C8D;
-  --color-background: #ECF0F1;
-  --color-text: #2C3E50;
-  --color-text-light: #7F8C8D;
-  --color-light: #BDC3C7;
+  /* Enhanced Color Palette */
+  --color-primary: #1A1E2E;
+  --color-primary-400: #60A5FA;  /* Blue primary color for navigation */
+  --color-primary-hover: #252A3F;
+  --color-secondary: #2A3041;
+  --color-background: #0F1419;
+  --color-background-primary: 15, 20, 25;  /* RGB values for rgba usage */
+  --color-surface: #1A1E2E;
+  --color-text: #F8FAFC;
+  --color-text-primary: 248, 250, 252;  /* RGB values */
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-border-subtle: 148, 163, 184;  /* RGB values */
+  --color-accent: #FF6B00;
+  --color-accent-hover: #FF8E3C;
+  --color-accent-light: rgba(255, 107, 0, 0.1);
+  
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(26, 30, 46, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   
   /* Navigation Colors */
-  --color-nav-bg: rgba(44, 62, 80, 0.95);
-  --color-nav-text: #ECF0F1;
-  --color-nav-text-hover: #BDC3C7;
+  --color-nav-bg: rgba(26, 30, 46, 0.9);
+  --color-nav-text: #F8FAFC;
+  --color-nav-text-hover: #FF6B00;
   
   /* Typography */
   --font-primary: 'Inter', sans-serif;

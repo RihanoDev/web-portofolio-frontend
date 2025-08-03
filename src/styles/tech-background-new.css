@@ -1,0 +1,196 @@
+/* Tech Pattern Background - Clean Version */
+
+/* Base background layer */
+.tech-pattern-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  overflow: hidden;
+}
+
+/* Light theme background */
+.light-theme .tech-pattern-bg {
+  background: #f8fafc;
+}
+
+/* Dark theme background */
+.dark-theme .tech-pattern-bg,
+.dark .tech-pattern-bg {
+  background: #0f172a;
+}
+
+/* Simple subtle dot pattern */
+.tech-pattern-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.02;
+  background-image: 
+    radial-gradient(circle at 25% 25%, currentColor 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, currentColor 1px, transparent 1px);
+  background-size: 60px 60px, 100px 100px;
+  background-position: 0 0, 50px 50px;
+}
+
+.dark-theme .tech-pattern-bg::before,
+.dark .tech-pattern-bg::before {
+  opacity: 0.04;
+}
+
+/* Floating tech icons */
+.floating-tech-icons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -5;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-tech-icons .tech-icon {
+  position: absolute;
+  opacity: 0.04;
+  animation: float 40s infinite ease-in-out;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(2px);
+  color: currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-theme .floating-tech-icons .tech-icon,
+.dark .floating-tech-icons .tech-icon {
+  opacity: 0.08;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Tech icon positions and colors */
+.tech-icon.golang {
+  top: 10%;
+  left: 15%;
+  animation-delay: 0s;
+  color: #00ADD8;
+}
+
+.tech-icon.nodejs {
+  top: 25%;
+  right: 20%;
+  animation-delay: -5s;
+  color: #339933;
+}
+
+.tech-icon.vue {
+  bottom: 30%;
+  left: 25%;
+  animation-delay: -10s;
+  color: #4FC08D;
+}
+
+.tech-icon.docker {
+  top: 40%;
+  right: 15%;
+  animation-delay: -15s;
+  color: #2496ED;
+}
+
+.tech-icon.postgres {
+  bottom: 50%;
+  right: 30%;
+  animation-delay: -20s;
+  color: #336791;
+}
+
+.tech-icon.redis {
+  top: 60%;
+  left: 40%;
+  animation-delay: -25s;
+  color: #DC382D;
+}
+
+.tech-icon.k8s {
+  bottom: 20%;
+  right: 45%;
+  animation-delay: -30s;
+  color: #326CE5;
+}
+
+.tech-icon.api {
+  top: 80%;
+  left: 60%;
+  animation-delay: -35s;
+  color: #FF6B00;
+}
+
+.tech-icon.cloud {
+  top: 15%;
+  left: 70%;
+  animation-delay: -3s;
+  color: #FFA500;
+}
+
+.tech-icon.code {
+  bottom: 70%;
+  left: 80%;
+  animation-delay: -8s;
+  color: #7C3AED;
+}
+
+.tech-icon.git {
+  top: 50%;
+  right: 10%;
+  animation-delay: -12s;
+  color: #F05032;
+}
+
+.tech-icon.monitor {
+  bottom: 40%;
+  left: 5%;
+  animation-delay: -18s;
+  color: #6B7280;
+}
+
+/* Simple float animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.03;
+  }
+  50% {
+    transform: translateY(-15px) rotate(180deg);
+    opacity: 0.06;
+  }
+}
+
+/* Dark theme float animation */
+@keyframes floatDark {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.06;
+  }
+  50% {
+    transform: translateY(-15px) rotate(180deg);
+    opacity: 0.1;
+  }
+}
+
+/* Dark theme uses different animation */
+.dark-theme .floating-tech-icons .tech-icon {
+  animation-name: floatDark;
+}
+
+.dark .floating-tech-icons .tech-icon {
+  animation-name: floatDark;
+}
