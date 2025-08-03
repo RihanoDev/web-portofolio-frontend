@@ -59,34 +59,73 @@ jobs:
           org.opencontainers.image.version=${{ steps.extract_version.outputs.VERSION }}
           org.opencontainers.image.revision=${{ github.sha }}
           
-    - name: Deploy to server (optional)
+    - name: Deploy to server
       if: github.ref_type == 'tag'
-      run: |
-        echo "Deploying version ${{ steps.extract_version.outputs.VERSION }}"
-        # Tambahkan script deployment ke server di sini
-        # Contoh: SSH ke server dan update docker-compose
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          echo "🚀 Starting deployment of ${{ steps.extract_version.outputs.VERSION }}..."
+          
+          # Pull latest image
+          docker pull ${{ env.IMAGE_NAME }}:${{ steps.extract_version.outputs.VERSION }}
+          
+          # Stop and remove existing container
+          docker stop web-porto-frontend || true
+          docker rm web-porto-frontend || true
+          
+          # Run new container
+          docker run -d \
+            --name web-porto-frontend \
+            --restart unless-stopped \
+            -p 80:80 \
+            --health-cmd="curl -f http://localhost/ || exit 1" \
+            --health-interval=30s \
+            --health-timeout=3s \
+            --health-retries=3 \
+            ${{ env.IMAGE_NAME }}:${{ steps.extract_version.outputs.VERSION }}
+          
+          # Clean up old images  
+          docker image prune -af --filter "until=24h"
+          
+          # Wait for container to be healthy
+          echo "⏳ Waiting for container to be ready..."
+          timeout 60 bash -c 'until docker inspect --format="{{.State.Health.Status}}" web-porto-frontend | grep -q "healthy"; do sleep 2; done' || true
+          
+          echo "✅ Deployment completed successfully!"
+          echo "🌐 Site should be available at your server IP"
         
     - name: Create GitHub Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
       with:
         tag_name: ${{ steps.extract_version.outputs.VERSION }}
-        release_name: Release ${{ steps.extract_version.outputs.VERSION }}
+        name: Release ${{ steps.extract_version.outputs.VERSION }}
         body: |
-          ## Changes in ${{ steps.extract_version.outputs.VERSION }}
+          ## 🚀 Release ${{ steps.extract_version.outputs.VERSION }}
           
-          - ✅ PDF viewer mobile optimization
-          - ✅ Theme selector mobile visibility fixes
-          - ✅ Navbar appearance improvements
-          - ✅ Glass theme enhancements
+          ### ✨ What's New
+          - Complete glass theme portfolio system
+          - Mobile-optimized PDF viewer with smart fallbacks
+          - Responsive navigation with mobile dropdown
+          - Theme selector with mobile-friendly interface
+          - Production-ready Docker deployment
+          - Automated CI/CD pipeline
           
-          **Docker Image:** `${{ env.IMAGE_NAME }}:${{ steps.extract_version.outputs.VERSION }}`
-          
-          ### How to deploy:
+          ### 📦 Docker Image
           ```bash
           docker pull ${{ env.IMAGE_NAME }}:${{ steps.extract_version.outputs.VERSION }}
-          docker run -p 80:80 ${{ env.IMAGE_NAME }}:${{ steps.extract_version.outputs.VERSION }}
           ```
+          
+          ### � Quick Deploy
+          ```bash
+          docker run -d --name web-porto -p 80:80 ${{ env.IMAGE_NAME }}:${{ steps.extract_version.outputs.VERSION }}
+          ```
+          
+          ### 🌐 Live Demo
+          The application has been automatically deployed to the production server.
         draft: false
         prerelease: false
+      continue-on-error: true

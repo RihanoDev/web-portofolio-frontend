@@ -9,8 +9,10 @@ echo "🚀 Starting deployment of web-portofolio-frontend..."
 
 # Configuration
 PROJECT_DIR="/home/$(whoami)/web-portofolio-frontend"
-IMAGE_NAME="ghcr.io/rihanodev/web-portofolio-frontend:latest"
-CONTAINER_NAME="web-portofolio-frontend"
+IMAGE_NAME="rihanodev/web-porto-frontend"
+CONTAINER_NAME="web-porto"
+VERSION=${1:-latest}
+PORT=80
 
 # Colors for output
 RED='\033[0;31m'
