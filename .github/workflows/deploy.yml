@@ -69,33 +69,59 @@ jobs:
         script: |
           echo "🚀 Starting deployment of ${{ steps.extract_version.outputs.VERSION }}..."
           
+          # Check what's using port 80
+          echo "🔍 Checking port 80 usage..."
+          sudo netstat -tlnp | grep :80 || true
+          sudo lsof -i :80 || true
+          
+          # Stop any existing services on port 80
+          echo "🛑 Stopping services on port 80..."
+          sudo systemctl stop apache2 || true
+          sudo systemctl stop nginx || true
+          sudo systemctl disable apache2 || true
+          sudo systemctl disable nginx || true
+          
+          # Kill any processes using port 80
+          sudo fuser -k 80/tcp || true
+          
           # Pull latest image
+          echo "📦 Pulling Docker image..."
           docker pull ${{ env.IMAGE_NAME }}:${{ steps.extract_version.outputs.VERSION }}
           
           # Stop and remove existing container
+          echo "🔄 Managing existing containers..."
           docker stop web-porto-frontend || true
           docker rm web-porto-frontend || true
           
+          # Wait a moment for port to be freed
+          sleep 5
+          
           # Run new container
+          echo "🚀 Starting new container..."
           docker run -d \
             --name web-porto-frontend \
             --restart unless-stopped \
             -p 80:80 \
-            --health-cmd="curl -f http://localhost/ || exit 1" \
-            --health-interval=30s \
-            --health-timeout=3s \
-            --health-retries=3 \
             ${{ env.IMAGE_NAME }}:${{ steps.extract_version.outputs.VERSION }}
           
+          # Wait for container to start
+          echo "⏳ Waiting for container to start..."
+          sleep 10
+          
+          # Check container status
+          echo "📊 Container status:"
+          docker ps | grep web-porto-frontend || true
+          docker logs web-porto-frontend --tail 10 || true
+          
+          # Test if port 80 is responding
+          echo "🌐 Testing HTTP response..."
+          timeout 30 bash -c 'until curl -f http://localhost/ >/dev/null 2>&1; do sleep 2; echo "Waiting for HTTP..."; done' || echo "HTTP test timed out"
+          
           # Clean up old images  
-          docker image prune -af --filter "until=24h"
+          docker image prune -af --filter "until=24h" || true
           
-          # Wait for container to be healthy
-          echo "⏳ Waiting for container to be ready..."
-          timeout 60 bash -c 'until docker inspect --format="{{.State.Health.Status}}" web-porto-frontend | grep -q "healthy"; do sleep 2; done' || true
-          
-          echo "✅ Deployment completed successfully!"
-          echo "🌐 Site should be available at your server IP"
+          echo "✅ Deployment completed!"
+          echo "🌐 Site should be available at http://$(curl -s ifconfig.me || echo 'your-server-ip')"
         
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
