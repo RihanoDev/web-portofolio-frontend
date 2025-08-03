@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: rihano/web-porto-frontend
+  IMAGE_NAME: rihanodev/web-porto-frontend
 
 jobs:
   build-and-deploy:
