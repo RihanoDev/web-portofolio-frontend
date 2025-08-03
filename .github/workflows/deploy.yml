@@ -69,20 +69,20 @@ jobs:
         script: |
           echo "🚀 Starting deployment of ${{ steps.extract_version.outputs.VERSION }}..."
           
-          # Check what's using port 80
-          echo "🔍 Checking port 80 usage..."
-          sudo netstat -tlnp | grep :80 || true
-          sudo lsof -i :80 || true
+          # Check what's using port 2002
+          echo "🔍 Checking port 2002 usage..."
+          sudo netstat -tlnp | grep :2002 || true
+          sudo lsof -i :2002 || true
           
-          # Stop any existing services on port 80
-          echo "🛑 Stopping services on port 80..."
+          # Stop any existing services on port 2002
+          echo "🛑 Stopping services on port 2002..."
           sudo systemctl stop apache2 || true
           sudo systemctl stop nginx || true
           sudo systemctl disable apache2 || true
           sudo systemctl disable nginx || true
           
-          # Kill any processes using port 80
-          sudo fuser -k 80/tcp || true
+          # Kill any processes using port 2002
+          sudo fuser -k 2002/tcp || true
           
           # Pull latest image
           echo "📦 Pulling Docker image..."
@@ -121,9 +121,32 @@ jobs:
           echo "📋 Container logs (last 10 lines):"
           docker logs web-porto-frontend --tail 10 || true
           
-          # Test if port 80 is responding
+          # Test if port 2002 is responding
           echo "🌐 Testing HTTP response..."
-          timeout 30 bash -c 'until curl -f http://localhost/ >/dev/null 2>&1; do sleep 2; echo "Waiting for HTTP..."; done' || echo "HTTP test timed out"
+          timeout 30 bash -c 'until curl -f http://localhost:2002/ >/dev/null 2>&1; do sleep 2; echo "Waiting for HTTP..."; done' || echo "HTTP test timed out"
+          
+          # Additional debugging
+          echo "🔍 Detailed debugging:"
+          echo "1. Testing direct container access:"
+          curl -I http://localhost:2002/ || true
+          
+          echo "2. Testing assets access:"
+          curl -I http://localhost:2002/assets/ || true
+          
+          echo "3. Testing JS file:"
+          curl -I http://localhost:2002/assets/index-DIHMInyV.js || true
+          
+          echo "4. Container network inspection:"
+          docker inspect web-porto-frontend --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' || true
+          
+          echo "5. Nginx status in container:"
+          docker exec web-porto-frontend ps aux | grep nginx || true
+          
+          echo "6. Port binding verification:"
+          docker port web-porto-frontend || true
+          
+          echo "7. Full curl test:"
+          curl -v http://localhost:2002/ || true
           
           # Clean up old images  
           docker image prune -af --filter "until=24h" || true
