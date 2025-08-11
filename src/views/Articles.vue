@@ -7,5 +7,5 @@
 </template>
 
 <script setup lang="ts">
-import ArticleGridFull from '../components/ui/ArticleGrid.vue'
+import ArticleGridFull from '../components/organisms/ArticleGrid.vue'
 </script>

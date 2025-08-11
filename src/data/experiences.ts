@@ -86,22 +86,3 @@ export const getExperiences = async (): Promise<Experience[]> => {
   await new Promise(resolve => setTimeout(resolve, 100))
   return experiencesData
 }
-
-// Function to get experiences by type
-export const getExperiencesByType = async (type: string): Promise<Experience[]> => {
-  const experiences = await getExperiences()
-  if (type === 'all') return experiences
-  return experiences.filter(exp => exp.type === type)
-}
-
-// Function to get latest experiences
-export const getLatestExperiences = async (limit = 3): Promise<Experience[]> => {
-  const experiences = await getExperiences()
-  return experiences.slice(0, limit)
-}
-
-// Function to get experience by ID
-export const getExperienceById = async (id: number): Promise<Experience | undefined> => {
-  const experiences = await getExperiences()
-  return experiences.find(exp => exp.id === id)
-}

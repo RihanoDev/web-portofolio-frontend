@@ -36,12 +36,18 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { ArrowRight } from 'lucide-vue-next'
-import ArticleCard from '../ui/ArticleCard.vue'
+import ArticleCard from '../molecules/ArticleCard.vue'
 import type { Article } from '../../types/article'
-import { getArticles } from '../../services/articles'
+import { getArticles } from '../../data/articles'
 
-const articles: Article[] = getArticles()
+const articles = ref<Article[]>([])
+
+// Load articles on component mount
+onMounted(async () => {
+  articles.value = await getArticles()
+})
 </script>
 
 <style scoped>

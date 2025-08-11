@@ -183,7 +183,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { Send, Loader2, Lightbulb, Code, Rocket } from 'lucide-vue-next'
-import ContactInfo from '../ui/ContactInfo.vue'
+import ContactInfo from '../molecules/ContactInfo.vue'
 
 const isSubmitting = ref(false)
 const submitStatus = reactive({

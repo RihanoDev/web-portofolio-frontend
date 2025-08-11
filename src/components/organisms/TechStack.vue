@@ -112,7 +112,7 @@
 
 <script setup lang="ts">
 import { Server, Database, Cloud } from 'lucide-vue-next'
-import TechCard from '../ui/TechCard.vue'
+import TechCard from '../molecules/TechCard.vue'
 
 const backendTech = [
   { name: 'Go', icon: 'fab fa-golang', color: '#00ADD8', description: 'Primary backend language' },

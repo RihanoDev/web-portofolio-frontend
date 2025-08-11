@@ -110,8 +110,8 @@
 
 <script setup lang="ts">
 import { Github, ExternalLink, CheckCircle, Eye } from 'lucide-vue-next'
-import BaseButton from '../base/BaseButton.vue'
-import Badge from '../base/Badge.vue'
+import BaseButton from '../atoms/Button.vue'
+import Badge from '../atoms/Badge.vue'
 
 interface Project {
   id: number

@@ -68,12 +68,18 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { Server, Database, Cloud, Code } from 'lucide-vue-next'
-import BaseCard from '../base/BaseCard.vue'
+import BaseCard from '../molecules/Card.vue'
 import type { Experience } from '../../types/experience'
-import { getExperiences } from '../../services/experiences'
+import { getExperiences } from '../../data/experiences'
 
-const experiences: Experience[] = getExperiences()
+const experiences = ref<Experience[]>([])
+
+// Load experiences on component mount
+onMounted(async () => {
+  experiences.value = await getExperiences()
+})
 
 const skillCategories = [
   {

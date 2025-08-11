@@ -217,9 +217,9 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { Menu, X, FileText, Download, ExternalLink, Check } from 'lucide-vue-next'
-import ThemeSelector from '../ui/ThemeSelector.vue'
-import { downloadResume, openResumeInNewTab } from '../../hooks/useResume'
-import { useTheme } from '../../hooks/useTheme'
+import ThemeSelector from '../atoms/ThemeSelector.vue'
+import { downloadResume, openResumeInNewTab } from '../../composables/useResume'
+import { useTheme } from '../../composables/useTheme'
 
 const route = useRoute()
 const isOpen = ref(false)

@@ -28,8 +28,8 @@
 </template>
 
 <script setup lang="ts">
-import BaseCard from '../base/BaseCard.vue'
-import BaseButton from '../base/BaseButton.vue'
+import BaseCard from '../molecules/Card.vue'
+import BaseButton from '../atoms/Button.vue'
 
 const projects = [
   { title: 'SaaS Platform', desc: 'Multi-tenant SaaS platform for business automation.', icon: 'app' },

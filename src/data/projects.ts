@@ -124,22 +124,3 @@ export const getProjects = async (): Promise<Project[]> => {
   await new Promise(resolve => setTimeout(resolve, 100))
   return projectsData
 }
-
-// Function to get projects by category
-export const getProjectsByCategory = async (category: string): Promise<Project[]> => {
-  const projects = await getProjects()
-  if (category === 'All') return projects
-  return projects.filter(project => project.category === category)
-}
-
-// Function to get project by ID
-export const getProjectById = async (id: number): Promise<Project | undefined> => {
-  const projects = await getProjects()
-  return projects.find(project => project.id === id)
-}
-
-// Function to get featured projects
-export const getFeaturedProjects = async (limit = 3): Promise<Project[]> => {
-  const projects = await getProjects()
-  return projects.filter(project => project.status === 'completed').slice(0, limit)
-}

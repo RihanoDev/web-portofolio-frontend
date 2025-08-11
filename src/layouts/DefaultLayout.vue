@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import Navbar from '../components/layout/Navbar.vue'
 import Footer from '../components/layout/Footer.vue'
-import FloatingViewCounter from '../components/ui/FloatingViewCounter.vue'
+import FloatingViewCounter from '../components/molecules/FloatingViewCounter.vue'
 // Removed decorative CSS imports; all styling handled by Tailwind/style.css
 
 // Add intersection observer for scroll animations

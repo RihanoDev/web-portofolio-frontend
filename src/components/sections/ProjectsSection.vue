@@ -60,19 +60,14 @@ import type { Project } from '../../types/project'
 import { getProjects } from '../../data/projects'
 
 const activeCategory = ref('All')
-const categories = ['All', 'Backend', 'Full Stack', 'Microservices', 'API']
+
+const categories = ['All', 'Backend', 'Microservices', 'API', 'Full Stack', 'DevOps']
+
 const projects = ref<Project[]>([])
-const loading = ref(true)
 
 // Load projects on component mount
 onMounted(async () => {
-  try {
-    projects.value = await getProjects()
-  } catch (error) {
-    console.error('Error loading projects:', error)
-  } finally {
-    loading.value = false
-  }
+  projects.value = await getProjects()
 })
 
 const filteredProjects = computed(() => {
@@ -83,4 +78,11 @@ const filteredProjects = computed(() => {
 })
 </script>
 
-
+<style scoped>
+.glass {
+  background: rgba(var(--surface-rgb), 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+</style>

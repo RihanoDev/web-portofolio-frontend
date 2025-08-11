@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import BaseCard from '../base/BaseCard.vue'
+import BaseCard from '../molecules/Card.vue'
 
 const experiences = [
   { role: 'Backend Engineer', company: 'TechCorp', period: '2022 - Sekarang' },

@@ -28,8 +28,8 @@
 </template>
 
 <script setup lang="ts">
-import BaseCard from '../base/BaseCard.vue'
-import BaseButton from '../base/BaseButton.vue'
+import BaseCard from '../molecules/Card.vue'
+import BaseButton from '../atoms/Button.vue'
 
 const articles = [
   { title: 'Scaling Microservices', desc: 'Best practices for scaling microservices in production.' },

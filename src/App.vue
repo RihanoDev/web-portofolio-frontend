@@ -4,7 +4,7 @@ import DefaultLayout from './layouts/DefaultLayout.vue'
 import './styles/variables.css'
 import './styles/global-background.css'
 import '@fortawesome/fontawesome-free/css/all.css'
-import { useTheme } from './hooks/useTheme'
+import { useTheme } from './composables/useTheme'
 
 // Initialize theme system
 const { currentTheme } = useTheme()
