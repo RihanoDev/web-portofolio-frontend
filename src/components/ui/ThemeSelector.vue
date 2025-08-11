@@ -86,7 +86,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ChevronDown, Check, Palette } from 'lucide-vue-next'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme } from '../../hooks/useTheme'
 
 const { themes, currentTheme, currentThemeId, setTheme } = useTheme()
 

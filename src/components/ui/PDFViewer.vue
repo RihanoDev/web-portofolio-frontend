@@ -228,7 +228,7 @@ const downloadPDF = () => {
   // For demo purposes, we'll create a simple download
   const link = document.createElement('a')
   link.href = '#' // Replace with actual PDF URL
-  link.download = 'Rizky_Haffiyan_Roseno_Resume.pdf'
+  link.download = 'Rizky_Roseno_Resume.pdf'
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)

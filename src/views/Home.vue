@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <HeroSection />
-    <AboutSectionHome />
     <ExperienceSectionHome />
     <TechStackSectionHome />
     <ProjectsSectionHome />
@@ -15,7 +14,6 @@ import { onMounted } from 'vue'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import HeroSection from '@/components/sections/HeroSection.vue'
-import AboutSectionHome from '@/components/sections/AboutSectionHome.vue'
 import ExperienceSectionHome from '@/components/sections/ExperienceSectionHome.vue'
 import TechStackSectionHome from '@/components/sections/TechStackSectionHome.vue'
 import ProjectsSectionHome from '@/components/sections/ProjectsSectionHome.vue'

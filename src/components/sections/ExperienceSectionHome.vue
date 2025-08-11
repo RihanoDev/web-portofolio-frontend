@@ -5,14 +5,20 @@
       <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Experience</h2>
       <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
     </div>
-    <div class="flex flex-row flex-wrap gap-6 justify-center items-center">
-      <div v-for="(exp, i) in experiences" :key="i" class="glass-card flex flex-col items-center gap-2 px-7 py-6 rounded-2xl shadow-lg min-w-[200px]">
-        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-accent/10 mb-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M16 3v4M8 3v4"/></svg>
-        </div>
-        <div class="font-semibold text-primary truncate">{{ exp.role }}</div>
-        <div class="text-secondary text-sm truncate">{{ exp.company }}</div>
-        <div class="text-xs text-accent">{{ exp.period }}</div>
+    <div class="max-w-6xl mx-auto">
+      <div class="flex gap-4 overflow-x-auto pb-2 snap-x">
+        <BaseCard v-for="(exp, i) in experiences" :key="i" padding="lg" class="min-w-[260px] snap-start">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-accent/10">
+              <i class="fas fa-briefcase text-accent"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-text-primary truncate">{{ exp.role }}</h3>
+              <p class="text-sm text-text-secondary truncate">{{ exp.company }}</p>
+            </div>
+          </div>
+          <p class="text-xs text-accent">{{ exp.period }}</p>
+        </BaseCard>
       </div>
     </div>
     </div>
@@ -20,6 +26,8 @@
 </template>
 
 <script setup lang="ts">
+import BaseCard from '../base/BaseCard.vue'
+
 const experiences = [
   { role: 'Backend Engineer', company: 'TechCorp', period: '2022 - Sekarang' },
   { role: 'Software Engineer', company: 'StartupX', period: '2020 - 2022' },

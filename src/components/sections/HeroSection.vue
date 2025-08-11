@@ -16,7 +16,7 @@
               <div class="w-full h-full rounded-full overflow-hidden border-2 border-primary-500/20">
                 <img 
                   src="/profile.jpg" 
-                  alt="Rizky Haffiyan Roseno - RihanoDev" 
+                  alt="Rizky Haffiyan Roseno" 
                   class="w-full h-full object-cover"
                   @error="handleImageError"
                 />
@@ -34,27 +34,21 @@
         <!-- Enhanced Main Heading -->
         <div class="mb-6 space-y-2">
           <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-text-primary leading-tight">
-            <span class="text-interactive-theme">
-              Rizky Haffiyan
-            </span>
-            <br>
-            <span class="text-text-primary">Roseno</span>
+            Rizky Haffiyan Roseno
           </h1>
           
-          <!-- Animated subtitle -->
+          <!-- Subheadline -->
           <div class="relative">
-            <p class="text-xl md:text-2xl text-text-secondary font-medium">
-              <span class="text-interactive-theme">Backend Engineer</span> | 
-              <span class="text-interactive-theme">Cloud</span> | 
-              <span class="text-interactive-theme">Software Engineering</span>
+            <p class="text-lg md:text-xl text-text-muted font-normal">
+              Backend Engineer · Go · Microservices · Cloud
             </p>
           </div>
         </div>
 
-        <!-- Enhanced specialization tags -->
+        <!-- Punchline -->
         <div class="mb-8">
           <p class="text-lg text-text-secondary mb-4 leading-relaxed max-w-2xl mx-auto">
-            Crafting robust, scalable solutions with 
+            Engineer yang cepat eksekusi, terbukti mengirim microservices berskala produksi.
           </p>
           <div class="flex flex-wrap justify-center gap-3 mb-6">
             <span class="px-4 py-2 rounded-full glass-subtle border border-primary-500/20 text-primary-400 font-medium text-sm hover:bg-primary-500/10 transition-all duration-300">
@@ -77,28 +71,7 @@
           </p>
         </div>
 
-        <!-- Enhanced greeting with stats -->
-        <div class="mb-10">
-          <div class="glass-card rounded-2xl p-6 max-w-md mx-auto">
-            <p class="text-lg text-text-primary font-medium mb-3 flex items-center justify-center">
-              <span class="mr-2">👋</span> Welcome to my digital space!
-            </p>
-            <div class="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <div class="text-2xl font-bold text-primary-500">1</div>
-                <div class="text-xs text-text-muted">Years Experience</div>
-              </div>
-              <div>
-                <div class="text-2xl font-bold text-primary-500">6</div>
-                <div class="text-xs text-text-muted">Projects Built</div>
-              </div>
-              <div>
-                <div class="text-2xl font-bold text-primary-500">24/7</div>
-                <div class="text-xs text-text-muted">Learning Mode</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
 
         <!-- Enhanced Social Links -->
         <div class="flex justify-center items-center space-x-6 mb-8">
@@ -123,20 +96,18 @@
 
         <!-- Call to action buttons -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a 
-            href="#projects"
-            class="btn-cta btn-with-icon btn-shimmer"
-          >
-            <i class="fas fa-code icon"></i>
+          <BaseButton as="a" href="#projects" variant="primary">
+            <i class="fas fa-code mr-2"></i>
             <span>View My Work</span>
-          </a>
-          <a 
-            href="#contact"
-            class="btn-outline btn-with-icon"
-          >
-            <i class="fas fa-envelope icon"></i>
+          </BaseButton>
+          <BaseButton as="a" href="#contact" variant="outline">
+            <i class="fas fa-envelope mr-2"></i>
             <span>Get In Touch</span>
-          </a>
+          </BaseButton>
+          <BaseButton as="router-link" to="/about" variant="ghost">
+            <i class="fas fa-user mr-2"></i>
+            <span>About Me</span>
+          </BaseButton>
         </div>
       </div>
     </div>
@@ -144,6 +115,7 @@
 </template>
 
 <script setup lang="ts">
+import BaseButton from '../base/BaseButton.vue'
 const socialLinks = [
   {
     name: 'LinkedIn',

@@ -13,7 +13,7 @@
                 <span class="text-white font-bold text-xl">R</span>
               </div>
               <div>
-                <h3 class="text-text-primary font-bold text-xl">RihanoDev</h3>
+                <h3 class="text-text-primary font-bold text-xl">Rizky Haffiyan Roseno</h3>
                 <p class="text-text-secondary text-sm">Backend Engineer</p>
               </div>
             </div>
@@ -38,20 +38,7 @@
             </ul>
           </div>
 
-          <!-- Enhanced Services -->
-          <div class="md:col-span-1">
-            <h3 class="text-text-primary font-semibold text-lg mb-6 inline-flex items-center gap-3">
-              <i class="fas fa-cogs text-primary-400 flex-shrink-0"></i>
-              <span>Services</span>
-            </h3>
-            <ul class="space-y-3">
-              <li><span class="footer-link cursor-default inline-flex items-center gap-3"><i class="fas fa-server text-blue-400 flex-shrink-0"></i><span>Backend Development</span></span></li>
-              <li><span class="footer-link cursor-default inline-flex items-center gap-3"><i class="fas fa-database text-green-400 flex-shrink-0"></i><span>Database Design</span></span></li>
-              <li><span class="footer-link cursor-default inline-flex items-center gap-3"><i class="fas fa-code-branch text-purple-400 flex-shrink-0"></i><span>API Development</span></span></li>
-              <li><span class="footer-link cursor-default inline-flex items-center gap-3"><i class="fas fa-network-wired text-orange-400 flex-shrink-0"></i><span>System Integration</span></span></li>
-              <li><span class="footer-link cursor-default inline-flex items-center gap-3"><i class="fas fa-cloud text-cyan-400 flex-shrink-0"></i><span>Cloud Solutions</span></span></li>
-            </ul>
-          </div>
+          
 
           <!-- Enhanced Contact & Social -->
           <div class="md:col-span-1">
@@ -132,7 +119,7 @@
         <div class="border-t border-border-subtle pt-8">
           <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div class="flex items-center space-x-4 text-text-muted text-sm">
-              <span>&copy; 2024 RihanoDev. All rights reserved.</span>
+              <span>&copy; 2024 Rizky Haffiyan Roseno. All rights reserved.</span>
               <span class="inline-flex items-center gap-1">
                 <i class="fas fa-heart text-red-400 flex-shrink-0"></i>
                 <span>Made with passion in Indonesia</span>

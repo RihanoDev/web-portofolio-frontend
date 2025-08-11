@@ -1,0 +1,46 @@
+/* Moved from App.vue: global UI utilities */
+.glass {
+  background: rgba(26, 30, 46, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+  background: rgba(26, 30, 46, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-subtle {
+  background: rgba(26, 30, 46, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-8px) scale(1.02); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 0, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(255, 107, 0, 0.5); }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgba(26, 30, 46, 0.3); }
+::-webkit-scrollbar-thumb { background: rgba(255, 107, 0, 0.6); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 107, 0, 0.8); }
+
+/* Text selection */
+::selection { background: rgba(255, 107, 0, 0.3); color: #F8FAFC; }
+
+/* Focus styles */
+*:focus { outline: 2px solid rgba(255, 107, 0, 0.5); outline-offset: 2px; }
+
+

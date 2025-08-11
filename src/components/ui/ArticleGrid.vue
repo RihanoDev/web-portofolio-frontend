@@ -54,25 +54,14 @@
         
         <!-- Tags -->
         <div class="flex flex-wrap gap-2 mb-4">
-          <span 
-            v-for="tag in article.tags.slice(0, 3)" 
-            :key="tag"
-            class="px-2 py-1 bg-white/10 text-xs text-gray-300 rounded-md"
-          >
-            #{{ tag }}
-          </span>
+          <Badge v-for="tag in article.tags.slice(0, 3)" :key="tag" color="gray">#{{ tag }}</Badge>
         </div>
         
         <!-- Action Button -->
-        <a 
-          :href="article.url" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="btn-outline btn-sm btn-with-icon w-full"
-        >
-          <span>Read Article</span>
-          <ExternalLink class="icon" />
-        </a>
+        <BaseButton as="a" :href="article.url" target="_blank" rel="noopener noreferrer" variant="outline" size="sm" class="w-full">
+          <span class="mr-2">Read Article</span>
+          <ExternalLink class="w-4 h-4" />
+        </BaseButton>
       </div>
     </article>
   </div>
@@ -80,6 +69,9 @@
 
 <script setup lang="ts">
 import { Calendar, User, ExternalLink } from 'lucide-vue-next'
+import BaseButton from '../base/BaseButton.vue'
+import Badge from '../base/Badge.vue'
+import { formatDate } from '../../utils/date'
 
 interface Article {
   id: number
@@ -134,14 +126,6 @@ const articles: Article[] = [
   }
 ]
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'short', 
-    day: 'numeric' 
-  })
-}
 
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement

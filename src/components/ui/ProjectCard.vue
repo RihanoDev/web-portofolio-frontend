@@ -66,20 +66,9 @@
         </p>
 
         <!-- Technologies -->
-        <div class="flex flex-wrap gap-2 mb-4">
-          <span 
-            v-for="tech in project.technologies.slice(0, 4)" 
-            :key="tech"
-            class="px-2 py-1 bg-surface/50 text-xs font-medium text-secondary rounded border border-white/5"
-          >
-            {{ tech }}
-          </span>
-          <span 
-            v-if="project.technologies.length > 4"
-            class="px-2 py-1 bg-accent/10 text-xs font-medium text-accent rounded border border-accent/20"
-          >
-            +{{ project.technologies.length - 4 }} more
-          </span>
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          <Badge v-for="tech in project.technologies.slice(0, 4)" :key="tech" color="gray">{{ tech }}</Badge>
+          <Badge v-if="project.technologies.length > 4">+{{ project.technologies.length - 4 }} more</Badge>
         </div>
 
         <!-- Key Features (shown on hover) -->
@@ -101,34 +90,18 @@
 
         <!-- Action Buttons -->
         <div class="flex gap-3 mt-4 pt-4 border-t border-white/5">
-          <a 
-            v-if="project.githubUrl"
-            :href="project.githubUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-secondary btn-with-icon btn-sm flex-1"
-          >
-            <Github class="icon" />
+          <BaseButton v-if="project.githubUrl" as="a" :href="project.githubUrl" target="_blank" rel="noopener noreferrer" variant="secondary" size="sm" class="flex-1">
+            <Github class="w-4 h-4 mr-2" />
             <span>Code</span>
-          </a>
-          <a 
-            v-if="project.liveUrl"
-            :href="project.liveUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-primary btn-with-icon btn-sm flex-1"
-          >
-            <ExternalLink class="icon" />
+          </BaseButton>
+          <BaseButton v-if="project.liveUrl" as="a" :href="project.liveUrl" target="_blank" rel="noopener noreferrer" variant="primary" size="sm" class="flex-1">
+            <ExternalLink class="w-4 h-4 mr-2" />
             <span>Live Demo</span>
-          </a>
-          <button 
-            v-if="!project.liveUrl && project.githubUrl"
-            class="btn-primary btn-with-icon btn-sm flex-1"
-            @click="openProject"
-          >
-            <Eye class="icon" />
+          </BaseButton>
+          <BaseButton v-if="!project.liveUrl && project.githubUrl" variant="primary" size="sm" class="flex-1" @click="openProject">
+            <Eye class="w-4 h-4 mr-2" />
             <span>View</span>
-          </button>
+          </BaseButton>
         </div>
       </div>
     </div>
@@ -137,6 +110,8 @@
 
 <script setup lang="ts">
 import { Github, ExternalLink, CheckCircle, Eye } from 'lucide-vue-next'
+import BaseButton from '../base/BaseButton.vue'
+import Badge from '../base/Badge.vue'
 
 interface Project {
   id: number

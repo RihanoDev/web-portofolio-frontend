@@ -5,13 +5,22 @@
       <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Articles</h2>
       <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      <div v-for="(article, i) in articles.slice(0, 3)" :key="i" class="blog-card glass-card flex flex-col items-center px-6 py-7 rounded-2xl shadow-lg hover:scale-[1.03] transition-transform">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-accent/10 mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2z"/><path d="M17 3v4a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V3"/></svg>
-        </div>
-        <div class="font-semibold text-primary text-lg text-center mb-1 truncate w-full">{{ article.title }}</div>
-        <div class="text-secondary text-sm text-center truncate w-full">{{ article.desc }}</div>
+    <div class="max-w-6xl mx-auto">
+      <div class="flex gap-4 overflow-x-auto pb-2 snap-x">
+        <BaseCard v-for="(article, i) in articles.slice(0, 6)" :key="i" padding="lg" class="min-w-[260px] snap-start">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-accent/10">
+              <i class="fas fa-newspaper text-accent"></i>
+            </div>
+            <h3 class="font-semibold text-text-primary truncate">{{ article.title }}</h3>
+          </div>
+          <p class="text-sm text-text-secondary line-clamp-2">{{ article.desc }}</p>
+        </BaseCard>
+      </div>
+      <div class="text-center mt-6">
+        <BaseButton as="router-link" to="/articles" variant="outline">
+          View all articles
+        </BaseButton>
       </div>
     </div>
     </div>
@@ -19,6 +28,9 @@
 </template>
 
 <script setup lang="ts">
+import BaseCard from '../base/BaseCard.vue'
+import BaseButton from '../base/BaseButton.vue'
+
 const articles = [
   { title: 'Scaling Microservices', desc: 'Best practices for scaling microservices in production.' },
   { title: 'Golang Tips', desc: 'Tips and tricks for writing clean Go code.' },

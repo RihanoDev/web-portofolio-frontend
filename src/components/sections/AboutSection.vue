@@ -7,7 +7,7 @@
           <h2 class="text-4xl md:text-5xl font-bold mb-4 text-text-primary">About Me</h2>
           <div class="w-24 h-1 bg-gradient-to-r from-primary-400 to-blue-500 mx-auto mb-6 rounded-full"></div>
           <p class="text-xl text-text-secondary max-w-3xl mx-auto">
-            Passionate backend engineer with expertise in building scalable, high-performance systems
+            Backend engineer yang fokus pada hasil: reliabel, terukur, dan sederhana untuk dioperasikan.
           </p>
         </div>
 
@@ -19,19 +19,13 @@
               
               <div class="space-y-4 text-text-secondary leading-relaxed">
                 <p class="text-text-primary">
-                  A dedicated backend engineer with a passion for building robust, scalable systems. 
-                  I specialize in <span class="text-primary-400 font-semibold">Golang</span> development and have extensive experience 
-                  in designing microservices architectures, transactional systems, and high-throughput APIs.
+                  Saya membangun backend yang cepat dan robust dengan <span class="text-primary-400 font-semibold">Go</span>, fokus pada microservices, transaksi konsisten, dan API ber-throughput tinggi.
                 </p>
-                
                 <p class="text-text-primary">
-                  My expertise spans across distributed systems, database optimization, and cloud-native technologies. 
-                  I believe in writing <span class="text-primary-400 font-semibold">clean, maintainable code</span> and following best practices in software engineering.
+                  Beberapa hasil: memangkas p95 response hingga 40% lewat indexing dan caching, meningkatkan uptime jadi 99.9% dengan observability dan circuit breaker, serta menurunkan waktu rilis lewat CI/CD yang rapih.
                 </p>
-                
                 <p class="text-text-primary">
-                  When I'm not coding, I enjoy exploring new technologies, contributing to open-source projects, 
-                  and sharing knowledge with the developer community.
+                  Prinsip saya: kirim bernilai bisnis, ukur dengan metrik, dan jaga agar sistem mudah dirawat.
                 </p>
               </div>
             </div>
@@ -113,36 +107,7 @@
               </div>
             </div>
 
-            <!-- Services -->
-            <div class="space-y-4">
-              <h4 class="text-xl font-bold text-primary">What I Do</h4>
-              
-              <div class="space-y-3">
-                <div class="flex items-start space-x-3 p-4 glass-card rounded-lg">
-                  <Code class="w-6 h-6 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <h5 class="font-semibold text-primary">Backend Development</h5>
-                    <p class="text-sm text-secondary">Building scalable APIs and microservices</p>
-                  </div>
-                </div>
-
-                <div class="flex items-start space-x-3 p-4 glass-card rounded-lg">
-                  <Database class="w-6 h-6 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <h5 class="font-semibold text-primary">Database Architecture</h5>
-                    <p class="text-sm text-secondary">Designing optimal database solutions</p>
-                  </div>
-                </div>
-
-                <div class="flex items-start space-x-3 p-4 glass-card rounded-lg">
-                  <Cloud class="w-6 h-6 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <h5 class="font-semibold text-primary">Cloud Solutions</h5>
-                    <p class="text-sm text-secondary">Deploying and managing cloud infrastructure</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -151,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import { MapPin, Mail, Phone, Code, Database, Cloud } from 'lucide-vue-next'
+import { MapPin, Mail, Phone } from 'lucide-vue-next'
 </script>
 
 <style scoped>

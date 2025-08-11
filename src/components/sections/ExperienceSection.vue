@@ -11,25 +11,8 @@
           </p>
         </div>
 
-        <!-- Experience Timeline -->
-        <div class="relative">
-          <!-- Timeline Line -->
-          <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent via-accent/50 to-transparent transform md:-translate-x-0.5"></div>
-
-          <!-- Experience Items -->
-          <div class="space-y-12">
-            <ExperienceCard
-              v-for="(experience, index) in experiences"
-              :key="experience.id"
-              :experience="experience"
-              :index="index"
-              :isLeft="index % 2 === 0"
-            />
-          </div>
-        </div>
-
         <!-- Skills Summary -->
-        <div class="mt-20">
+        <div class="mb-16">
           <div class="text-center mb-12">
             <h3 class="text-3xl font-bold text-primary mb-4">Key Skills & Expertise</h3>
             <p class="text-secondary">Technologies and methodologies I've mastered throughout my career</p>
@@ -57,6 +40,28 @@
             </div>
           </div>
         </div>
+
+        <!-- Experiences Horizontal Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <BaseCard v-for="exp in experiences" :key="exp.id" padding="lg">
+            <div class="flex items-start gap-3 mb-3">
+              <div class="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
+                <i class="fas fa-briefcase text-accent"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-primary">{{ exp.title }}</h3>
+                <p class="text-sm text-secondary">{{ exp.company }} • {{ exp.location }}</p>
+                <p class="text-xs text-accent">{{ exp.period }}</p>
+              </div>
+            </div>
+            <p class="text-sm text-secondary mb-3">{{ exp.description }}</p>
+            <div class="flex flex-wrap gap-1">
+              <span v-for="t in exp.technologies" :key="t" class="px-2 py-1 text-xs bg-accent/10 text-accent rounded">
+                {{ t }}
+              </span>
+            </div>
+          </BaseCard>
+        </div>
       </div>
     </div>
   </section>
@@ -64,91 +69,11 @@
 
 <script setup lang="ts">
 import { Server, Database, Cloud, Code } from 'lucide-vue-next'
-import ExperienceCard from '../ui/ExperienceCard.vue'
+import BaseCard from '../base/BaseCard.vue'
+import type { Experience } from '../../types/experience'
+import { getExperiences } from '../../services/experiences'
 
-interface Experience {
-  id: number
-  title: string
-  company: string
-  location: string
-  period: string
-  type: 'full-time' | 'freelance' | 'contract'
-  description: string
-  achievements: string[]
-  technologies: string[]
-  logo?: string
-}
-
-const experiences: Experience[] = [
-  {
-    id: 1,
-    title: 'Senior Backend Engineer',
-    company: 'TechCorp Indonesia',
-    location: 'Jakarta, Indonesia',
-    period: '2022 - Present',
-    type: 'full-time',
-    description: 'Leading backend development for high-traffic e-commerce platform serving millions of users. Responsible for system architecture, database optimization, and team mentoring.',
-    achievements: [
-      'Reduced API response time by 60% through database optimization and caching strategies',
-      'Led migration from monolithic to microservices architecture',
-      'Mentored 5 junior developers and established coding standards',
-      'Implemented CI/CD pipeline reducing deployment time by 80%'
-    ],
-    technologies: ['Go', 'PostgreSQL', 'Redis', 'Docker', 'Kubernetes', 'Kafka'],
-    logo: '/companies/techcorp.png'
-  },
-  {
-    id: 2,
-    title: 'Backend Engineer',
-    company: 'StartupXYZ',
-    location: 'Jakarta, Indonesia',
-    period: '2021 - 2022',
-    type: 'full-time',
-    description: 'Developed scalable backend systems for fintech application handling financial transactions and user management with high security standards.',
-    achievements: [
-      'Built secure payment processing system handling $1M+ monthly transactions',
-      'Implemented real-time fraud detection reducing fraudulent activities by 40%',
-      'Developed RESTful APIs serving 100K+ daily active users',
-      'Achieved 99.9% system uptime through robust error handling'
-    ],
-    technologies: ['Go', 'MySQL', 'Redis', 'AWS', 'Docker'],
-    logo: '/companies/startupxyz.png'
-  },
-  {
-    id: 3,
-    title: 'Freelance Backend Engineer',
-    company: 'Various Clients',
-    location: 'Remote',
-    period: '2020 - 2021',
-    type: 'freelance',
-    description: 'Provided backend development services for multiple clients, ranging from small businesses to medium enterprises, focusing on API development and database design.',
-    achievements: [
-      'Delivered 15+ projects with 100% client satisfaction rate',
-      'Reduced development time by 40% using modern development practices',
-      'Helped clients migrate legacy systems to modern architectures',
-      'Provided technical consultation for system architecture decisions'
-    ],
-    technologies: ['Go', 'Node.js', 'PostgreSQL', 'MongoDB', 'Docker'],
-    logo: '/companies/freelance.png'
-  },
-  {
-    id: 4,
-    title: 'Junior Backend Engineer',
-    company: 'Digital Agency Pro',
-    location: 'Jakarta, Indonesia',
-    period: '2019 - 2020',
-    type: 'full-time',
-    description: 'Started my professional journey developing web applications and learning industry best practices under senior developer mentorship.',
-    achievements: [
-      'Developed 10+ web applications using modern backend frameworks',
-      'Learned industry best practices for code quality and testing',
-      'Contributed to team knowledge sharing sessions',
-      'Received "Most Improved Developer" award in 2020'
-    ],
-    technologies: ['Node.js', 'Express', 'MySQL', 'MongoDB', 'Git'],
-    logo: '/companies/digital-agency.png'
-  }
-]
+const experiences: Experience[] = getExperiences()
 
 const skillCategories = [
   {

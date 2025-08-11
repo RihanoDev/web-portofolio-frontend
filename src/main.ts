@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import './style.css'
 import './styles/variables.css'
-import './styles/layout.css'
-import './styles/sections.css'
+// removed legacy CSS imports for modular architecture cleanup
+import './styles/app-ui.css'
 import './styles/utilities.css'
 import App from './App.vue'
 import router from './router'

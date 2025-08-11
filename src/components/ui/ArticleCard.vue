@@ -93,6 +93,7 @@
 
 <script setup lang="ts">
 import { Clock, ArrowRight } from 'lucide-vue-next'
+import { formatDate } from '../../utils/date'
 
 interface Article {
   id: number
@@ -117,14 +118,6 @@ interface Props {
 
 defineProps<Props>()
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  })
-}
 
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement

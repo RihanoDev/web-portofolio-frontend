@@ -142,7 +142,7 @@ const downloadPDF = () => {
   try {
     const link = document.createElement('a')
     link.href = resumePDF
-    link.download = 'Rizky_Haffiyan_Roseno_Resume.pdf'
+  link.download = 'Rizky_Roseno_Resume.pdf'
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)

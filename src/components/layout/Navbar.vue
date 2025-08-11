@@ -12,13 +12,13 @@
             <div class="w-10 h-10 rounded-full glass-subtle flex items-center justify-center mr-3 group-hover:shadow-lg transition-all duration-300">
               <img 
                 src="../../assets/logo-navbar.png" 
-                alt="RihanoDev Logo" 
+                alt="Rizky Haffiyan Roseno Logo" 
                 class="w-full h-full rounded-full object-cover"
               />
             </div>
             <div class="flex flex-col">
-              <span class="text-lg font-bold text-interactive-theme group-hover:text-primary-400 transition-colors duration-300">
-                RihanoDev
+              <span class="text-lg font-bold text-text-primary group-hover:text-primary-400 transition-colors duration-300">
+                Rizky Haffiyan Roseno
               </span>
               <span class="text-xs text-text-secondary -mt-1">
                 Backend Engineer
@@ -218,8 +218,8 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { Menu, X, FileText, Download, ExternalLink, Check } from 'lucide-vue-next'
 import ThemeSelector from '../ui/ThemeSelector.vue'
-import { downloadResume, openResumeInNewTab } from '../../composables/useResume'
-import { useTheme } from '../../composables/useTheme'
+import { downloadResume, openResumeInNewTab } from '../../hooks/useResume'
+import { useTheme } from '../../hooks/useTheme'
 
 const route = useRoute()
 const isOpen = ref(false)

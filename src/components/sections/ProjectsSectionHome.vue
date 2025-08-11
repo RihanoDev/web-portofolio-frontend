@@ -5,16 +5,22 @@
       <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Projects</h2>
       <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      <div v-for="(project, i) in projects.slice(0, 3)" :key="i" class="blog-card glass-card flex flex-col items-center px-6 py-7 rounded-2xl shadow-lg hover:scale-[1.03] transition-transform">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-accent/10 mb-4">
-          <svg v-if="project.icon === 'app'" xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="4"/></svg>
-          <svg v-else-if="project.icon === 'chat'" xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <svg v-else-if="project.icon === 'api'" xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="11" width="18" height="2" rx="1"/><rect x="7" y="7" width="2" height="10" rx="1"/><rect x="15" y="7" width="2" height="10" rx="1"/></svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-        </div>
-        <div class="font-semibold text-primary text-lg text-center mb-1 truncate w-full">{{ project.title }}</div>
-        <div class="text-secondary text-sm text-center truncate w-full">{{ project.desc }}</div>
+    <div class="max-w-6xl mx-auto">
+      <div class="flex gap-4 overflow-x-auto pb-2 snap-x">
+        <BaseCard v-for="(project, i) in projects.slice(0, 6)" :key="i" padding="lg" class="min-w-[260px] snap-start">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-accent/10">
+              <i class="fas fa-code text-accent"></i>
+            </div>
+            <h3 class="font-semibold text-text-primary truncate">{{ project.title }}</h3>
+          </div>
+          <p class="text-sm text-text-secondary line-clamp-2">{{ project.desc }}</p>
+        </BaseCard>
+      </div>
+      <div class="text-center mt-6">
+        <BaseButton as="router-link" to="/projects" variant="outline">
+          View all projects
+        </BaseButton>
       </div>
     </div>
     </div>
@@ -22,6 +28,9 @@
 </template>
 
 <script setup lang="ts">
+import BaseCard from '../base/BaseCard.vue'
+import BaseButton from '../base/BaseButton.vue'
+
 const projects = [
   { title: 'SaaS Platform', desc: 'Multi-tenant SaaS platform for business automation.', icon: 'app' },
   { title: 'Realtime Chat', desc: 'Realtime chat app with WebSocket and scalable backend.', icon: 'chat' },
