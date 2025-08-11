@@ -53,80 +53,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { ExternalLink } from 'lucide-vue-next'
 import ProjectCard from '../molecules/ProjectCard.vue'
 import type { Project } from '../../types/project'
+import { getProjects } from '../../data/projects'
 
 const activeCategory = ref('All')
 const categories = ['All', 'Backend', 'Full Stack', 'Microservices', 'API']
+const projects = ref<Project[]>([])
+const loading = ref(true)
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: 'BRI API Payment Gateway Integration',
-    description: 'Production payment system handling $500K+ monthly transaction volume',
-    longDescription: 'High-performance payment gateway integration for BRI API, processing over $500,000 in monthly transactions with 99.9% uptime and comprehensive fraud detection.',
-    category: 'Backend',
-    technologies: ['Go', 'PostgreSQL', 'Redis', 'REST API', 'Docker'],
-    image: '/projects/payment-gateway.jpg',
-    features: [
-      '$500K+ monthly transaction volume',
-      '99.9% uptime with real-time monitoring',
-      'Comprehensive fraud detection',
-      'PCI DSS compliance implementation',
-      'Multi-currency transaction support',
-      'Real-time transaction status tracking'
-    ],
-    status: 'completed'
-  },
-  {
-    id: 2,
-    title: 'Portfolio Website with CI/CD',
-    description: 'Vue.js portfolio with automated GitHub Actions deployment',
-    longDescription: 'Modern portfolio website built with Vue 3, TypeScript, and Tailwind CSS, featuring automated CI/CD pipeline with Docker containerization and SSH deployment.',
-    category: 'Full Stack',
-    technologies: ['Vue.js', 'TypeScript', 'Tailwind CSS', 'Docker', 'GitHub Actions'],
-    image: '/projects/portfolio-website.jpg',
-    githubUrl: 'https://github.com/yourusername/web-portofolio-frontend',
-    liveUrl: 'http://your-server:2002',
-    features: [
-      'Responsive design with mobile optimization',
-      'Glass morphism theme system',
-      'Automated CI/CD with GitHub Actions',
-      'Docker containerization',
-      'SEO optimization',
-      'Performance monitoring'
-    ],
-    status: 'completed'
-  },
-  {
-    id: 3,
-    title: 'SuriaTech Backend Systems',
-    description: '50K+ requests/hour backend infrastructure with advanced caching',
-    longDescription: 'Scalable backend systems for SuriaTech handling over 50,000 requests per hour with Redis caching, database optimization, and comprehensive monitoring.',
-    category: 'Backend',
-    technologies: ['Go', 'PostgreSQL', 'Redis', 'gRPC', 'Prometheus'],
-    image: '/projects/suriatech-backend.jpg',
-    features: [
-      '50K+ requests/hour capacity',
-      'Advanced Redis caching strategy',
-      'Database query optimization',
-      'Real-time performance monitoring',
-      'Microservices architecture',
-      'Automated scaling capabilities'
-    ],
-    status: 'completed'
+// Load projects on component mount
+onMounted(async () => {
+  try {
+    projects.value = await getProjects()
+  } catch (error) {
+    console.error('Error loading projects:', error)
+  } finally {
+    loading.value = false
   }
-]
+})
 
 const filteredProjects = computed(() => {
   if (activeCategory.value === 'All') {
-    return projects
+    return projects.value
   }
-  return projects.filter(project => project.category === activeCategory.value)
+  return projects.value.filter(project => project.category === activeCategory.value)
 })
-</script>
 </script>
 
 
