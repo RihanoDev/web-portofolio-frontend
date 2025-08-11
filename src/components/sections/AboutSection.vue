@@ -4,9 +4,9 @@
       <div class="max-w-6xl mx-auto">
         <!-- Section Header -->
         <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-text-primary">About Me</h2>
-          <div class="w-24 h-1 bg-gradient-to-r from-primary-400 to-blue-500 mx-auto mb-6 rounded-full"></div>
-          <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+          <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--color-text-primary);">About Me</h2>
+          <div class="w-24 h-1 mx-auto mb-6 rounded-full" style="background: var(--gradient-primary);"></div>
+          <p class="text-xl max-w-3xl mx-auto" style="color: var(--color-text-secondary);">
             Backend engineer yang fokus pada hasil: reliabel, terukur, dan sederhana untuk dioperasikan.
           </p>
         </div>
@@ -15,16 +15,16 @@
           <!-- Left: Content -->
           <div class="space-y-8">
             <div class="space-y-6">
-              <h3 class="text-2xl font-bold text-text-primary">Hi, I'm Rizky Haffiyan Roseno</h3>
+              <h3 class="text-2xl font-bold" style="color: var(--color-text-primary);">Hi, I'm Rizky Haffiyan Roseno</h3>
               
-              <div class="space-y-4 text-text-secondary leading-relaxed">
-                <p class="text-text-primary">
-                  Saya membangun backend yang cepat dan robust dengan <span class="text-primary-400 font-semibold">Go</span>, fokus pada microservices, transaksi konsisten, dan API ber-throughput tinggi.
+              <div class="space-y-4 leading-relaxed" style="color: var(--color-text-secondary);">
+                <p style="color: var(--color-text-primary);">
+                  Saya membangun backend yang cepat dan robust dengan <span class="font-semibold" style="color: var(--color-accent);">Go</span>, fokus pada microservices, transaksi konsisten, dan API ber-throughput tinggi.
                 </p>
-                <p class="text-text-primary">
+                <p style="color: var(--color-text-primary);">
                   Beberapa hasil: memangkas p95 response hingga 40% lewat indexing dan caching, meningkatkan uptime jadi 99.9% dengan observability dan circuit breaker, serta menurunkan waktu rilis lewat CI/CD yang rapih.
                 </p>
-                <p class="text-text-primary">
+                <p style="color: var(--color-text-primary);">
                   Prinsip saya: kirim bernilai bisnis, ukur dengan metrik, dan jaga agar sistem mudah dirawat.
                 </p>
               </div>
@@ -32,13 +32,15 @@
 
             <!-- Quick Stats -->
             <div class="grid grid-cols-2 gap-6">
-              <div class="glass-subtle p-6 rounded-lg text-center border border-border-subtle/20 hover:glass-card transition-all duration-300">
-                <div class="text-3xl font-bold text-primary-400 mb-2">3+</div>
-                <div class="text-sm text-text-secondary">Years Experience</div>
+              <div class="glass-subtle p-6 rounded-lg text-center border transition-all duration-300"
+                   style="border-color: rgba(255, 255, 255, 0.1);">
+                <div class="text-3xl font-bold mb-2" style="color: var(--color-accent);">3+</div>
+                <div class="text-sm" style="color: var(--color-text-secondary);">Years Experience</div>
               </div>
-              <div class="glass-subtle p-6 rounded-lg text-center border border-border-subtle/20 hover:glass-card transition-all duration-300">
-                <div class="text-3xl font-bold text-primary-400 mb-2">50+</div>
-                <div class="text-sm text-text-secondary">Projects Completed</div>
+              <div class="glass-subtle p-6 rounded-lg text-center border transition-all duration-300"
+                   style="border-color: rgba(255, 255, 255, 0.1);">
+                <div class="text-3xl font-bold mb-2" style="color: var(--color-accent);">50+</div>
+                <div class="text-sm" style="color: var(--color-text-secondary);">Projects Completed</div>
               </div>
             </div>
 

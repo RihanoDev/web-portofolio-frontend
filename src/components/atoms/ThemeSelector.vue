@@ -3,18 +3,19 @@
     <!-- Theme Dropdown Button -->
     <button 
       @click="isOpen = !isOpen"
-      class="bg-slate-800/80 border border-white/10 relative overflow-hidden group flex items-center space-x-2 px-3 py-2 rounded-lg hover:scale-105 transition-all duration-300 focus:outline-none hover:bg-slate-700/90 hover:border-orange-500/30"
+      class="relative overflow-hidden group flex items-center space-x-2 px-3 py-2 rounded-lg hover:scale-105 transition-all duration-300 focus:outline-none theme-selector-btn"
       :title="currentTheme.name"
     >
       <!-- Palette Icon -->
-      <Palette class="w-4 h-4 text-orange-400" />
+      <Palette class="w-4 h-4" style="color: var(--color-accent);" />
       
       <!-- Theme Name (hidden on mobile) -->
-      <span class="hidden sm:block text-sm font-medium text-white">{{ currentTheme.name }}</span>
+      <span class="hidden sm:block text-sm font-medium" style="color: var(--color-text-primary);">{{ currentTheme.name }}</span>
       
       <!-- Dropdown Arrow -->
       <ChevronDown 
-        class="w-4 h-4 transition-transform duration-200 text-slate-400"
+        class="w-4 h-4 transition-transform duration-200"
+        style="color: var(--color-text-secondary);"
         :class="{ 'rotate-180': isOpen }"
       />
     </button>
@@ -30,10 +31,11 @@
     >
       <div 
         v-if="isOpen"
-        class="absolute right-0 mt-2 w-64 bg-slate-800/95 border border-white/20 rounded-xl shadow-2xl z-[9999] overflow-hidden mobile-dropdown"
+        class="absolute right-0 mt-2 w-64 rounded-xl shadow-lg z-[9999] overflow-hidden mobile-dropdown theme-dropdown"
       >
         <div class="p-2">
-          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wide px-3 py-2">
+          <div class="text-xs font-semibold uppercase tracking-wide px-3 py-2"
+               style="color: var(--color-text-secondary);">
             Choose Theme
           </div>
           
@@ -42,31 +44,34 @@
               v-for="theme in themes"
               :key="theme.id"
               @click="selectTheme(theme.id)"
-              class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-700/50 transition-all duration-200 group focus:outline-none"
-              :class="{ 'bg-slate-700/60': currentThemeId === theme.id }"
+              class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 group focus:outline-none theme-option"
+              :class="{ 'theme-option-selected': currentThemeId === theme.id }"
             >
               <!-- Color Preview -->
               <div class="flex space-x-1">
                 <div 
-                  class="w-4 h-4 rounded-full border border-white/20"
+                  class="w-4 h-4 rounded-full border"
+                  style="border-color: rgba(255, 255, 255, 0.2);"
                   :style="{ background: theme.colors.accent }"
                 ></div>
                 <div 
-                  class="w-4 h-4 rounded-full border border-white/20"
+                  class="w-4 h-4 rounded-full border"
+                  style="border-color: rgba(255, 255, 255, 0.2);"
                   :style="{ background: theme.colors.primary }"
                 ></div>
               </div>
               
               <!-- Theme Info -->
               <div class="flex-1 text-left">
-                <div class="text-sm font-medium text-white">{{ theme.name }}</div>
-                <div class="text-xs text-slate-400">{{ getThemeDescription(theme.id) }}</div>
+                <div class="text-sm font-medium" style="color: var(--color-text-primary);">{{ theme.name }}</div>
+                <div class="text-xs" style="color: var(--color-text-secondary);">{{ getThemeDescription(theme.id) }}</div>
               </div>
               
               <!-- Selected Indicator -->
               <Check 
                 v-if="currentThemeId === theme.id"
-                class="w-4 h-4 text-green-400"
+                class="w-4 h-4"
+                style="color: var(--color-accent);"
               />
             </button>
           </div>
@@ -128,21 +133,74 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* Theme Selector Button */
+.theme-selector-btn {
+  background-color: rgba(var(--color-secondary-rgb), 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.theme-selector-btn:hover {
+  background-color: rgba(var(--color-secondary-rgb), 0.9);
+  border-color: rgba(var(--accent-rgb), 0.3);
+}
+
+/* Theme Dropdown */
+.theme-dropdown {
+  background-color: rgba(var(--color-secondary-rgb), 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Theme Options */
+.theme-option:hover {
+  background-color: rgba(var(--color-tertiary-rgb), 0.5);
+}
+
+.theme-option-selected {
+  background-color: rgba(var(--color-tertiary-rgb), 0.6);
+}
+
 /* Mobile-specific adjustments for theme selector */
 @media (max-width: 768px) {
   .mobile-dropdown {
     position: static !important;
     width: 100% !important;
     margin-top: 0.5rem !important;
-    box-shadow: none !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 }
 
-/* Ensure dropdown is visible above other elements */
-.mobile-dropdown {
-  background: rgba(30, 41, 59, 0.95) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+/* Light theme adaptations */
+[data-theme="light"] .theme-dropdown,
+[data-theme="light-blue"] .theme-dropdown {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .theme-selector-btn,
+[data-theme="light-blue"] .theme-selector-btn {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .theme-selector-btn:hover,
+[data-theme="light-blue"] .theme-selector-btn:hover {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(var(--accent-rgb), 0.3) !important;
+}
+
+[data-theme="light"] .theme-option:hover,
+[data-theme="light-blue"] .theme-option:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .theme-option-selected,
+[data-theme="light-blue"] .theme-option-selected {
+  background-color: rgba(0, 0, 0, 0.08) !important;
 }
 </style>

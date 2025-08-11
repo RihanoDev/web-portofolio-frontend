@@ -18,16 +18,16 @@
             <div class="w-full h-full flex items-center justify-center text-lg" v-html="skill.icon"></div>
           </div>
           <div>
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ skill.name }}</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400">{{ skill.category }}</p>
+            <h3 class="text-lg font-semibold" style="color: var(--color-text-primary);">{{ skill.name }}</h3>
+            <p class="text-sm" style="color: var(--color-text-secondary);">{{ skill.category }}</p>
           </div>
         </div>
         
         <!-- Skill Level -->
         <div class="mb-4">
           <div class="flex justify-between items-center mb-2">
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Proficiency</span>
-            <span class="text-sm font-bold text-gray-900 dark:text-white">{{ skill.level }}%</span>
+            <span class="text-sm font-medium" style="color: var(--color-text-secondary);">Proficiency</span>
+            <span class="text-sm font-bold" style="color: var(--color-text-primary);">{{ skill.level }}%</span>
           </div>
           <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
             <div 
@@ -41,7 +41,7 @@
         </div>
         
         <!-- Experience -->
-        <div class="text-sm text-gray-600 dark:text-gray-400">
+        <div class="text-sm" style="color: var(--color-text-secondary);">
           <div class="flex items-center space-x-2">
             <Calendar class="w-4 h-4" />
             <span>{{ skill.experience }} experience</span>
@@ -49,7 +49,7 @@
         </div>
         
         <!-- Projects Count -->
-        <div class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+        <div class="mt-3 text-sm" style="color: var(--color-text-secondary);">
           <div class="flex items-center space-x-2">
             <Briefcase class="w-4 h-4" />
             <span>{{ skill.projects }} projects</span>

@@ -1,58 +1,94 @@
 <template>
-  <section id="techstack-home" class="py-16 flex flex-col items-center relative overflow-hidden">
+  <section id="techstack-home" class="py-16 flex flex-col items-center relative overflow-visible">
     <div class="text-center mb-12 relative z-10">
       <div class="flex flex-col items-center mb-8">
         <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Tech Stack</h2>
         <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
       </div>      
-    <p class="text-text-secondary max-w-2xl mx-auto">Technologies and tools I use to bring ideas to life</p>
+    <p class="max-w-2xl mx-auto" style="color: var(--color-text-secondary);">Technologies and tools I use to bring ideas to life</p>
     </div>
     
-    <div class="w-full max-w-7xl mx-auto">
+    <div class="w-full max-w-7xl mx-auto overflow-visible" style="padding: 20px 0;">
       <!-- Row 1 - Moving Right -->
-      <div class="tech-row overflow-hidden mb-6">
+      <div class="tech-row overflow-hidden mb-6 relative" style="padding: 12px 0;">
         <div class="marquee-right flex gap-6 items-center" :style="{ animationDuration: '25s' }">
           <div 
             v-for="(tech, index) in techRows[0].concat(techRows[0])" 
             :key="`row1-${index}`"
-            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit"
+            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit hover:z-10 relative"
           >
             <div class="w-8 h-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <component :is="getTechIcon(tech)" class="w-8 h-8" />
+              <img 
+                v-if="getDevIconUrl(tech)" 
+                :src="getDevIconUrl(tech)" 
+                :alt="tech"
+                class="w-8 h-8 object-contain"
+                loading="lazy"
+              />
+              <component 
+                v-else
+                :is="getTechIcon(tech)" 
+                class="w-8 h-8" 
+              />
             </div>
-            <span class="text-text-primary font-medium group-hover:text-primary-400 transition-colors duration-300">{{ tech }}</span>
+            <span class="font-medium transition-colors duration-300" 
+                  style="color: var(--color-text-primary);">{{ tech }}</span>
           </div>
         </div>
       </div>
 
       <!-- Row 2 - Moving Left -->
-      <div class="tech-row overflow-hidden mb-6">
+      <div class="tech-row overflow-hidden mb-6 relative" style="padding: 12px 0;">
         <div class="marquee-left flex gap-6 items-center" :style="{ animationDuration: '30s' }">
           <div 
             v-for="(tech, index) in techRows[1].concat(techRows[1])" 
             :key="`row2-${index}`"
-            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit"
+            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit hover:z-10 relative"
           >
             <div class="w-8 h-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <component :is="getTechIcon(tech)" class="w-8 h-8" />
+              <img 
+                v-if="getDevIconUrl(tech)" 
+                :src="getDevIconUrl(tech)" 
+                :alt="tech"
+                class="w-8 h-8 object-contain"
+                loading="lazy"
+              />
+              <component 
+                v-else
+                :is="getTechIcon(tech)" 
+                class="w-8 h-8" 
+              />
             </div>
-            <span class="text-text-primary font-medium group-hover:text-primary-400 transition-colors duration-300">{{ tech }}</span>
+            <span class="font-medium transition-colors duration-300" 
+                  style="color: var(--color-text-primary);">{{ tech }}</span>
           </div>
         </div>
       </div>
 
       <!-- Row 3 - Moving Right -->
-      <div class="tech-row overflow-hidden">
+      <div class="tech-row overflow-hidden relative" style="padding: 12px 0;">
         <div class="marquee-right flex gap-6 items-center" :style="{ animationDuration: '35s' }">
           <div 
             v-for="(tech, index) in techRows[2].concat(techRows[2])" 
             :key="`row3-${index}`"
-            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit"
+            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit hover:z-10 relative"
           >
             <div class="w-8 h-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <component :is="getTechIcon(tech)" class="w-8 h-8" />
+              <img 
+                v-if="getDevIconUrl(tech)" 
+                :src="getDevIconUrl(tech)" 
+                :alt="tech"
+                class="w-8 h-8 object-contain"
+                loading="lazy"
+              />
+              <component 
+                v-else
+                :is="getTechIcon(tech)" 
+                class="w-8 h-8" 
+              />
             </div>
-            <span class="text-text-primary font-medium group-hover:text-primary-400 transition-colors duration-300">{{ tech }}</span>
+            <span class="font-medium transition-colors duration-300" 
+                  style="color: var(--color-text-primary);">{{ tech }}</span>
           </div>
         </div>
       </div>
@@ -66,7 +102,7 @@ import { h } from 'vue'
 
 // Tech stacks divided into 3 rows
 const techs = [
-  'Golang', 'Node.js', 'PostgreSQL', 'Redis', 'Docker', 'Kubernetes', 'RabbitMQ', 'MongoDB', 'GraphQL', 'gRPC', 'AWS', 'GCP', 'Linux', 'CI/CD', 'TypeScript', 'Vue.js', 'React', 'TailwindCSS', 'Jest', 'Git', 'Nginx', 'Prometheus', 'Grafana', 'ElasticSearch'
+  'Golang', 'Node.js', 'PostgreSQL', 'Redis', 'Docker', 'Kubernetes', 'MongoDB', 'GraphQL', 'AWS', 'Linux', 'TypeScript', 'Vue.js', 'React', 'TailwindCSS', 'Git', 'Nginx', 'Prometheus', 'Grafana', 'DBeaver', 'MySQL', 'Postman', 'GitHub', 'GitLab'
 ]
 
 const techRows = [
@@ -74,6 +110,37 @@ const techRows = [
   techs.slice(8, 16), // Row 2: 8 items
   techs.slice(16, 24) // Row 3: 8 items
 ]
+
+// Function to get DevIcon CDN URLs
+const getDevIconUrl = (tech: string) => {
+  const iconMap: Record<string, string> = {
+    'Golang': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg',
+    'Node.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
+    'PostgreSQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg',
+    'Redis': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg',
+    'Docker': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg',
+    'Kubernetes': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg',
+    'MongoDB': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
+    'GraphQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg',
+    'AWS': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
+    'TypeScript': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
+    'Vue.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',
+    'React': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+    'TailwindCSS': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg',
+    'Git': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+    'Nginx': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg',
+    'Grafana': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg',
+    'Linux': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg',
+    'DBeaver': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dbeaver/dbeaver-original.svg',
+    'MySQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
+    'Postman': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg',
+    'Prometheus': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg',
+    'GitHub': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
+    'GitLab': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg'
+  }
+  
+  return iconMap[tech] || ''
+}
 
 // Function to get tech icons with better SVG designs
 const getTechIcon = (tech: string) => {

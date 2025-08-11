@@ -1,20 +1,20 @@
 <template>
-  <section id="experience-home" class="py-16 relative">
+  <section id="experience-home" class="py-16 relative overflow-visible">
     <div class="relative z-10">
     <div class="flex flex-col items-center mb-8">
       <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Experience</h2>
       <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
     </div>
-    <div class="max-w-6xl mx-auto">
-      <div class="flex gap-4 overflow-x-auto pb-2 snap-x">
-        <BaseCard v-for="(exp, i) in experiences" :key="i" padding="lg" class="min-w-[260px] snap-start">
+    <div class="max-w-6xl mx-auto overflow-visible" style="padding: 16px 0;">
+      <div class="flex gap-4 overflow-x-auto pb-2 snap-x" style="padding: 8px 0;">
+        <BaseCard v-for="(exp, i) in experiences" :key="i" padding="lg" class="min-w-[260px] snap-start hover:scale-105 transition-transform duration-300 hover:z-10 relative">
           <div class="flex items-center gap-3 mb-2">
             <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-accent/10">
               <i class="fas fa-briefcase text-accent"></i>
             </div>
             <div>
-              <h3 class="font-semibold text-text-primary truncate">{{ exp.role }}</h3>
-              <p class="text-sm text-text-secondary truncate">{{ exp.company }}</p>
+              <h3 class="font-semibold truncate" style="color: var(--color-text-primary);">{{ exp.role }}</h3>
+              <p class="text-sm truncate" style="color: var(--color-text-secondary);">{{ exp.company }}</p>
             </div>
           </div>
           <p class="text-xs text-accent">{{ exp.period }}</p>

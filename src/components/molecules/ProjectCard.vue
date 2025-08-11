@@ -6,6 +6,8 @@
           :src="project.image" 
           :alt="project.title"
           class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          loading="lazy"
+          :style="{ 'content-visibility': 'auto' }"
           @error="handleImageError"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

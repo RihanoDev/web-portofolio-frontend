@@ -16,9 +16,24 @@
           <!-- Backend & Languages -->
           <div class="text-center">
             <h3 class="text-2xl font-bold text-primary mb-8">Backend & Languages</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 overflow-visible" style="padding: 16px;">
               <TechCard 
                 v-for="tech in backendTech" 
+                :key="tech.name"
+                :name="tech.name"
+                :icon="tech.icon"
+                :color="tech.color"
+                :description="tech.description"
+              />
+            </div>
+          </div>
+
+          <!-- Frontend -->
+          <div class="text-center">
+            <h3 class="text-2xl font-bold text-primary mb-8">Frontend</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-visible" style="padding: 16px;">
+              <TechCard 
+                v-for="tech in frontendTech" 
                 :key="tech.name"
                 :name="tech.name"
                 :icon="tech.icon"
@@ -31,7 +46,7 @@
           <!-- Databases -->
           <div class="text-center">
             <h3 class="text-2xl font-bold text-primary mb-8">Databases</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 overflow-visible" style="padding: 16px;">
               <TechCard 
                 v-for="tech in databaseTech" 
                 :key="tech.name"
@@ -46,7 +61,7 @@
           <!-- DevOps & Cloud -->
           <div class="text-center">
             <h3 class="text-2xl font-bold text-primary mb-8">DevOps & Cloud</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 overflow-visible" style="padding: 16px;">
               <TechCard 
                 v-for="tech in devOpsTech" 
                 :key="tech.name"
@@ -61,7 +76,7 @@
           <!-- Tools & Others -->
           <div class="text-center">
             <h3 class="text-2xl font-bold text-primary mb-8">Tools & Others</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 overflow-visible" style="padding: 16px;">
               <TechCard 
                 v-for="tech in toolsTech" 
                 :key="tech.name"
@@ -119,16 +134,21 @@ const backendTech = [
   { name: 'Node.js', icon: 'fab fa-node-js', color: '#339933', description: 'JavaScript runtime' },
   { name: 'Python', icon: 'fab fa-python', color: '#3776AB', description: 'Scripting & automation' },
   { name: 'TypeScript', icon: 'fab fa-js-square', color: '#3178C6', description: 'Type-safe JavaScript' },
-  { name: 'Java', icon: 'fab fa-java', color: '#007396', description: 'Enterprise applications' },
-  { name: 'C++', icon: 'fas fa-code', color: '#00599C', description: 'System programming' }
+  { name: 'JavaScript', icon: 'fab fa-js-square', color: '#F7DF1E', description: 'Frontend & backend language' },
+  { name: 'Java', icon: 'fab fa-java', color: '#007396', description: 'Enterprise applications' }
+]
+
+const frontendTech = [
+  { name: 'Vue.js', icon: 'fab fa-vuejs', color: '#4FC08D', description: 'Progressive JavaScript framework' },
+  { name: 'React', icon: 'fab fa-react', color: '#61DAFB', description: 'UI library' },
+  { name: 'TailwindCSS', icon: 'fab fa-css3-alt', color: '#06B6D4', description: 'Utility-first CSS framework' }
 ]
 
 const databaseTech = [
   { name: 'PostgreSQL', icon: 'fas fa-database', color: '#336791', description: 'Primary relational DB' },
   { name: 'Redis', icon: 'fas fa-server', color: '#DC382D', description: 'Caching & sessions' },
   { name: 'MongoDB', icon: 'fas fa-leaf', color: '#47A248', description: 'Document database' },
-  { name: 'MySQL', icon: 'fas fa-database', color: '#4479A1', description: 'Relational database' },
-  { name: 'ElasticSearch', icon: 'fas fa-search', color: '#005571', description: 'Search engine' }
+  { name: 'MySQL', icon: 'fas fa-database', color: '#4479A1', description: 'Relational database' }
 ]
 
 const devOpsTech = [
@@ -137,15 +157,16 @@ const devOpsTech = [
   { name: 'AWS', icon: 'fab fa-aws', color: '#FF9900', description: 'Cloud services' },
   { name: 'Jenkins', icon: 'fas fa-cogs', color: '#D33833', description: 'CI/CD pipeline' },
   { name: 'Terraform', icon: 'fas fa-layer-group', color: '#623CE4', description: 'Infrastructure as code' },
-  { name: 'Linux', icon: 'fab fa-linux', color: '#FCC624', description: 'Server OS' }
+  { name: 'Linux', icon: 'fab fa-linux', color: '#FCC624', description: 'Server OS' },
+  { name: 'Nginx', icon: 'fas fa-server', color: '#009639', description: 'Web server & reverse proxy' }
 ]
 
 const toolsTech = [
   { name: 'Git', icon: 'fab fa-git-alt', color: '#F05032', description: 'Version control' },
-  { name: 'Kafka', icon: 'fas fa-stream', color: '#231F20', description: 'Message streaming' },
-  { name: 'gRPC', icon: 'fas fa-network-wired', color: '#4285F4', description: 'RPC framework' },
-  { name: 'REST API', icon: 'fas fa-exchange-alt', color: '#61DAFB', description: 'API design' },
+  { name: 'GitHub', icon: 'fab fa-github', color: '#181717', description: 'Code repository' },
   { name: 'GraphQL', icon: 'fas fa-project-diagram', color: '#E10098', description: 'Query language' },
+  { name: 'FastAPI', icon: 'fas fa-bolt', color: '#009688', description: 'Modern Python API framework' },
+  { name: 'Grafana', icon: 'fas fa-chart-line', color: '#F46800', description: 'Monitoring & observability' },
   { name: 'Microservices', icon: 'fas fa-sitemap', color: '#FF6B6B', description: 'Architecture pattern' }
 ]
 </script>

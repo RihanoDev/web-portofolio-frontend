@@ -2,3 +2,77 @@
 @import './variables.css';
 @import './global-background.css';
 @import './utilities.css';
+
+/* Global overflow fix for hover effects */
+.grid {
+  overflow: visible !important;
+}
+
+/* Container overflow fix */
+section, .container, .mx-auto {
+  overflow: visible;
+}
+
+/* Hover scale effects - ensure they don't get clipped */
+.hover\:scale-105:hover,
+.group-hover\:scale-110,
+.hover\:scale-110:hover {
+  z-index: 10;
+  position: relative;
+}
+
+/* Performance optimizations */
+img {
+  content-visibility: auto;
+}
+
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+  * {
+    /* Disable smooth scrolling on mobile for better performance */
+    scroll-behavior: auto !important;
+  }
+  
+  /* Reduce animation complexity on mobile */
+  .transition-all,
+  .transition-transform,
+  .transition-colors,
+  .transition-opacity {
+    transition-duration: 0.15s !important;
+  }
+  
+  /* Simplify hover effects on mobile */
+  .hover\:scale-105:hover,
+  .group-hover\:scale-110,
+  .hover\:shadow-2xl:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Optimize backdrop filters */
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl {
+    backdrop-filter: blur(4px) !important;
+  }
+  
+  /* Reduce glass effect complexity */
+  .glass,
+  .glass-card,
+  .glass-btn {
+    backdrop-filter: blur(4px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

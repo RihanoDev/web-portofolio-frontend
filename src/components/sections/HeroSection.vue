@@ -24,7 +24,8 @@
             </div>
             <!-- Floating badge -->
             <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-              <div class="px-3 py-1.5 glass-strong text-primary-400 text-xs font-semibold rounded-full shadow-glow animate-pulse border border-primary-500/30">
+              <div class="px-3 py-1.5 glass-strong text-xs font-semibold rounded-full shadow-glow animate-pulse border"
+                   style="color: var(--color-accent); border-color: rgba(var(--accent-rgb), 0.3);">
                 Open For Freelance
               </div>
             </div>
@@ -33,39 +34,24 @@
 
         <!-- Enhanced Main Heading -->
         <div class="mb-6 space-y-2">
-          <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-text-primary leading-tight">
+          <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight"
+              style="color: var(--color-text-primary);">
             Rizky Haffiyan Roseno
           </h1>
           
           <!-- Subheadline -->
           <div class="relative">
-            <p class="text-lg md:text-xl text-text-muted font-normal">
+            <p class="text-lg md:text-xl font-normal"
+               style="color: var(--color-text-secondary);">
               Backend Engineer · Go · Microservices · Cloud
             </p>
           </div>
         </div>
 
-        <!-- Punchline -->
-        <!-- <div class="mb-8">
-          <p class="text-lg text-text-secondary mb-4 leading-relaxed max-w-2xl mx-auto">
-            Engineer yang cepat eksekusi, terbukti mengirim microservices berskala produksi.
-          </p>
-          <div class="flex flex-wrap justify-center gap-3 mb-6">
-            <span class="px-4 py-2 rounded-full glass-subtle border border-primary-500/20 text-primary-400 font-medium text-sm hover:bg-primary-500/10 transition-all duration-300">
-              <i class="fab fa-golang mr-2"></i>Golang
-            </span>
-            <span class="px-4 py-2 rounded-full glass-subtle border border-blue-500/20 text-blue-400 font-medium text-sm hover:bg-blue-500/10 transition-all duration-300">
-              <i class="fas fa-cubes mr-2"></i>Microservices
-            </span>
-            <span class="px-4 py-2 rounded-full glass-subtle border border-purple-500/20 text-purple-400 font-medium text-sm hover:bg-purple-500/10 transition-all duration-300">
-              <i class="fas fa-network-wired mr-2"></i>Distributed Systems
-            </span>
-          </div>
-        </div> -->
-
         <!-- Enhanced description -->
         <div class="mb-10">
-          <p class="text-base md:text-lg text-text-muted max-w-2xl mx-auto leading-relaxed">
+          <p class="text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
+             style="color: var(--color-text-secondary);">
             Passionate about building high-performance APIs, cloud-native architectures, 
             and scalable backend systems that power exceptional user experiences.
           </p>
@@ -85,10 +71,12 @@
             :aria-label="social.name"
             style="outline: none !important; -webkit-tap-highlight-color: transparent !important;"
           >
-            <div class="w-14 h-14 rounded-xl glass hover:glass-strong transition-all duration-300 flex items-center justify-center text-text-secondary hover:text-primary-400 hover:scale-110 border border-border-subtle hover:border-primary-500/30 group-hover:shadow-glow">
+            <div class="w-14 h-14 rounded-xl glass hover:glass-strong transition-all duration-300 flex items-center justify-center hover:scale-110 border group-hover:shadow-glow"
+                 style="color: var(--color-text-secondary); border-color: rgba(255, 255, 255, 0.1);">
               <i :class="social.icon + ' text-xl'"></i>
             </div>
-            <span class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm text-text-muted opacity-0 group-hover:opacity-100 transition-all duration-300 bg-surface-glass px-2 py-1 rounded-md border border-border-subtle">
+            <span class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 px-2 py-1 rounded-md border"
+                  style="color: var(--color-text-secondary); background-color: rgba(var(--color-secondary-rgb), 0.8); border-color: rgba(255, 255, 255, 0.1);">
               {{ social.name }}
             </span>
           </a>

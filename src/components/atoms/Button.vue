@@ -27,10 +27,10 @@ const props = withDefaults(defineProps<Props>(), {
 const computedClasses = computed(() => {
   const base = 'font-semibold disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none relative overflow-hidden'
   const variants: Record<string, string> = {
-    primary: 'bg-accent text-white hover:bg-accent/90 hover:scale-105 shadow-lg hover:shadow-xl',
-    secondary: 'glass text-primary border border-white/10 hover:border-accent/50 hover:bg-accent/10',
-    outline: 'border border-accent text-accent hover:bg-accent hover:text-white',
-    ghost: 'text-primary hover:text-accent hover:bg-accent/10'
+    primary: 'text-white hover:scale-105 shadow-lg hover:shadow-xl btn-primary-custom',
+    secondary: 'glass border hover:scale-105 btn-secondary-custom',
+    outline: 'border hover:scale-105 btn-outline-custom',
+    ghost: 'hover:scale-105 btn-ghost-custom'
   }
   const sizes: Record<string, string> = {
     sm: 'text-sm px-4 py-2',
@@ -42,5 +42,43 @@ const computedClasses = computed(() => {
 </script>
 
 <style scoped>
-/* Using global glass effects - no local styles needed */
+/* Custom button styles using CSS custom properties */
+.btn-primary-custom {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+.btn-primary-custom:hover {
+  background-color: var(--color-accent);
+  filter: brightness(0.9);
+}
+
+.btn-secondary-custom {
+  color: var(--color-text-primary);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary-custom:hover {
+  border-color: rgba(var(--accent-rgb), 0.5);
+  background-color: rgba(var(--accent-rgb), 0.1);
+}
+
+.btn-outline-custom {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.btn-outline-custom:hover {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+.btn-ghost-custom {
+  color: var(--color-text-primary);
+}
+
+.btn-ghost-custom:hover {
+  color: var(--color-accent);
+  background-color: rgba(var(--accent-rgb), 0.1);
+}
 </style>
