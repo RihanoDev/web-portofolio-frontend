@@ -218,11 +218,11 @@ const getTechIcon = (tech: string) => {
 }
 
 .tech-card {
-  background: rgba(var(--surface-rgb), 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(var(--color-secondary-rgb), 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 107, 0, 0.2);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
@@ -245,24 +245,24 @@ const getTechIcon = (tech: string) => {
 .tech-card:hover {
   transform: translateY(-5px) scale(1.05);
   border-color: rgba(255, 107, 0, 0.4);
-  background: rgba(var(--surface-rgb), 0.9);
-  box-shadow: 
-    0 10px 40px rgba(255, 107, 0, 0.2),
-    0 0 0 1px rgba(255, 107, 0, 0.1);
+  background: rgba(var(--color-secondary-rgb), 0.9);
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.15);
 }
 
 .tech-card:hover svg {
-  filter: drop-shadow(0 4px 8px rgba(255, 107, 0, 0.3));
+  filter: drop-shadow(0 2px 4px rgba(255, 107, 0, 0.2));
 }
 
 .marquee-right {
   animation: marqueeRight 25s linear infinite;
   width: fit-content;
+  will-change: transform;
 }
 
 .marquee-left {
   animation: marqueeLeft 30s linear infinite;
   width: fit-content;
+  will-change: transform;
 }
 
 @keyframes marqueeRight {
@@ -279,23 +279,32 @@ const getTechIcon = (tech: string) => {
 @media (max-width: 768px) {
   .tech-card {
     padding: 0.75rem 1rem;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  
+  .tech-row {
+    margin-bottom: 1rem;
   }
   
   .marquee-right,
   .marquee-left {
     gap: 1rem;
+    animation-duration: 20s;
+  }
+  
+  /* Disable hover pause on mobile */
+  .tech-row:hover .marquee-right,
+  .tech-row:hover .marquee-left {
+    animation-play-state: running;
   }
 }
 
-/* Theme-aware styling */
-.tech-card svg {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-  transition: filter 0.3s ease;
-}
-
-/* Animation pause on hover */
-.tech-row:hover .marquee-right,
-.tech-row:hover .marquee-left {
-  animation-play-state: paused;
+/* Desktop hover pause */
+@media (min-width: 769px) {
+  .tech-row:hover .marquee-right,
+  .tech-row:hover .marquee-left {
+    animation-play-state: paused;
+  }
 }
 </style>
