@@ -1,94 +1,100 @@
 <template>
-  <section id="techstack-home" class="py-16 flex flex-col items-center relative overflow-visible">
-    <div class="text-center mb-12 relative z-10">
-      <div class="flex flex-col items-center mb-8">
+  <section id="techstack-home" class="py-8 md:py-12 lg:py-16 xl:py-20 flex flex-col items-center relative overflow-visible">
+    <div class="text-center mb-6 md:mb-8 lg:mb-10 xl:mb-12 relative z-10">
+      <div class="flex flex-col items-center mb-4 md:mb-6 lg:mb-8">
         <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Tech Stack</h2>
         <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
       </div>      
-    <p class="max-w-2xl mx-auto" style="color: var(--color-text-secondary);">Technologies and tools I use to bring ideas to life</p>
+    <p class="max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto text-base md:text-lg lg:text-xl px-4" style="color: var(--color-text-secondary);">Technologies and tools I use to bring ideas to life</p>
     </div>
     
-    <div class="w-full max-w-7xl mx-auto overflow-visible" style="padding: 20px 0;">
+    <div class="w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-full mx-auto overflow-visible px-4 lg:px-6 xl:px-8" style="padding-top: 20px; padding-bottom: 20px;">
       <!-- Row 1 - Moving Right -->
-      <div class="tech-row overflow-hidden mb-6 relative" style="padding: 12px 0;">
-        <div class="marquee-right flex gap-6 items-center" :style="{ animationDuration: '25s' }">
-          <div 
-            v-for="(tech, index) in techRows[0].concat(techRows[0])" 
-            :key="`row1-${index}`"
-            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit hover:z-10 relative"
-          >
-            <div class="w-8 h-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <img 
-                v-if="getDevIconUrl(tech)" 
-                :src="getDevIconUrl(tech)" 
-                :alt="tech"
-                class="w-8 h-8 object-contain"
-                loading="lazy"
-              />
-              <component 
-                v-else
-                :is="getTechIcon(tech)" 
-                class="w-8 h-8" 
-              />
+      <div class="tech-row overflow-visible mb-3 relative" style="padding: 15px 0;">
+        <div class="marquee-container">
+          <div class="marquee-content marquee-right">
+            <div 
+              v-for="(tech, index) in [...techRows[0], ...techRows[0]]" 
+              :key="`row1-${index}`"
+              class="tech-card group flex items-center gap-2 px-4 py-2 rounded-xl glass-card whitespace-nowrap hover:z-20 relative"
+            >
+              <div class="w-6 h-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <img 
+                  v-if="getDevIconUrl(tech)" 
+                  :src="getDevIconUrl(tech)" 
+                  :alt="tech"
+                  class="w-6 h-6 object-contain"
+                  loading="lazy"
+                />
+                <component 
+                  v-else
+                  :is="getTechIcon(tech)" 
+                  class="w-6 h-6" 
+                />
+              </div>
+              <span class="font-medium text-sm transition-colors duration-300" 
+                    style="color: var(--color-text-primary);">{{ tech }}</span>
             </div>
-            <span class="font-medium transition-colors duration-300" 
-                  style="color: var(--color-text-primary);">{{ tech }}</span>
           </div>
         </div>
       </div>
 
       <!-- Row 2 - Moving Left -->
-      <div class="tech-row overflow-hidden mb-6 relative" style="padding: 12px 0;">
-        <div class="marquee-left flex gap-6 items-center" :style="{ animationDuration: '30s' }">
-          <div 
-            v-for="(tech, index) in techRows[1].concat(techRows[1])" 
-            :key="`row2-${index}`"
-            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit hover:z-10 relative"
-          >
-            <div class="w-8 h-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <img 
-                v-if="getDevIconUrl(tech)" 
-                :src="getDevIconUrl(tech)" 
-                :alt="tech"
-                class="w-8 h-8 object-contain"
-                loading="lazy"
-              />
-              <component 
-                v-else
-                :is="getTechIcon(tech)" 
-                class="w-8 h-8" 
-              />
+      <div class="tech-row overflow-visible mb-3 relative" style="padding: 15px 0;">
+        <div class="marquee-container">
+          <div class="marquee-content marquee-left">
+            <div 
+              v-for="(tech, index) in [...techRows[1], ...techRows[1]]" 
+              :key="`row2-${index}`"
+              class="tech-card group flex items-center gap-2 px-4 py-2 rounded-xl glass-card whitespace-nowrap hover:z-20 relative"
+            >
+              <div class="w-6 h-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <img 
+                  v-if="getDevIconUrl(tech)" 
+                  :src="getDevIconUrl(tech)" 
+                  :alt="tech"
+                  class="w-6 h-6 object-contain"
+                  loading="lazy"
+                />
+                <component 
+                  v-else
+                  :is="getTechIcon(tech)" 
+                  class="w-6 h-6" 
+                />
+              </div>
+              <span class="font-medium text-sm transition-colors duration-300" 
+                    style="color: var(--color-text-primary);">{{ tech }}</span>
             </div>
-            <span class="font-medium transition-colors duration-300" 
-                  style="color: var(--color-text-primary);">{{ tech }}</span>
           </div>
         </div>
       </div>
 
       <!-- Row 3 - Moving Right -->
-      <div class="tech-row overflow-hidden relative" style="padding: 12px 0;">
-        <div class="marquee-right flex gap-6 items-center" :style="{ animationDuration: '35s' }">
-          <div 
-            v-for="(tech, index) in techRows[2].concat(techRows[2])" 
-            :key="`row3-${index}`"
-            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit hover:z-10 relative"
-          >
-            <div class="w-8 h-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <img 
-                v-if="getDevIconUrl(tech)" 
-                :src="getDevIconUrl(tech)" 
-                :alt="tech"
-                class="w-8 h-8 object-contain"
-                loading="lazy"
-              />
-              <component 
-                v-else
-                :is="getTechIcon(tech)" 
-                class="w-8 h-8" 
-              />
+      <div class="tech-row overflow-visible relative" style="padding: 15px 0;">
+        <div class="marquee-container">
+          <div class="marquee-content marquee-right-slow">
+            <div 
+              v-for="(tech, index) in [...techRows[2], ...techRows[2]]" 
+              :key="`row3-${index}`"
+              class="tech-card group flex items-center gap-2 px-4 py-2 rounded-xl glass-card whitespace-nowrap hover:z-20 relative"
+            >
+              <div class="w-6 h-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <img 
+                  v-if="getDevIconUrl(tech)" 
+                  :src="getDevIconUrl(tech)" 
+                  :alt="tech"
+                  class="w-6 h-6 object-contain"
+                  loading="lazy"
+                />
+                <component 
+                  v-else
+                  :is="getTechIcon(tech)" 
+                  class="w-6 h-6" 
+                />
+              </div>
+              <span class="font-medium text-sm transition-colors duration-300" 
+                    style="color: var(--color-text-primary);">{{ tech }}</span>
             </div>
-            <span class="font-medium transition-colors duration-300" 
-                  style="color: var(--color-text-primary);">{{ tech }}</span>
           </div>
         </div>
       </div>
@@ -213,8 +219,81 @@ const getTechIcon = (tech: string) => {
 <style scoped>
 .tech-row {
   width: 100%;
-  mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
-  -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+  padding: 15px 0;
+  mask: linear-gradient(90deg, transparent, white 5%, white 95%, transparent);
+  -webkit-mask: linear-gradient(90deg, transparent, white 5%, white 95%, transparent);
+  overflow: visible;
+}
+
+.marquee-container {
+  width: 100%;
+  overflow: visible;
+  position: relative;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+  animation-fill-mode: both;
+}
+
+.marquee-right {
+  animation: scrollRight 20s linear infinite;
+  animation-play-state: running;
+}
+
+.marquee-left {
+  animation: scrollLeft 25s linear infinite;
+  animation-play-state: running;
+}
+
+.marquee-right-slow {
+  animation: scrollRight 30s linear infinite;
+  animation-play-state: running;
+}
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* WebKit-specific keyframes for better mobile support */
+@-webkit-keyframes scrollRight {
+  0% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+  100% {
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+}
+
+@-webkit-keyframes scrollLeft {
+  0% {
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
 }
 
 .tech-card {
@@ -225,6 +304,8 @@ const getTechIcon = (tech: string) => {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
+  min-width: fit-content;
 }
 
 .tech-card::before {
@@ -243,68 +324,228 @@ const getTechIcon = (tech: string) => {
 }
 
 .tech-card:hover {
-  transform: translateY(-5px) scale(1.05);
-  border-color: rgba(255, 107, 0, 0.4);
-  background: rgba(var(--color-secondary-rgb), 0.9);
-  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.15);
+  transform: translateY(-8px) scale(1.08);
+  border-color: rgba(255, 107, 0, 0.5);
+  background: rgba(var(--color-secondary-rgb), 0.95);
+  box-shadow: 0 8px 25px rgba(255, 107, 0, 0.2);
+  z-index: 30;
 }
 
 .tech-card:hover svg {
   filter: drop-shadow(0 2px 4px rgba(255, 107, 0, 0.2));
 }
 
-.marquee-right {
-  animation: marqueeRight 25s linear infinite;
-  width: fit-content;
-  will-change: transform;
-}
-
-.marquee-left {
-  animation: marqueeLeft 30s linear infinite;
-  width: fit-content;
-  will-change: transform;
-}
-
-@keyframes marqueeRight {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(0%); }
-}
-
-@keyframes marqueeLeft {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
-}
-
-/* Responsive adjustments */
+/* Mobile optimizations */
 @media (max-width: 768px) {
+  .tech-row {
+    padding: 8px 0;
+  }
+  
   .tech-card {
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.75rem;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+    gap: 0.5rem !important;
   }
   
-  .tech-row {
-    margin-bottom: 1rem;
+  .tech-card .w-6 {
+    width: 1.25rem;
+    height: 1.25rem;
   }
   
-  .marquee-right,
+  .tech-card span {
+    font-size: 0.75rem;
+  }
+  
+  .marquee-content {
+    gap: 0.75rem;
+    animation-play-state: running !important;
+    -webkit-animation-play-state: running !important;
+  }
+  
+  .marquee-right {
+    animation: scrollRight 12s linear infinite !important;
+    animation-play-state: running !important;
+    -webkit-animation: scrollRight 12s linear infinite !important;
+    -webkit-animation-play-state: running !important;
+  }
+  
   .marquee-left {
-    gap: 1rem;
-    animation-duration: 20s;
+    animation: scrollLeft 15s linear infinite !important;
+    animation-play-state: running !important;
+    -webkit-animation: scrollLeft 15s linear infinite !important;
+    -webkit-animation-play-state: running !important;
   }
   
-  /* Disable hover pause on mobile */
+  .marquee-right-slow {
+    animation: scrollRight 18s linear infinite !important;
+    animation-play-state: running !important;
+    -webkit-animation: scrollRight 18s linear infinite !important;
+    -webkit-animation-play-state: running !important;
+  }
+  
+  /* Force animation to continue on mobile */
+  .tech-row:hover .marquee-content,
+  .tech-row .marquee-content {
+    animation-play-state: running !important;
+    -webkit-animation-play-state: running !important;
+  }
+  
   .tech-row:hover .marquee-right,
-  .tech-row:hover .marquee-left {
-    animation-play-state: running;
+  .tech-row .marquee-right {
+    animation-play-state: running !important;
+    -webkit-animation-play-state: running !important;
+  }
+  
+  .tech-row:hover .marquee-left,
+  .tech-row .marquee-left {
+    animation-play-state: running !important;
+    -webkit-animation-play-state: running !important;
+  }
+  
+  .tech-row:hover .marquee-right-slow,
+  .tech-row .marquee-right-slow {
+    animation-play-state: running !important;
+    -webkit-animation-play-state: running !important;
+  }
+  
+  /* Prevent touch scroll interference */
+  .marquee-container {
+    touch-action: pan-y;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 }
 
-/* Desktop hover pause */
-@media (min-width: 769px) {
-  .tech-row:hover .marquee-right,
-  .tech-row:hover .marquee-left {
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .tech-row {
+    padding: 10px 0;
+  }
+  
+  .tech-card {
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+  
+  .tech-card .w-6 {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  .tech-card span {
+    font-size: 0.875rem;
+  }
+  
+  .marquee-content {
+    gap: 1rem;
+  }
+  
+  .marquee-right {
+    animation-duration: 25s;
+  }
+  
+  .marquee-left {
+    animation-duration: 30s;
+  }
+  
+  .marquee-right-slow {
+    animation-duration: 35s;
+  }
+  
+  /* Enable hover pause on tablet */
+  .tech-row:hover .marquee-content {
     animation-play-state: paused;
+    -webkit-animation-play-state: paused;
+  }
+}
+
+/* Large Desktop/TV optimizations */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .tech-row {
+    padding: 12px 0;
+  }
+  
+  .tech-card {
+    padding: 0.875rem 1.25rem;
+    gap: 0.75rem;
+  }
+  
+  .tech-card .w-6 {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  
+  .tech-card span {
+    font-size: 0.9rem;
+  }
+  
+  .marquee-content {
+    gap: 1.25rem;
+  }
+  
+  .marquee-right {
+    animation-duration: 30s;
+  }
+  
+  .marquee-left {
+    animation-duration: 35s;
+  }
+  
+  .marquee-right-slow {
+    animation-duration: 40s;
+  }
+}
+
+/* Ultra-wide/4K TV optimizations */
+@media (min-width: 1441px) {
+  .tech-row {
+    padding: 15px 0;
+  }
+  
+  .tech-card {
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+    font-size: 1rem;
+  }
+  
+  .tech-card .w-6 {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .marquee-content {
+    gap: 1.5rem;
+  }
+  
+  .marquee-right {
+    animation-duration: 35s;
+  }
+  
+  .marquee-left {
+    animation-duration: 40s;
+  }
+  
+  .marquee-right-slow {
+    animation-duration: 45s;
+  }
+  
+  /* Enhanced hover effects for large screens */
+  .tech-card:hover {
+    transform: translateY(-10px) scale(1.1);
+    box-shadow: 0 12px 35px rgba(255, 107, 0, 0.25);
+  }
+}
+
+/* Desktop hover pause (769px and above) */
+@media (min-width: 769px) {
+  .tech-row:hover .marquee-content {
+    animation-play-state: paused;
+    -webkit-animation-play-state: paused;
   }
 }
 </style>

@@ -5,16 +5,33 @@
       <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Experience</h2>
       <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
     </div>
-    <div class="max-w-6xl mx-auto overflow-visible" style="padding: 16px 0;">
-      <div class="flex gap-4 overflow-x-auto pb-2 snap-x" style="padding: 8px 0;">
-        <BaseCard v-for="(exp, i) in experiences" :key="i" padding="lg" class="min-w-[260px] snap-start hover:scale-105 transition-transform duration-300 hover:z-10 relative">
+    <div class="max-w-6xl mx-auto overflow-visible px-4" style="padding: 16px 0;">
+      <!-- Desktop/Tablet Grid Layout -->
+      <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+        <BaseCard v-for="(exp, i) in experiences" :key="i" padding="lg" class="hover:scale-105 transition-transform duration-300 hover:z-10 relative">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-accent/10">
+              <i class="fas fa-briefcase text-accent text-lg"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-semibold text-lg" style="color: var(--color-text-primary);">{{ exp.role }}</h3>
+              <p class="text-sm" style="color: var(--color-text-secondary);">{{ exp.company }}</p>
+            </div>
+          </div>
+          <p class="text-sm text-accent font-medium">{{ exp.period }}</p>
+        </BaseCard>
+      </div>
+      
+      <!-- Mobile Horizontal Scroll -->
+      <div class="md:hidden flex gap-4 overflow-x-auto pb-2 snap-x" style="padding: 8px 0;">
+        <BaseCard v-for="(exp, i) in experiences" :key="i" padding="lg" class="min-w-[280px] snap-start hover:scale-105 transition-transform duration-300 hover:z-10 relative">
           <div class="flex items-center gap-3 mb-2">
             <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-accent/10">
               <i class="fas fa-briefcase text-accent"></i>
             </div>
-            <div>
-              <h3 class="font-semibold truncate" style="color: var(--color-text-primary);">{{ exp.role }}</h3>
-              <p class="text-sm truncate" style="color: var(--color-text-secondary);">{{ exp.company }}</p>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-semibold" style="color: var(--color-text-primary);">{{ exp.role }}</h3>
+              <p class="text-sm" style="color: var(--color-text-secondary);">{{ exp.company }}</p>
             </div>
           </div>
           <p class="text-xs text-accent">{{ exp.period }}</p>
@@ -43,15 +60,73 @@ const experiences = [
   border: 1px solid rgba(255,255,255,0.08);
   transition: box-shadow 0.2s;
 }
+
 .glass-card:hover {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
 }
-.min-w-\[200px\] {
-  min-width: 200px;
+
+/* Mobile scroll improvements */
+@media (max-width: 767px) {
+  .min-w-\[280px\] {
+    min-width: 280px;
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .overflow-x-auto::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar-thumb {
+    background: rgba(var(--accent-rgb), 0.5);
+    border-radius: 4px;
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--accent-rgb), 0.7);
+  }
 }
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+/* Tablet optimizations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  /* Ensure cards have equal height */
+  .md\:grid > * {
+    height: 100%;
+  }
+}
+
+/* Large tablet and small desktop */
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  
+  /* Ensure cards have equal height */
+  .lg\:grid-cols-3 > * {
+    height: 100%;
+  }
+}
+
+/* Smooth transitions for responsive changes */
+.transition-transform {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Better hover effects for larger screens */
+@media (min-width: 768px) {
+  .hover\:scale-105:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  }
 }
 </style>

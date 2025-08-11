@@ -30,7 +30,7 @@
         </div>
 
         <!-- Navigation Menu - Center -->
-        <div class="hidden md:flex items-center space-x-6">
+        <div class="hidden xl:flex items-center space-x-6">
           <router-link
             v-for="item in navItems"
             :key="item.path"
@@ -46,12 +46,12 @@
         <!-- Right Section - Theme & Resume -->
         <div class="flex items-center gap-4">
           <!-- Theme Selector -->
-          <div class="hidden md:block">
+          <div class="hidden xl:block">
             <ThemeSelector />
           </div>
           
           <!-- Resume Button -->
-          <div class="hidden md:block relative group">
+          <div class="hidden xl:block relative group">
             <router-link 
               to="/resume"
               class="resume-button flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 hover:scale-105"
@@ -94,7 +94,7 @@
           <!-- Mobile Menu Button -->
           <button 
             @click="isOpen = !isOpen" 
-            class="mobile-menu-button md:hidden p-2 rounded-lg transition-all duration-300 focus:outline-none"
+            class="mobile-menu-button xl:hidden p-2 rounded-lg transition-all duration-300 focus:outline-none"
             :style="{ color: isOpen ? 'var(--color-accent)' : 'var(--color-text-primary)' }"
           >
             <Menu v-if="!isOpen" class="w-6 h-6" />
@@ -112,8 +112,8 @@
         leave-from-class="transform scale-100 opacity-100"
         leave-to-class="transform scale-95 opacity-0"
       >
-        <div v-if="isOpen" class="absolute top-full left-0 right-0 md:hidden mt-2 mx-4">
-          <div class="mobile-dropdown rounded-xl shadow-2xl overflow-hidden">
+        <div v-if="isOpen" class="absolute top-full xl:hidden mt-2 left-4 right-4">
+          <div class="mobile-dropdown rounded-xl shadow-2xl overflow-hidden ml-auto max-w-sm">
             <!-- Navigation Links -->
             <div class="p-4 space-y-2">
               <router-link
@@ -327,11 +327,29 @@ const isActive = (path: string) => {
   background: rgba(var(--color-secondary), 0.8);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--color-text-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-menu-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 107, 0, 0.1), transparent);
+  transition: left 0.3s ease;
+}
+
+.mobile-menu-button:hover::before {
+  left: 100%;
 }
 
 .mobile-menu-button:hover {
   background: rgba(var(--color-tertiary), 0.9);
   border-color: rgba(var(--accent-rgb), 0.3);
+  transform: scale(1.05);
 }
 
 /* Resume button theming */
@@ -354,6 +372,20 @@ const isActive = (path: string) => {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transform-origin: top right;
+  width: 100%;
+  min-width: 280px;
+  max-width: 400px;
+}
+
+/* Responsive dropdown positioning */
+@media (max-width: 480px) {
+  .mobile-dropdown {
+    width: calc(100vw - 2rem) !important;
+    right: 1rem !important;
+    left: 1rem !important;
+    transform-origin: top center;
+  }
 }
 
 [data-theme*="light"] .custom-navbar {
@@ -375,6 +407,76 @@ const isActive = (path: string) => {
 
 [data-theme*="light"] .resume-button:hover {
   background: rgba(255, 255, 255, 0.9);
+}
+
+/* Tablet and iPad specific styles - Mobile menu untuk 1024px ke bawah */
+@media (max-width: 1279px) {
+  .mobile-menu-button {
+    display: flex !important;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Better touch targets for tablets */
+  .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Large tablet optimizations (1024px - 1279px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .mobile-dropdown {
+    max-width: 420px;
+    min-width: 380px;
+  }
+  
+  .nav-link {
+    font-size: 1.1rem;
+    padding: 1rem 1.25rem;
+  }
+  
+  .mobile-menu-button {
+    padding: 0.75rem;
+  }
+}
+
+/* iPad specific optimizations */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .mobile-dropdown {
+    max-width: 380px;
+    min-width: 320px;
+  }
+  
+  .nav-link {
+    font-size: 1rem;
+    padding: 0.875rem 1rem;
+  }
+  
+  .mobile-menu-button {
+    padding: 0.625rem;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 767px) {
+  .mobile-dropdown {
+    max-width: 280px;
+    min-width: 260px;
+    margin-right: 0; /* Hapus margin extra, cukup dari right-4 saja */
+  }
+}
+
+/* Very small mobile devices */
+@media (max-width: 480px) {
+  .mobile-dropdown {
+    max-width: 260px;
+    min-width: 240px;
+    margin-right: 0; /* Hapus margin extra */
+  }
 }
 </style>
 

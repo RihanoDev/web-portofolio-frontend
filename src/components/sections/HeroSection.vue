@@ -84,11 +84,11 @@
 
         <!-- Call to action buttons -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <BaseButton as="a" href="#projects" variant="primary">
+          <BaseButton as="router-link" to="/projects" variant="primary">
             <i class="fas fa-code mr-2"></i>
             <span>View My Work</span>
           </BaseButton>
-          <BaseButton as="a" href="#contact" variant="outline">
+          <BaseButton as="router-link" to="/contact" variant="outline">
             <i class="fas fa-envelope mr-2"></i>
             <span>Get In Touch</span>
           </BaseButton>
