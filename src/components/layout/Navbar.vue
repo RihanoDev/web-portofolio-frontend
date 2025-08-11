@@ -12,13 +12,13 @@
             <div class="w-10 h-10 rounded-full glass-subtle flex items-center justify-center mr-3 group-hover:shadow-lg transition-all duration-300">
               <img 
                 src="../../assets/logo-navbar.png" 
-                alt="Rizky Haffiyan Roseno Logo" 
+                alt="RihanoDev Logo" 
                 class="w-full h-full rounded-full object-cover"
               />
             </div>
             <div class="flex flex-col">
               <span class="text-lg font-bold text-text-primary group-hover:text-primary-400 transition-colors duration-300">
-                Rizky Haffiyan Roseno
+                RihanoDev
               </span>
               <span class="text-xs text-text-secondary -mt-1">
                 Backend Engineer
@@ -52,32 +52,32 @@
           <div class="hidden md:block relative group">
             <router-link 
               to="/resume"
-              class="flex items-center gap-2 px-4 py-2 glass-btn rounded-lg font-medium text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              class="flex items-center gap-2 px-4 py-2 bg-slate-800/80 border border-white/10 rounded-lg font-medium text-sm text-white transition-all duration-300 hover:scale-105 hover:bg-slate-700/90 hover:border-orange-500/30"
             >
               <FileText class="w-4 h-4" />
               <span>Resume</span>
             </router-link>
             
             <!-- Dropdown for additional options -->
-            <div class="absolute right-0 top-full mt-2 w-48 glass-card rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+            <div class="absolute right-0 top-full mt-2 w-48 bg-slate-800/95 border border-white/20 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
               <div class="p-2 space-y-1">
                 <router-link 
                   to="/resume"
-                  class="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-text-secondary hover:text-interactive-theme hover:glass-subtle transition-all duration-200"
+                  class="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-slate-300 hover:text-orange-400 hover:bg-slate-700/50 transition-all duration-200"
                 >
                   <FileText class="w-4 h-4" />
                   <span>View Online</span>
                 </router-link>
                 <button
                   @click="downloadResume"
-                  class="w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm text-text-secondary hover:text-interactive-theme hover:glass-subtle transition-all duration-200"
+                  class="w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm text-slate-300 hover:text-orange-400 hover:bg-slate-700/50 transition-all duration-200"
                 >
                   <Download class="w-4 h-4" />
                   <span>Download PDF</span>
                 </button>
                 <button
                   @click="openResumeInNewTab"
-                  class="w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm text-text-secondary hover:text-interactive-theme hover:glass-subtle transition-all duration-200"
+                  class="w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm text-slate-300 hover:text-orange-400 hover:bg-slate-700/50 transition-all duration-200"
                 >
                   <ExternalLink class="w-4 h-4" />
                   <span>Open in New Tab</span>
@@ -89,8 +89,8 @@
           <!-- Mobile Menu Button -->
           <button 
             @click="isOpen = !isOpen" 
-            class="md:hidden p-2 rounded-lg glass-subtle transition-all duration-300 focus:outline-none mobile-menu-button"
-            :class="isOpen ? 'text-primary-400' : 'text-text-primary'"
+            class="md:hidden p-2 rounded-lg bg-slate-800/80 border border-white/10 transition-all duration-300 focus:outline-none mobile-menu-button"
+            :class="isOpen ? 'text-orange-400' : 'text-white'"
           >
             <Menu v-if="!isOpen" class="w-6 h-6" />
             <X v-else class="w-6 h-6" />
@@ -108,7 +108,7 @@
         leave-to-class="transform scale-95 opacity-0"
       >
         <div v-if="isOpen" class="absolute top-full left-0 right-0 md:hidden mt-2 mx-4">
-          <div class="glass-strong border border-white/20 rounded-xl shadow-2xl overflow-hidden backdrop-blur-md">
+          <div class="bg-slate-800/95 border border-white/20 rounded-xl shadow-2xl overflow-hidden backdrop-blur-md">
             <!-- Navigation Links -->
             <div class="p-4 space-y-2">
               <router-link
@@ -130,14 +130,14 @@
             <!-- Resume Section -->
             <div class="p-4">
               <div class="space-y-3">
-                <div class="text-xs font-semibold text-text-secondary uppercase tracking-wide px-2">
+                <div class="text-xs font-semibold text-slate-400 uppercase tracking-wide px-2">
                   Resume
                 </div>
                 
                 <router-link 
                   to="/resume"
                   @click="isOpen = false"
-                  class="flex items-center gap-3 px-4 py-3 glass-btn rounded-lg font-medium transition-all duration-300"
+                  class="flex items-center gap-3 px-4 py-3 bg-slate-700/80 rounded-lg font-medium transition-all duration-300"
                 >
                   <FileText class="w-4 h-4" />
                   <span>View Resume</span>
@@ -146,7 +146,7 @@
                 <div class="grid grid-cols-2 gap-2">
                   <button
                     @click="downloadResume; isOpen = false"
-                    class="flex items-center justify-center gap-2 px-3 py-2 glass-subtle rounded-lg text-sm font-medium transition-all duration-300 hover:glass-strong"
+                    class="flex items-center justify-center gap-2 px-3 py-2 bg-slate-700/50 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-slate-600/60"
                   >
                     <Download class="w-4 h-4" />
                     <span>Download</span>
@@ -154,7 +154,7 @@
                   
                   <button
                     @click="openResumeInNewTab; isOpen = false"
-                    class="flex items-center justify-center gap-2 px-3 py-2 glass-subtle rounded-lg text-sm font-medium transition-all duration-300 hover:glass-strong"
+                    class="flex items-center justify-center gap-2 px-3 py-2 bg-slate-700/50 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-slate-600/60"
                   >
                     <ExternalLink class="w-4 h-4" />
                     <span>New Tab</span>
@@ -168,7 +168,7 @@
 
             <!-- Theme Selector -->
             <div class="p-4">
-              <div class="text-xs font-semibold text-text-secondary uppercase tracking-wide px-2 mb-3">
+              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wide px-2 mb-3">
                 Theme
               </div>
               
@@ -178,8 +178,8 @@
                   v-for="theme in availableThemes"
                   :key="theme.id"
                   @click="selectTheme(theme.id); isOpen = false"
-                  class="flex items-center gap-2 px-3 py-2 glass-subtle rounded-lg text-sm font-medium transition-all duration-300 hover:glass-strong group"
-                  :class="{ 'glass-strong border border-primary-400/30': currentThemeId === theme.id }"
+                  class="flex items-center gap-2 px-3 py-2 bg-slate-700/50 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-slate-600/60 group"
+                  :class="{ 'bg-slate-600/70 border border-orange-400/30': currentThemeId === theme.id }"
                 >
                   <!-- Color Preview -->
                   <div class="flex space-x-1">
@@ -194,7 +194,7 @@
                   </div>
                   
                   <!-- Theme Name -->
-                  <span class="text-xs text-text-primary group-hover:text-primary-400 transition-colors">
+                  <span class="text-xs text-white group-hover:text-orange-400 transition-colors">
                     {{ theme.name }}
                   </span>
                   
@@ -254,31 +254,35 @@ const isActive = (path: string) => {
 }
 
 .nav-default {
-  color: rgb(var(--color-text-secondary));
+  color: #94a3b8;
 }
 
 .nav-default:hover {
-  color: rgb(var(--color-primary-400));
-  background: rgba(var(--color-primary-400), 0.1) !important;
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.1) !important;
 }
 
 .nav-active {
-  color: rgb(var(--color-primary-400));
-  background: rgba(var(--color-primary-400), 0.15) !important;
-  box-shadow: 0 2px 8px rgba(var(--color-primary-400), 0.2) !important;
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.15) !important;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.2) !important;
 }
 
-/* Clean glass effect without strong backgrounds */
+/* Enhanced glass effect for navbar - stronger blur to block floating icons */
 .glass-nav {
-  background: rgba(var(--color-background-primary), 0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(var(--color-border-subtle), 0.1);
+  background: rgba(0, 0, 0, 0.98);
+  backdrop-filter: blur(80px);
+  -webkit-backdrop-filter: blur(80px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 4px 40px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 /* Override any orange/accent colors in navigation */
 .nav-link:hover,
 .nav-link:focus {
-  color: rgb(var(--color-primary-400)) !important;
+  color: #f97316 !important;
 }
 
 .nav-link i,

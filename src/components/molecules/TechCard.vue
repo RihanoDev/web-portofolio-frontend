@@ -42,23 +42,13 @@ const isHovered = ref(false)
 </script>
 
 <style scoped>
-.tech-card .glass {
-  background: rgba(var(--surface-rgb), 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.tech-card:hover .glass {
-  background: rgba(var(--surface-rgb), 0.6);
-  border-color: rgba(var(--accent-rgb), 0.3);
-}
-
+/* Using global glass-card - only tech-specific styles here */
 .tech-icon-bg {
-  background: rgba(var(--surface-rgb), 0.3);
+  background: rgba(26, 30, 46, 0.3);
   transition: all 0.3s ease;
 }
 
 .tech-card:hover .tech-icon-bg {
-  background: rgba(var(--accent-rgb), 0.1);
+  background: rgba(255, 107, 0, 0.1);
 }
 </style>

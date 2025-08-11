@@ -52,7 +52,7 @@
           </div>
 
           <!-- Contact Form -->
-          <div class="glass p-8 rounded-xl">
+          <div class="glass-card p-8 rounded-xl">
             <h3 class="text-2xl font-bold text-primary mb-6">Send Message</h3>
             
             <form @submit.prevent="handleSubmit" class="space-y-6">
@@ -117,20 +117,18 @@
               </div>
 
               <!-- Submit Button -->
-              <button
+              <BaseButton
                 type="submit"
                 :disabled="isSubmitting"
-                :class="[
-                  'btn-primary btn-with-icon w-full',
-                  { 'btn-loading': isSubmitting }
-                ]"
-                style="outline: none !important; -webkit-tap-highlight-color: transparent !important;"
+                variant="primary"
+                size="lg"
+                class="w-full"
               >
                 <span v-if="!isSubmitting">Send Message</span>
                 <span v-else>Sending...</span>
-                <Send class="icon" v-if="!isSubmitting" />
-                <Loader2 class="icon animate-spin" v-else />
-              </button>
+                <Send class="w-5 h-5 ml-2" v-if="!isSubmitting" />
+                <Loader2 class="w-5 h-5 ml-2 animate-spin" v-else />
+              </BaseButton>
             </form>
 
             <!-- Success/Error Messages -->
@@ -145,7 +143,7 @@
 
         <!-- Additional Info -->
         <div class="mt-16 text-center">
-          <div class="glass p-8 rounded-xl max-w-4xl mx-auto">
+          <div class="glass-card p-8 rounded-xl max-w-4xl mx-auto">
             <h3 class="text-2xl font-bold text-primary mb-4">Ready to Start Your Project?</h3>
             <p class="text-secondary mb-6">
               Let's discuss your requirements and see how I can help bring your backend systems to life
@@ -184,6 +182,7 @@
 import { ref, reactive } from 'vue'
 import { Send, Loader2, Lightbulb, Code, Rocket } from 'lucide-vue-next'
 import ContactInfo from '../molecules/ContactInfo.vue'
+import BaseButton from '../atoms/Button.vue'
 
 const isSubmitting = ref(false)
 const submitStatus = reactive({
@@ -231,12 +230,7 @@ const handleSubmit = async () => {
 </script>
 
 <style scoped>
-.glass {
-  background: rgba(var(--surface-rgb), 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
+/* Using global glass effects - no local styles needed */
 
 .form-input {
   width: 100%;

@@ -103,3 +103,56 @@
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(255, 107, 0, 0.2);
 }
+
+/* Light Theme Adaptations */
+[data-theme="light"] .glass-card,
+[data-theme="light-blue"] .glass-card {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+[data-theme="light"] .glass-card:hover,
+[data-theme="light-blue"] .glass-card:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(var(--accent-rgb), 0.3) !important;
+  box-shadow: 
+    0 6px 25px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="light"] .glass-btn,
+[data-theme="light-blue"] .glass-btn {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: var(--color-text-primary) !important;
+}
+
+[data-theme="light"] .glass-btn:hover,
+[data-theme="light-blue"] .glass-btn:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+}
+
+/* Light theme specific text adjustments */
+[data-theme="light"] .text-primary,
+[data-theme="light-blue"] .text-primary {
+  color: var(--color-text-primary) !important;
+}
+
+[data-theme="light"] .text-secondary,
+[data-theme="light-blue"] .text-secondary {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Dark themes maintain original styles */
+[data-theme^="dark-"] .text-primary {
+  color: var(--color-text-primary);
+}
+
+[data-theme^="dark-"] .text-secondary {
+  color: var(--color-text-secondary);
+}

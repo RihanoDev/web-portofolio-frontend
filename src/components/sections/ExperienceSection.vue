@@ -22,7 +22,7 @@
             <div 
               v-for="skill in skillCategories" 
               :key="skill.category"
-              class="glass p-6 rounded-xl text-center hover:border-accent/30 transition-all duration-300"
+              class="glass-card p-6 rounded-xl text-center hover:border-accent/30 transition-all duration-300"
             >
               <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-gradient flex items-center justify-center">
                 <component :is="skill.icon" class="w-8 h-8 text-white" />
@@ -106,10 +106,5 @@ const skillCategories = [
 </script>
 
 <style scoped>
-.glass {
-  background: rgba(var(--surface-rgb), 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
+/* Using global glass effects - no local styles needed */
 </style>

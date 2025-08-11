@@ -131,17 +131,7 @@ const handleAuthorImageError = (event: Event) => {
 </script>
 
 <style scoped>
-.article-card .glass {
-  background: rgba(var(--surface-rgb), 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.article-card:hover .glass {
-  background: rgba(var(--surface-rgb), 0.6);
-  border-color: rgba(var(--accent-rgb), 0.2);
-}
-
+/* Using global glass-card class */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;

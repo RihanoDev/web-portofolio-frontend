@@ -3,7 +3,7 @@
     <div
       v-for="skill in skills"
       :key="skill.name"
-      class="skill-card group relative overflow-hidden rounded-xl p-6 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300"
+      class="skill-card group relative overflow-hidden rounded-xl p-6 glass-card hover:border-accent/30 transition-all duration-300"
     >
       <!-- Background Icon -->
       <div class="absolute top-4 right-4 opacity-10 group-hover:opacity-20 transition-opacity duration-300">

@@ -14,7 +14,7 @@
 
     <!-- Experience Card -->
     <div 
-      class="glass rounded-xl p-6 hover:shadow-2xl transition-all duration-500 hover:scale-105 border border-white/5"
+      class="glass-card rounded-xl p-6 hover:shadow-2xl transition-all duration-500 hover:scale-105 border border-white/5"
       :class="{ 'md:text-right': !isLeft }"
     >
       <!-- Period Badge -->
@@ -172,14 +172,5 @@ const getTypeText = (type: string) => {
 </script>
 
 <style scoped>
-.glass {
-  background: rgba(var(--surface-rgb), 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.glass:hover {
-  background: rgba(var(--surface-rgb), 0.6);
-  border-color: rgba(var(--accent-rgb), 0.2);
-}
+/* Local styles removed - using global glass-card class */
 </style>

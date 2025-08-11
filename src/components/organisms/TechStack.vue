@@ -76,7 +76,7 @@
 
         <!-- Expertise Summary -->
         <div class="mt-20 text-center">
-          <div class="glass p-8 rounded-xl max-w-4xl mx-auto">
+          <div class="glass-card p-8 rounded-xl max-w-4xl mx-auto">
             <h3 class="text-2xl font-bold text-primary mb-6">Core Expertise</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div class="space-y-3">
@@ -151,10 +151,5 @@ const toolsTech = [
 </script>
 
 <style scoped>
-.glass {
-  background: rgba(var(--surface-rgb), 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
+/* Using global glass effects - no local styles needed */
 </style>

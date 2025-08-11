@@ -3,18 +3,18 @@
     <!-- Theme Dropdown Button -->
     <button 
       @click="isOpen = !isOpen"
-      class="glass-btn relative overflow-hidden group flex items-center space-x-2 px-3 py-2 rounded-lg hover:scale-105 transition-all duration-300 focus:outline-none"
+      class="bg-slate-800/80 border border-white/10 relative overflow-hidden group flex items-center space-x-2 px-3 py-2 rounded-lg hover:scale-105 transition-all duration-300 focus:outline-none hover:bg-slate-700/90 hover:border-orange-500/30"
       :title="currentTheme.name"
     >
       <!-- Palette Icon -->
-      <Palette class="w-4 h-4 text-primary-400" />
+      <Palette class="w-4 h-4 text-orange-400" />
       
       <!-- Theme Name (hidden on mobile) -->
-      <span class="hidden sm:block text-sm font-medium text-text-primary">{{ currentTheme.name }}</span>
+      <span class="hidden sm:block text-sm font-medium text-white">{{ currentTheme.name }}</span>
       
       <!-- Dropdown Arrow -->
       <ChevronDown 
-        class="w-4 h-4 transition-transform duration-200 text-text-secondary"
+        class="w-4 h-4 transition-transform duration-200 text-slate-400"
         :class="{ 'rotate-180': isOpen }"
       />
     </button>
@@ -30,10 +30,10 @@
     >
       <div 
         v-if="isOpen"
-        class="absolute right-0 mt-2 w-64 glass-strong border border-white/20 rounded-xl shadow-2xl z-[9999] overflow-hidden mobile-dropdown"
+        class="absolute right-0 mt-2 w-64 bg-slate-800/95 border border-white/20 rounded-xl shadow-2xl z-[9999] overflow-hidden mobile-dropdown"
       >
         <div class="p-2">
-          <div class="text-xs font-semibold text-text-secondary uppercase tracking-wide px-3 py-2">
+          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wide px-3 py-2">
             Choose Theme
           </div>
           
@@ -42,8 +42,8 @@
               v-for="theme in themes"
               :key="theme.id"
               @click="selectTheme(theme.id)"
-              class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-all duration-200 group focus:outline-none"
-              :class="{ 'bg-white/10': currentThemeId === theme.id }"
+              class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-700/50 transition-all duration-200 group focus:outline-none"
+              :class="{ 'bg-slate-700/60': currentThemeId === theme.id }"
             >
               <!-- Color Preview -->
               <div class="flex space-x-1">
@@ -59,8 +59,8 @@
               
               <!-- Theme Info -->
               <div class="flex-1 text-left">
-                <div class="text-sm font-medium text-text-primary">{{ theme.name }}</div>
-                <div class="text-xs text-text-secondary">{{ getThemeDescription(theme.id) }}</div>
+                <div class="text-sm font-medium text-white">{{ theme.name }}</div>
+                <div class="text-xs text-slate-400">{{ getThemeDescription(theme.id) }}</div>
               </div>
               
               <!-- Selected Indicator -->
@@ -102,11 +102,10 @@ const getThemeDescription = (themeId: string) => {
     'dark-orange': 'Warm & Energetic',
     'dark-blue': 'Professional & Clean',
     'dark-purple': 'Creative & Modern',
-    'dark-emerald': 'Fresh & Natural',
-    'dark-rose': 'Elegant & Sophisticated',
-    'dark-cyan': 'Cool & Refreshing',
+    'dark-green': 'Fresh & Natural',
+    'cyberpunk': 'Futuristic & Bold',
     'light': 'Bright & Minimal',
-    'dark': 'Classic Dark'
+    'light-blue': 'Clean & Modern'
   }
   return descriptions[themeId] || 'Custom Theme'
 }
@@ -142,7 +141,7 @@ onUnmounted(() => {
 
 /* Ensure dropdown is visible above other elements */
 .mobile-dropdown {
-  background: rgba(var(--color-background-primary), 0.95) !important;
+  background: rgba(30, 41, 59, 0.95) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
 }

@@ -1,6 +1,5 @@
 <template>
-  <div class="project-card group cursor-pointer">
-    <div class="glass-card rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+  <div class="project-card group cursor-pointer glass-card rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl">
       <!-- Project Image -->
       <div class="relative h-48 overflow-hidden">
         <img 
@@ -104,7 +103,6 @@
           </BaseButton>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -172,18 +170,12 @@ const openProject = () => {
 
 <style scoped>
 .project-card {
+  position: relative;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.project-card .glass {
-  background: rgba(var(--surface-rgb), 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  position: relative;
-  overflow: hidden;
-}
-
-.project-card .glass::before {
+/* Using global glass-card class, enhanced with project-specific effects */
+.project-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -195,18 +187,8 @@ const openProject = () => {
   z-index: 1;
 }
 
-.project-card:hover .glass::before {
+.project-card:hover::before {
   left: 100%;
-}
-
-.project-card:hover .glass {
-  background: rgba(var(--surface-rgb), 0.7);
-  border-color: rgba(var(--accent-rgb), 0.3);
-  transform: translateY(-8px);
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 107, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Enhanced button interactions */

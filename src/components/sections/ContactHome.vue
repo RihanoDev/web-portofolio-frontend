@@ -16,7 +16,7 @@
           <!-- Email -->
           <a 
             href="mailto:rihanodev@gmail.com"
-            class="glass rounded-xl p-6 border border-white/5 hover:border-accent/20 transition-all duration-300 group"
+            class="glass-card rounded-xl p-6 border border-white/5 hover:border-accent/20 transition-all duration-300 group"
           >
             <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors">
               <i class="fas fa-envelope text-accent text-xl"></i>
@@ -28,7 +28,7 @@
           <!-- Phone -->
           <a 
             href="tel:+628123456789"
-            class="glass rounded-xl p-6 border border-white/5 hover:border-accent/20 transition-all duration-300 group"
+            class="glass-card rounded-xl p-6 border border-white/5 hover:border-accent/20 transition-all duration-300 group"
           >
             <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors">
               <i class="fas fa-phone text-accent text-xl"></i>
@@ -38,7 +38,7 @@
           </a>
 
           <!-- Location -->
-          <div class="glass rounded-xl p-6 border border-white/5">
+          <div class="glass-card rounded-xl p-6 border border-white/5">
             <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-4">
               <i class="fas fa-map-marker-alt text-accent text-xl"></i>
             </div>
@@ -129,16 +129,5 @@
 </template>
 
 <style scoped>
-.glass {
-  background: rgba(var(--surface-rgb), 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.glass-strong {
-  background: rgba(var(--surface-rgb), 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
+/* Using global glass effects - no local styles needed */
 </style>

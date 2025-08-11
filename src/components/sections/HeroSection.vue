@@ -46,7 +46,7 @@
         </div>
 
         <!-- Punchline -->
-        <div class="mb-8">
+        <!-- <div class="mb-8">
           <p class="text-lg text-text-secondary mb-4 leading-relaxed max-w-2xl mx-auto">
             Engineer yang cepat eksekusi, terbukti mengirim microservices berskala produksi.
           </p>
@@ -61,7 +61,7 @@
               <i class="fas fa-network-wired mr-2"></i>Distributed Systems
             </span>
           </div>
-        </div>
+        </div> -->
 
         <!-- Enhanced description -->
         <div class="mb-10">
@@ -141,24 +141,7 @@ const handleImageError = (event: Event) => {
 </script>
 
 <style scoped>
-.glass {
-  background: rgba(26, 30, 46, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.glass-strong {
-  background: rgba(26, 30, 46, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-subtle {
-  background: rgba(26, 30, 46, 0.3);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
+/* Using global glass effects - no local styles needed */
 
 /* Force remove outline from social links */
 .social-icon-link,

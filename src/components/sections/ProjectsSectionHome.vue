@@ -1,62 +1,58 @@
 <template>
-  <section id="projects-home" class="py-16 relative">
-    <div class="relative z-10">
-    <div class="flex flex-col items-center mb-8">
-      <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Projects</h2>
-      <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
-    </div>
-    <div class="max-w-6xl mx-auto">
-      <div class="flex gap-4 overflow-x-auto pb-2 snap-x">
-        <BaseCard v-for="(project, i) in projects.slice(0, 6)" :key="i" padding="lg" class="min-w-[260px] snap-start">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-accent/10">
-              <i class="fas fa-code text-accent"></i>
-            </div>
-            <h3 class="font-semibold text-text-primary truncate">{{ project.title }}</h3>
-          </div>
-          <p class="text-sm text-text-secondary line-clamp-2">{{ project.desc }}</p>
-        </BaseCard>
+  <section id="projects-home" class="py-20 relative">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-interactive-primary">Featured Projects</h2>
+          <div class="w-24 h-1 bg-gradient mx-auto mb-6"></div>
+          <p class="text-xl text-secondary max-w-3xl mx-auto">
+            Showcase of my recent work in backend development, system design, and architecture
+          </p>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+          <ProjectCard
+            v-for="project in featuredProjects"
+            :key="project.id"
+            :project="project"
+          />
+        </div>
+
+        <!-- View All Projects Button -->
+        <div class="text-center">
+          <router-link 
+            to="/projects"
+            class="inline-flex items-center px-8 py-4 rounded-lg glass-btn border border-accent text-accent font-semibold transition-all duration-300 hover:bg-accent hover:text-white hover:scale-105 space-x-2"
+          >
+            <span>View All Projects</span>
+            <ExternalLink class="w-5 h-5" />
+          </router-link>
+        </div>
       </div>
-      <div class="text-center mt-6">
-        <BaseButton as="router-link" to="/projects" variant="outline">
-          View all projects
-        </BaseButton>
-      </div>
-    </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import BaseCard from '../molecules/Card.vue'
-import BaseButton from '../atoms/Button.vue'
+import { ref, onMounted } from 'vue'
+import { getProjects } from '@/data'
+import type { Project } from '@/types'
+import { ProjectCard } from '@/components'
+import { ExternalLink } from 'lucide-vue-next'
 
-const projects = [
-  { title: 'SaaS Platform', desc: 'Multi-tenant SaaS platform for business automation.', icon: 'app' },
-  { title: 'Realtime Chat', desc: 'Realtime chat app with WebSocket and scalable backend.', icon: 'chat' },
-  { title: 'E-Commerce API', desc: 'RESTful API for e-commerce with payment integration.', icon: 'api' },
-  { title: 'Other Project', desc: 'Project lainnya...', icon: 'app' }
-]
+const projects = ref<Project[]>([])
+
+// Show only first 6 projects for home page
+const featuredProjects = ref<Project[]>([])
+
+onMounted(async () => {
+  projects.value = await getProjects()
+  featuredProjects.value = projects.value.slice(0, 6)
+})
 </script>
 
 <style scoped>
-.glass-card {
-  background: rgba(var(--surface-rgb), 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: box-shadow 0.2s;
-}
-.glass-card:hover {
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-}
-.blog-card {
-  min-height: 220px;
-  cursor: pointer;
-}
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/* Using global glass classes - no local overrides needed */
 </style>

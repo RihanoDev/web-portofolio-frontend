@@ -1,6 +1,9 @@
 <template>
   <div class="min-h-screen flex flex-col relative glass-container">
     
+    <!-- Floating Tech Icons Background -->
+    <FloatingTechIcons />
+    
     <Navbar />
     
     <main class="flex-1 w-full relative z-10">
@@ -20,6 +23,7 @@
 import Navbar from '../components/layout/Navbar.vue'
 import Footer from '../components/layout/Footer.vue'
 import FloatingViewCounter from '../components/molecules/FloatingViewCounter.vue'
+import FloatingTechIcons from '../components/organisms/FloatingTechIcons.vue'
 // Removed decorative CSS imports; all styling handled by Tailwind/style.css
 
 // Add intersection observer for scroll animations

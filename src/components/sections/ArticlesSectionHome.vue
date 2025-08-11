@@ -1,62 +1,58 @@
 <template>
-  <section id="articles-home" class="py-16 relative">
-    <div class="relative z-10">
-    <div class="flex flex-col items-center mb-8">
-      <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Articles</h2>
-      <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
-    </div>
-    <div class="max-w-6xl mx-auto">
-      <div class="flex gap-4 overflow-x-auto pb-2 snap-x">
-        <BaseCard v-for="(article, i) in articles.slice(0, 6)" :key="i" padding="lg" class="min-w-[260px] snap-start">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-accent/10">
-              <i class="fas fa-newspaper text-accent"></i>
-            </div>
-            <h3 class="font-semibold text-text-primary truncate">{{ article.title }}</h3>
-          </div>
-          <p class="text-sm text-text-secondary line-clamp-2">{{ article.desc }}</p>
-        </BaseCard>
+  <section id="articles-home" class="py-20 relative">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-interactive-primary">Latest Articles</h2>
+          <div class="w-24 h-1 bg-gradient mx-auto mb-6"></div>
+          <p class="text-xl text-secondary max-w-3xl mx-auto">
+            Sharing knowledge and insights about backend development, system design, and technology trends
+          </p>
+        </div>
+
+        <!-- Articles Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <ArticleCard
+            v-for="article in featuredArticles"
+            :key="article.id"
+            :article="article"
+          />
+        </div>
+
+        <!-- View All Articles Button -->
+        <div class="text-center">
+          <router-link 
+            to="/articles"
+            class="inline-flex items-center px-8 py-4 rounded-lg glass-btn border border-accent text-accent font-semibold transition-all duration-300 hover:bg-accent hover:text-white hover:scale-105 space-x-2"
+          >
+            <span>View All Articles</span>
+            <ExternalLink class="w-5 h-5" />
+          </router-link>
+        </div>
       </div>
-      <div class="text-center mt-6">
-        <BaseButton as="router-link" to="/articles" variant="outline">
-          View all articles
-        </BaseButton>
-      </div>
-    </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import BaseCard from '../molecules/Card.vue'
-import BaseButton from '../atoms/Button.vue'
+import { ref, onMounted } from 'vue'
+import { getArticles } from '@/data'
+import type { Article } from '@/types'
+import { ArticleCard } from '@/components'
+import { ExternalLink } from 'lucide-vue-next'
 
-const articles = [
-  { title: 'Scaling Microservices', desc: 'Best practices for scaling microservices in production.' },
-  { title: 'Golang Tips', desc: 'Tips and tricks for writing clean Go code.' },
-  { title: 'Database Indexing', desc: 'How to optimize queries with proper indexing.' },
-  { title: 'Artikel Lain', desc: 'Artikel lainnya...' }
-]
+const articles = ref<Article[]>([])
+
+// Show only first 6 articles for home page
+const featuredArticles = ref<Article[]>([])
+
+onMounted(async () => {
+  articles.value = await getArticles()
+  featuredArticles.value = articles.value.slice(0, 6)
+})
 </script>
 
 <style scoped>
-.glass-card {
-  background: rgba(var(--surface-rgb), 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: box-shadow 0.2s;
-}
-.glass-card:hover {
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-}
-.blog-card {
-  min-height: 220px;
-  cursor: pointer;
-}
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/* Using global glass effects - no local styles needed */
 </style>

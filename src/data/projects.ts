@@ -9,7 +9,7 @@ export const projectsData: Project[] = [
     longDescription: 'High-performance payment gateway integration for BRI API, processing over $500,000 in monthly transactions with 99.9% uptime and comprehensive fraud detection.',
     category: 'Backend',
     technologies: ['Go', 'PostgreSQL', 'Redis', 'REST API', 'Docker'],
-    image: '/projects/payment-gateway.jpg',
+    image: 'https://picsum.photos/400/300?random=11',
     features: [
       '$500K+ monthly transaction volume',
       '99.9% uptime with real-time monitoring', 
@@ -27,7 +27,7 @@ export const projectsData: Project[] = [
     longDescription: 'Modern portfolio website built with Vue 3, TypeScript, and Tailwind CSS, featuring automated CI/CD pipeline with Docker containerization and SSH deployment.',
     category: 'Full Stack',
     technologies: ['Vue.js', 'TypeScript', 'Tailwind CSS', 'Docker', 'GitHub Actions'],
-    image: '/projects/portfolio-website.jpg',
+    image: 'https://picsum.photos/400/300?random=12',
     githubUrl: 'https://github.com/RihanoDev/web-portofolio-frontend',
     liveUrl: 'http://your-server:2002',
     features: [
@@ -47,7 +47,7 @@ export const projectsData: Project[] = [
     longDescription: 'Scalable backend systems for SuriaTech handling over 50,000 requests per hour with Redis caching, database optimization, and comprehensive monitoring.',
     category: 'Backend',
     technologies: ['Go', 'PostgreSQL', 'Redis', 'gRPC', 'Prometheus'],
-    image: '/projects/suriatech-backend.jpg',
+    image: 'https://picsum.photos/400/300?random=13',
     features: [
       '50K+ requests/hour capacity',
       'Advanced Redis caching strategy',
@@ -65,7 +65,7 @@ export const projectsData: Project[] = [
     longDescription: 'Comprehensive digital platform for Tualang, featuring user management, content delivery, and analytics with modern web technologies and responsive design.',
     category: 'Full Stack',
     technologies: ['Vue.js', 'Node.js', 'PostgreSQL', 'Redis', 'Docker'],
-    image: '/projects/tualang-platform.jpg',
+    image: 'https://picsum.photos/400/300?random=14',
     features: [
       'User authentication and authorization',
       'Content management system',
@@ -83,7 +83,7 @@ export const projectsData: Project[] = [
     longDescription: 'Learning project implementing microservices patterns with Go, featuring service discovery, load balancing, and inter-service communication patterns.',
     category: 'Microservices',
     technologies: ['Go', 'Docker', 'Consul', 'gRPC', 'Kubernetes'],
-    image: '/projects/microservices-learning.jpg',
+    image: 'https://picsum.photos/400/300?random=15',
     features: [
       'Service discovery implementation',
       'Load balancing strategies',
@@ -101,7 +101,7 @@ export const projectsData: Project[] = [
     longDescription: 'Custom Go framework for building REST APIs quickly, featuring middleware, validation, database abstraction, and comprehensive testing utilities.',
     category: 'API',
     technologies: ['Go', 'Gin', 'PostgreSQL', 'Redis', 'Swagger'],
-    image: '/projects/api-framework.jpg',
+    image: 'https://picsum.photos/400/300?random=16',
     features: [
       'Rapid API development',
       'Built-in middleware system',

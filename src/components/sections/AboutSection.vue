@@ -120,10 +120,5 @@ import { MapPin, Mail, Phone } from 'lucide-vue-next'
 </script>
 
 <style scoped>
-.glass {
-  background: rgba(var(--surface-rgb), 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
+/* Using global glass effects - no local styles needed */
 </style>

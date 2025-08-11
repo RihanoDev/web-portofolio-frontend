@@ -15,7 +15,7 @@
           <div 
             v-for="(tech, index) in techRows[0].concat(techRows[0])" 
             :key="`row1-${index}`"
-            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl bg-gradient-to-br from-surface-glass to-surface-glass/50 backdrop-blur-lg border border-primary-500/20 hover:border-primary-400/40 transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/20 whitespace-nowrap min-w-fit"
+            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit"
           >
             <div class="w-8 h-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
               <component :is="getTechIcon(tech)" class="w-8 h-8" />
@@ -31,7 +31,7 @@
           <div 
             v-for="(tech, index) in techRows[1].concat(techRows[1])" 
             :key="`row2-${index}`"
-            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl bg-gradient-to-br from-surface-glass to-surface-glass/50 backdrop-blur-lg border border-primary-500/20 hover:border-primary-400/40 transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/20 whitespace-nowrap min-w-fit"
+            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit"
           >
             <div class="w-8 h-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
               <component :is="getTechIcon(tech)" class="w-8 h-8" />
@@ -47,7 +47,7 @@
           <div 
             v-for="(tech, index) in techRows[2].concat(techRows[2])" 
             :key="`row3-${index}`"
-            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl bg-gradient-to-br from-surface-glass to-surface-glass/50 backdrop-blur-lg border border-primary-500/20 hover:border-primary-400/40 transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/20 whitespace-nowrap min-w-fit"
+            class="tech-card group flex items-center gap-3 px-6 py-4 rounded-xl glass-card whitespace-nowrap min-w-fit"
           >
             <div class="w-8 h-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
               <component :is="getTechIcon(tech)" class="w-8 h-8" />

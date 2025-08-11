@@ -2,7 +2,7 @@
   <div class="floating-view-counter">
     <!-- Floating View Counter -->
     <div 
-      class="fixed bottom-6 right-6 z-40 glass-card rounded-full p-3 shadow-lg cursor-pointer group transition-all duration-300 hover:scale-105"
+      class="fixed bottom-6 right-6 z-40 view-counter-glass rounded-full p-3 shadow-lg cursor-pointer group transition-all duration-300 hover:scale-105"
       @mouseenter="showDetails = true"
       @mouseleave="showDetails = false"
     >
@@ -23,7 +23,7 @@
       >
         <div 
           v-if="showDetails"
-          class="absolute bottom-full right-0 mb-3 glass-card rounded-lg p-4 shadow-xl whitespace-nowrap min-w-[200px]"
+          class="absolute bottom-full right-0 mb-3 view-counter-tooltip rounded-lg p-4 shadow-xl whitespace-nowrap min-w-[200px]"
         >
           <div class="space-y-2">
             <div class="text-sm font-semibold text-primary-400 mb-3 flex items-center gap-2">
@@ -195,6 +195,27 @@ onMounted(() => {
 .floating-view-counter {
   /* Ensure it stays above other floating elements */
   z-index: 40;
+}
+
+/* Custom glass effect for view counter only */
+.view-counter-glass {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.view-counter-tooltip {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 /* Mobile responsiveness */

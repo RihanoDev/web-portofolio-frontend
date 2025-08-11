@@ -3,7 +3,7 @@
     <article 
       v-for="article in articles" 
       :key="article.id"
-      class="group relative overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:transform hover:scale-[1.02]"
+      class="group relative overflow-hidden rounded-xl glass-card hover:border-accent/30 transition-all duration-300 hover:transform hover:scale-[1.02]"
     >
       <!-- Image Header -->
       <div class="relative h-48 overflow-hidden">
@@ -97,7 +97,7 @@ const articles: Article[] = [
     publishedAt: "2024-01-15",
     author: "Rizky Haffiyan",
     tags: ["golang", "microservices", "architecture"],
-    image: "https://images.unsplash.com/photo-1555949963-ff9fe5c870eb?w=400&h=300&fit=crop",
+    image: "https://picsum.photos/400/300?random=1",
     url: "#"
   },
   {
@@ -109,7 +109,7 @@ const articles: Article[] = [
     publishedAt: "2024-01-10",
     author: "Rizky Haffiyan",
     tags: ["postgresql", "optimization", "database"],
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop",
+    image: "https://picsum.photos/400/300?random=2",
     url: "#"
   },
   {
@@ -121,7 +121,7 @@ const articles: Article[] = [
     publishedAt: "2024-01-05",
     author: "Rizky Haffiyan",
     tags: ["kubernetes", "devops", "containers"],
-    image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=400&h=300&fit=crop",
+    image: "https://picsum.photos/400/300?random=3",
     url: "#"
   }
 ]
@@ -129,7 +129,7 @@ const articles: Article[] = [
 
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement
-  target.src = 'https://images.unsplash.com/photo-1555949963-ff9fe5c870eb?w=400&h=300&fit=crop'
+  target.src = 'https://picsum.photos/400/300?random=fallback'
 }
 </script>
 

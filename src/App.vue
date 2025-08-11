@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import DefaultLayout from './layouts/DefaultLayout.vue'
 import './styles/variables.css'
 import './styles/global-background.css'
+import './styles/components/floating-tech-icons.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import { useTheme } from './composables/useTheme'
 
@@ -84,27 +85,62 @@ body::after {
   opacity: 0.1;
 }
 
-/* Global utility classes */
+/* Global utility classes - NORMAL (non-glass) untuk content, glass hanya untuk nav/footer */
 .glass {
-  background: rgba(26, 30, 46, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(26, 30, 46, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .glass-strong {
-  background: rgba(26, 30, 46, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  background: rgba(20, 25, 40, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .glass-subtle {
-  background: rgba(26, 30, 46, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(30, 35, 50, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* Enhanced glass card - NORMAL CARD (non-glass) untuk content */
+.glass-card {
+  background: rgba(26, 30, 46, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 10px 35px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(26, 30, 46, 0.98);
+  border-color: rgba(255, 107, 0, 0.3);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 107, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Additional glass classes - NORMAL untuk buttons */
+.glass-btn {
+  background: rgba(26, 30, 46, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-btn:hover {
+  background: rgba(20, 25, 40, 0.95);
+  border-color: rgba(255, 107, 0, 0.35);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
 }
 
 /* Enhanced animations */
@@ -126,43 +162,34 @@ body::after {
   }
 }
 
-/* Enhanced tech stack floating background pattern */
-.tech-bg-pattern {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.04;
+/* Ensure all content is above floating icons */
+main,
+nav,
+footer,
+section,
+article,
+div,
+.container,
+.glass,
+.glass-card,
+.glass-strong,
+.glass-subtle,
+.glass-btn {
+  position: relative;
+  z-index: 1;
 }
 
-.tech-bg-logo {
-  position: absolute;
-  font-size: 2.5rem;
-  animation: gentle-float 10s ease-in-out infinite;
-  user-select: none;
-  color: rgba(255, 107, 0, 0.6);
-  filter: blur(0.5px);
+/* Special z-index for important elements */
+.navbar,
+.glass-nav {
+  z-index: 50 !important;
 }
 
-.tech-bg-logo.go { top: 8%; left: 12%; animation-delay: 0s; }
-.tech-bg-logo.postgres { top: 18%; right: 18%; animation-delay: -2.5s; }
-.tech-bg-logo.redis { top: 28%; left: 8%; animation-delay: -4.2s; }
-.tech-bg-logo.docker { top: 12%; left: 65%; animation-delay: -1.3s; }
-.tech-bg-logo.k8s { top: 42%; right: 12%; animation-delay: -3.7s; }
-.tech-bg-logo.git { top: 58%; left: 18%; animation-delay: -5.1s; }
-.tech-bg-logo.linux { top: 68%; right: 22%; animation-delay: -1.8s; }
-.tech-bg-logo.api { top: 78%; left: 48%; animation-delay: -3.9s; }
-.tech-bg-logo.grpc { top: 22%; left: 82%; animation-delay: -2.7s; }
-.tech-bg-logo.kafka { top: 52%; right: 8%; animation-delay: -4.6s; }
-.tech-bg-logo.js { top: 32%; left: 38%; animation-delay: -6.2s; }
-.tech-bg-logo.vue { top: 62%; left: 72%; animation-delay: -0.8s; }
-.tech-bg-logo.react { top: 48%; right: 38%; animation-delay: -5.8s; }
-.tech-bg-logo.ts { top: 72%; right: 48%; animation-delay: -7.1s; }
-.tech-bg-logo.node { top: 82%; left: 28%; animation-delay: -2.9s; }
-.tech-bg-logo.mongo { top: 38%; left: 88%; animation-delay: -4.4s; }
+.glass-footer {
+  z-index: 10 !important;
+}
+
+/* Tech stack background handled by FloatingTechIcons component */
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
