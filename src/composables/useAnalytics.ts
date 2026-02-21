@@ -1,4 +1,4 @@
-import { ref, reactive, readonly, onUnmounted, onMounted } from 'vue'
+import { ref, reactive, readonly, onUnmounted } from 'vue'
 import { analyticsService } from '../services/analytics'
 import { viewCountEventEmitter, useWebSocket } from './useWebSocket'
 import type { ViewCountData, TrackViewRequest } from '../types/analytics'
