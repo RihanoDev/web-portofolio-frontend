@@ -59,7 +59,7 @@
             <div v-if="isLoading" class="flex items-center justify-center h-96">
               <div class="flex flex-col items-center space-y-4">
                 <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                <p class="text-gray-600">Loading PDF...</p>
+                <p class="text-gray-600">{{ $t('common.loading_pdf') || 'Loading PDF...' }}</p>
               </div>
             </div>
 

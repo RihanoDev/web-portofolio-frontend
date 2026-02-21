@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import type { 
+import type {
   RouteRecordRaw,
   RouteLocationNormalized,
-  RouteLocationNormalizedLoaded 
+  RouteLocationNormalizedLoaded
 } from 'vue-router'
 import Home from '../views/Home.vue'
 
@@ -48,6 +48,16 @@ const routes: RouteRecordRaw[] = [
     path: '/resume',
     name: 'resume',
     component: () => import('../views/Resume.vue')
+  },
+  {
+    path: '/privacy',
+    name: 'privacy',
+    component: () => import('../views/Privacy.vue')
+  },
+  {
+    path: '/terms',
+    name: 'terms',
+    component: () => import('../views/Terms.vue')
   },
   // Handle 404
   {

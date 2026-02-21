@@ -2,8 +2,8 @@
   <div class="not-found">
     <div class="not-found__content">
       <h1>404</h1>
-      <p>Page not found</p>
-      <router-link to="/" class="btn">Back to Home</router-link>
+      <p>{{ $t('common.not_found') || 'Page not found' }}</p>
+      <router-link to="/" class="btn">{{ $t('common.back_to_home') || 'Back to Home' }}</router-link>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-50">
+  <div class="relative z-50" ref="dropdownRef">
     <!-- Theme Dropdown Button -->
     <button 
       @click="isOpen = !isOpen"
@@ -79,12 +79,6 @@
       </div>
     </transition>
 
-    <!-- Backdrop -->
-    <div 
-      v-if="isOpen"
-      @click="isOpen = false"
-      class="fixed inset-0 z-[9998]"
-    ></div>
   </div>
 </template>
 
@@ -96,6 +90,7 @@ import { useTheme } from '../../composables/useTheme'
 const { themes, currentTheme, currentThemeId, setTheme } = useTheme()
 
 const isOpen = ref(false)
+const dropdownRef = ref<HTMLElement | null>(null)
 
 const selectTheme = (themeId: string) => {
   setTheme(themeId)
@@ -117,8 +112,7 @@ const getThemeDescription = (themeId: string) => {
 
 // Close dropdown when clicking outside
 const handleClickOutside = (event: Event) => {
-  const target = event.target as HTMLElement
-  if (!target.closest('.relative')) {
+  if (dropdownRef.value && !dropdownRef.value.contains(event.target as Node)) {
     isOpen.value = false
   }
 }

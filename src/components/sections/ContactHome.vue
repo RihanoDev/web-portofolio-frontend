@@ -4,10 +4,10 @@
       <div class="max-w-4xl mx-auto text-center">
         <!-- Section Header -->
         <div class="mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">Get In Touch</h2>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">{{ $t('contact.title') }}</h2>
           <div class="w-16 h-1 bg-accent mx-auto mb-6"></div>
           <p class="text-secondary max-w-2xl mx-auto">
-            Ready to discuss your next project? Let's connect and bring your ideas to life.
+            {{ $t('contact.home_subtitle') }}
           </p>
         </div>
 
@@ -49,7 +49,7 @@
 
         <!-- Social Links -->
         <div class="mb-12">
-          <p class="text-secondary mb-8 text-lg">You can also find me on</p>
+          <p class="text-secondary mb-8 text-lg">{{ $t('contact.find_me') }}</p>
           <div class="flex justify-center items-center space-x-4 sm:space-x-6">
             <a 
               href="https://github.com/RihanoDev"
@@ -117,7 +117,7 @@
             class="inline-flex items-center px-8 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-accent-hover transition-colors duration-300"
             style="outline: none !important; -webkit-tap-highlight-color: transparent !important;"
           >
-            Send Message
+            {{ $t('contact.btn_send') || 'Send Message' }}
             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
             </svg>

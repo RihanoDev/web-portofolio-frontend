@@ -28,32 +28,32 @@
           class="absolute bottom-full right-0 mb-3 view-counter-tooltip rounded-lg p-4 shadow-xl whitespace-nowrap min-w-[200px]"
           @click.stop
         >
-          <div class="space-y-2">
+            <div class="space-y-2">
             <div class="text-sm font-semibold mb-3 flex items-center gap-2" style="color: var(--color-accent);">
               <BarChart3 class="w-4 h-4" />
-              View Analytics
+              {{ $t('analytics.title') || 'View Analytics' }}
             </div>
             
             <div class="space-y-1.5">
               <div class="flex justify-between space-x-6">
-                <span class="text-xs" style="color: var(--color-text-secondary);">Total Views:</span>
+                <span class="text-xs" style="color: var(--color-text-secondary);">{{ $t('analytics.total_views') || 'Total Views:' }}</span>
                 <span class="font-semibold text-xs" style="color: var(--color-text-primary);">{{ formatNumber(totalViews) }}</span>
               </div>
               <div class="flex justify-between space-x-6">
-                <span class="text-xs" style="color: var(--color-text-secondary);">Today:</span>
+                <span class="text-xs" style="color: var(--color-text-secondary);">{{ $t('analytics.today') || 'Today:' }}</span>
                 <span class="font-semibold text-xs text-green-400">{{ todayViews }}</span>
               </div>
               <div class="flex justify-between space-x-6">
-                <span class="text-xs" style="color: var(--color-text-secondary);">This Week:</span>
+                <span class="text-xs" style="color: var(--color-text-secondary);">{{ $t('analytics.this_week') || 'This Week:' }}</span>
                 <span class="font-semibold text-xs" style="color: var(--color-text-primary);">{{ weekViews }}</span>
               </div>
               <div class="flex justify-between space-x-6">
-                <span class="text-xs" style="color: var(--color-text-secondary);">This Month:</span>
+                <span class="text-xs" style="color: var(--color-text-secondary);">{{ $t('analytics.this_month') || 'This Month:' }}</span>
                 <span class="font-semibold text-xs" style="color: var(--color-text-primary);">{{ monthViews }}</span>
               </div>
               <div class="border-t pt-1.5 mt-2" style="border-color: rgba(255, 255, 255, 0.1);">
                 <div class="flex justify-between space-x-6">
-                  <span class="text-xs" style="color: var(--color-text-secondary);">Unique Visitors:</span>
+                  <span class="text-xs" style="color: var(--color-text-secondary);">{{ $t('analytics.unique_visitors') || 'Unique Visitors:' }}</span>
                   <span class="font-semibold text-xs text-blue-400">{{ formatNumber(uniqueVisitors) }}</span>
                 </div>
               </div>
@@ -65,7 +65,7 @@
               <div class="flex items-center justify-between mt-2 pt-1.5" style="border-top: 1px solid rgba(255, 255, 255, 0.1);">
                 <span class="text-xs flex items-center gap-1" :class="isConnected ? 'text-green-400' : 'text-gray-400'">
                   <span class="inline-block w-2 h-2 rounded-full" :class="isConnected ? 'bg-green-400' : 'bg-gray-400'"></span>
-                  {{ isConnected ? 'Live' : 'Offline' }}
+                  {{ isConnected ? $t('analytics.live') : $t('analytics.offline') }}
                 </span>
                 <span class="text-xs text-gray-400">{{ currentPath }}</span>
               </div>

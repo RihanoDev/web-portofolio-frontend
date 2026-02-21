@@ -10,13 +10,13 @@
             class="flex items-center gap-2 px-4 py-2 glass-subtle rounded-lg font-medium text-sm transition-all duration-300 hover:scale-105 hover:glass-strong"
           >
             <ArrowLeft class="w-4 h-4" />
-            <span>Back</span>
+            <span>{{ $t('resume.back') || 'Back' }}</span>
           </button>
 
           <!-- Title -->
           <div class="flex items-center gap-3">
             <FileText class="w-6 h-6 text-primary-400" />
-            <h1 class="text-xl font-bold text-text-primary">Resume</h1>
+            <h1 class="text-xl font-bold text-text-primary">{{ $t('resume.title') || 'Resume' }}</h1>
           </div>
           
           <!-- Download Button -->
@@ -25,7 +25,7 @@
             class="flex items-center gap-2 px-4 py-2 glass-btn rounded-lg font-medium text-sm transition-all duration-300 hover:scale-105"
           >
             <Download class="w-4 h-4" />
-            <span>Download</span>
+            <span>{{ $t('resume.download') || 'Download' }}</span>
           </button>
         </div>
       </div>
@@ -40,16 +40,16 @@
           <div v-if="isLoading" class="flex items-center justify-center h-96">
             <div class="flex flex-col items-center gap-4">
               <div class="w-12 h-12 border-4 border-primary-400 border-t-transparent rounded-full animate-spin"></div>
-              <p class="text-text-secondary">Loading PDF...</p>
+              <p class="text-text-secondary">{{ $t('common.loading_pdf') || 'Loading PDF...' }}</p>
             </div>
           </div>
 
           <!-- Mobile PDF Notice -->
           <div v-if="isMobile" class="p-6 text-center">
             <FileText class="w-16 h-16 text-primary-400 mx-auto mb-4" />
-            <h3 class="text-xl font-semibold text-text-primary mb-2">Resume Available</h3>
+            <h3 class="text-xl font-semibold text-text-primary mb-2">{{ $t('resume.available') || 'Resume Available' }}</h3>
             <p class="text-text-secondary mb-6">
-              Mobile browsers have limited PDF support. Choose an option below:
+              {{ $t('resume.mobile_notice') || 'Mobile browsers have limited PDF support. Choose an option below:' }}
             </p>
             <div class="space-y-3">
               <button
@@ -57,14 +57,14 @@
                 class="w-full flex items-center justify-center gap-2 px-6 py-3 glass-btn rounded-lg font-medium transition-all duration-300 hover:scale-105"
               >
                 <Download class="w-5 h-5" />
-                <span>Download PDF</span>
+                <span>{{ $t('resume.download') || 'Download' }} PDF</span>
               </button>
               <button
                 @click="openInNewTab"
                 class="w-full flex items-center justify-center gap-2 px-6 py-3 glass-subtle rounded-lg font-medium transition-all duration-300 hover:glass-card"
               >
                 <ArrowLeft class="w-5 h-5 transform rotate-45" />
-                <span>Open in Browser</span>
+                <span>{{ $t('resume.open_browser') || 'Open in Browser' }}</span>
               </button>
             </div>
           </div>
@@ -82,16 +82,16 @@
           <!-- Error State -->
           <div v-if="hasError && !isMobile" class="flex flex-col items-center justify-center h-96 p-8">
             <AlertTriangle class="w-16 h-16 text-yellow-500 mb-4" />
-            <h3 class="text-xl font-semibold text-text-primary mb-2">Cannot Display PDF</h3>
+            <h3 class="text-xl font-semibold text-text-primary mb-2">{{ $t('resume.cannot_display') || 'Cannot Display PDF' }}</h3>
             <p class="text-text-secondary text-center mb-6">
-              Your browser doesn't support PDF viewing. Please download the file to view it.
+              {{ $t('resume.no_support') }}
             </p>
             <button
               @click="downloadPDF"
               class="flex items-center gap-2 px-6 py-3 glass-btn rounded-lg font-medium transition-all duration-300 hover:scale-105"
             >
               <Download class="w-5 h-5" />
-              <span>Download Resume</span>
+              <span>{{ $t('resume.download_resume') || 'Download Resume' }}</span>
             </button>
           </div>
         </div>

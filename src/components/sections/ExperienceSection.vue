@@ -4,16 +4,54 @@
       <div class="max-w-6xl mx-auto">
         <!-- Section Header -->
         <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-primary">Experience</h2>
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-primary">{{ $t('experience.title') }}</h2>
           <div class="w-24 h-1 bg-gradient mx-auto mb-6"></div>
-          <p class="text-xl text-secondary max-w-3xl mx-auto">My professional journey in backend development and software engineering</p>
+          <p class="text-xl text-secondary max-w-3xl mx-auto">{{ $t('experience.subtitle') }}</p>
+        </div>
+
+        <!-- Experiences Horizontal Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+          <!-- Loading State -->
+          <div v-if="isLoading" class="col-span-1 md:col-span-2 lg:col-span-3 py-16 text-center">
+            <p class="text-secondary text-lg">{{ $t('experience.loading') }}</p>
+          </div>
+          <!-- Empty State -->
+          <div v-else-if="experiences.length === 0" class="col-span-1 md:col-span-2 lg:col-span-3 py-16 text-center">
+            <p class="text-secondary text-lg">{{ $t('experience.empty') }}</p>
+          </div>
+          <!-- Experience Cards -->
+          <template v-else>
+            <BaseCard v-for="exp in experiences" :key="exp.id" padding="lg" class="w-full max-w-md h-full flex flex-col">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="w-12 h-12 rounded-lg bg-accent/10 flex-shrink-0 flex items-center justify-center">
+                  <i class="fas fa-briefcase text-accent"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-primary group-hover:text-accent transition-colors">
+                    {{ getLocalized(exp, 'title', locale) }}
+                  </h3>
+                  <p class="text-sm font-medium text-secondary">
+                    {{ exp.company }} • {{ getLocalized(exp, 'location', locale) }}
+                  </p>
+                  <p class="text-xs text-accent font-semibold">{{ formatPeriod(exp.startDate, exp.endDate, exp.current) }}</p>
+                </div>
+              </div>
+              <p class="text-sm text-secondary mb-4 flex-grow">{{ getLocalized(exp, 'description', locale) }}</p>
+              <div class="flex flex-wrap gap-2">
+                <span v-for="t in exp.technologies" :key="t.id" class="px-3 py-1 text-xs bg-accent/5 border border-accent/10 text-accent rounded-full hover:bg-accent/10 transition-colors">
+                  {{ t.name }}
+                </span>
+              </div>
+            </BaseCard>
+          </template>
         </div>
 
         <!-- Skills Summary -->
-        <div class="mb-16">
-          <div class="text-center mb-12">
-            <h3 class="text-3xl font-bold text-primary mb-4">Key Skills & Expertise</h3>
-            <p class="text-secondary">Technologies and methodologies I've mastered throughout my career</p>
+        <div class="mt-24 mb-8">
+          <div class="text-center mb-16">
+            <h3 class="text-3xl font-bold text-primary mb-4">{{ $t('experience.skills_title') }}</h3>
+            <p class="text-secondary">{{ $t('experience.skills_subtitle') }}</p>
+            <div class="w-16 h-1 bg-accent/30 mx-auto mt-4"></div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -30,39 +68,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Experiences Horizontal Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Loading State -->
-          <div v-if="isLoading" class="col-span-3 py-16 text-center">
-            <p class="text-secondary text-lg">Loading experiences...</p>
-          </div>
-          <!-- Empty State -->
-          <div v-else-if="experiences.length === 0" class="col-span-3 py-16 text-center">
-            <p class="text-secondary text-lg">No experience data available yet.</p>
-          </div>
-          <!-- Experience Cards -->
-          <template v-else>
-            <BaseCard v-for="exp in experiences" :key="exp.id" padding="lg">
-              <div class="flex items-start gap-3 mb-3">
-                <div class="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
-                  <i class="fas fa-briefcase text-accent"></i>
-                </div>
-                <div>
-                  <h3 class="text-lg font-semibold text-primary">{{ exp.title }}</h3>
-                  <p class="text-sm text-secondary">{{ exp.company }} • {{ exp.location }}</p>
-                  <p class="text-xs text-accent">{{ formatPeriod(exp.startDate, exp.endDate, exp.current) }}</p>
-                </div>
-              </div>
-              <p class="text-sm text-secondary mb-3">{{ exp.description }}</p>
-              <div class="flex flex-wrap gap-1">
-                <span v-for="t in exp.technologies" :key="t.id" class="px-2 py-1 text-xs bg-accent/10 text-accent rounded">
-                  {{ t.name }}
-                </span>
-              </div>
-            </BaseCard>
-          </template>
-        </div>
       </div>
     </div>
   </section>
@@ -70,10 +75,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import { Server, Database, Cloud, Code } from "lucide-vue-next";
 import BaseCard from "../molecules/Card.vue";
 import type { Experience } from "../../types/experience";
 import { fetchExperiences } from "../../services/experiences";
+import { getLocalized } from "../../utils/i18n";
+
+const { t, locale } = useI18n();
 
 const experiences = ref<Experience[]>([]);
 const isLoading = ref(true);
@@ -92,13 +101,15 @@ onMounted(async () => {
 
 // Format date period helper
 const formatPeriod = (startDate: string, endDate: string | null | undefined, current: boolean): string => {
+  const currentLocale = locale.value === 'id' ? 'id-ID' : 'en-US';
+  
   const formatDate = (date: string) => {
     const d = new Date(date);
-    return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+    return d.toLocaleDateString(currentLocale, { month: "short", year: "numeric" });
   };
 
   const start = formatDate(startDate);
-  const end = current ? "Present" : endDate ? formatDate(endDate) : "Present";
+  const end = current ? t('experience.present') : endDate ? formatDate(endDate) : t('experience.present');
   return `${start} - ${end}`;
 };
 

@@ -2,7 +2,7 @@
   <section id="experience-home" class="py-16 relative overflow-visible">
     <div class="relative z-10">
       <div class="flex flex-col items-center mb-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Experience</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">{{ $t('experience.title') }}</h2>
         <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
       </div>
       <div class="max-w-6xl mx-auto overflow-visible px-4" style="padding: 16px 0">
@@ -10,11 +10,11 @@
         <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           <!-- Loading State -->
           <div v-if="isLoading" class="col-span-3 py-16 text-center">
-            <p class="text-secondary text-lg">Loading experiences...</p>
+            <p class="text-secondary text-lg">{{ $t('experience.loading') }}</p>
           </div>
           <!-- Empty State -->
           <div v-else-if="experiences.length === 0" class="col-span-3 py-16 text-center">
-            <p class="text-secondary text-lg">No experience data available yet.</p>
+            <p class="text-secondary text-lg">{{ $t('experience.empty') }}</p>
           </div>
           <!-- Experience Cards -->
           <template v-else>
@@ -24,8 +24,8 @@
                   <i class="fas fa-briefcase text-accent text-lg"></i>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <h3 class="font-semibold text-lg" style="color: var(--color-text-primary)">{{ exp.title }}</h3>
-                  <p class="text-sm" style="color: var(--color-text-secondary)">{{ exp.company }}</p>
+                  <h3 class="font-semibold text-lg" style="color: var(--color-text-primary)">{{ getLocalized(exp, 'title', locale) }}</h3>
+                  <p class="text-sm" style="color: var(--color-text-secondary)">{{ getLocalized(exp, 'company', locale) }}</p>
                 </div>
               </div>
               <p class="text-sm text-accent font-medium">{{ formatPeriod(exp) }}</p>
@@ -37,11 +37,11 @@
         <div class="md:hidden flex gap-4 overflow-x-auto pb-2 snap-x" style="padding: 8px 0">
           <!-- Loading State -->
           <div v-if="isLoading" class="w-full py-16 text-center">
-            <p class="text-secondary text-lg">Loading experiences...</p>
+            <p class="text-secondary text-lg">{{ $t('experience.loading') }}</p>
           </div>
           <!-- Empty State -->
           <div v-else-if="experiences.length === 0" class="w-full py-16 text-center">
-            <p class="text-secondary text-lg">No experience data available yet.</p>
+            <p class="text-secondary text-lg">{{ $t('experience.empty') }}</p>
           </div>
           <!-- Experience Cards -->
           <template v-else>
@@ -51,8 +51,8 @@
                   <i class="fas fa-briefcase text-accent"></i>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <h3 class="font-semibold" style="color: var(--color-text-primary)">{{ exp.title }}</h3>
-                  <p class="text-sm" style="color: var(--color-text-secondary)">{{ exp.company }}</p>
+                  <h3 class="font-semibold" style="color: var(--color-text-primary)">{{ getLocalized(exp, 'title', locale) }}</h3>
+                  <p class="text-sm" style="color: var(--color-text-secondary)">{{ getLocalized(exp, 'company', locale) }}</p>
                 </div>
               </div>
               <p class="text-xs text-accent">{{ formatPeriod(exp) }}</p>
@@ -66,26 +66,31 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import BaseCard from "../molecules/Card.vue";
 import { fetchExperiences } from "../../services/experiences";
 import type { Experience } from "../../types/experience";
+import { getLocalized } from "../../utils/i18n";
 
+const { t, locale } = useI18n();
 const experiences = ref<Experience[]>([]);
 const isLoading = ref(true);
 
 // Format period from startDate, endDate, and current
 const formatPeriod = (experience: Experience): string => {
-  const startDate = new Date(experience.startDate).toLocaleDateString("en-US", {
+  const currentLocale = locale.value === 'id' ? 'id-ID' : 'en-US';
+  
+  const startDate = new Date(experience.startDate).toLocaleDateString(currentLocale, {
     year: "numeric",
     month: "short",
   });
 
   if (experience.current) {
-    return `${startDate} - Present`;
+    return `${startDate} - ${t('experience.present')}`;
   }
 
   if (experience.endDate) {
-    const endDate = new Date(experience.endDate).toLocaleDateString("en-US", {
+    const endDate = new Date(experience.endDate).toLocaleDateString(currentLocale, {
       year: "numeric",
       month: "short",
     });
