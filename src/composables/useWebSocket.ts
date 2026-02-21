@@ -51,15 +51,8 @@ export function useWebSocket() {
 
     // Determine WebSocket URL based on environment
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
-    let wsUrl: string
-
-    if (import.meta.env.DEV) {
-      // Development WebSocket endpoint (hardcoded for now)
-      wsUrl = 'ws://localhost:8080/ws/analytics'
-    } else {
-      // Production WebSocket endpoint (same domain as the API)
-      wsUrl = `${protocol}://${window.location.host}/ws/analytics`
-    }
+    const wsBase = import.meta.env.VITE_WS_BASE_URL || `${protocol}://${window.location.host}`
+    const wsUrl = `${wsBase}/ws/analytics`
 
     try {
       socket.value = new WebSocket(wsUrl)
