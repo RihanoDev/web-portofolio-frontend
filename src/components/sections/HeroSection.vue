@@ -13,20 +13,29 @@
         <div class="mb-8 group">
           <div class="relative inline-block">
             <div class="w-40 h-40 mx-auto rounded-full glass-strong p-1 group-hover:scale-105 transition-all duration-500">
-              <div class="w-full h-full rounded-full overflow-hidden border-2 border-primary-500/20">
+              <div class="w-full h-full rounded-full overflow-hidden border-2 border-primary-500/20 relative bg-gray-800/50">
+                <!-- Skeleton Loader -->
+                <div 
+                  v-if="!isImageLoaded" 
+                  class="absolute inset-0 bg-gradient-to-br from-gray-700 via-gray-600 to-gray-800 animate-pulse z-10"
+                ></div>
+                <!-- Image -->
                 <img 
-                  :src="profileData.avatarUrl" 
+                  v-if="displayAvatarUrl"
+                  :src="displayAvatarUrl" 
                   :alt="profileData.name" 
-                  class="w-full h-full object-cover"
+                  class="w-full h-full object-cover relative z-0 transition-opacity duration-300"
+                  :class="{'opacity-0': !isImageLoaded, 'opacity-100': isImageLoaded}"
+                  @load="isImageLoaded = true"
                   @error="handleImageError"
                 />
               </div>
             </div>
             <!-- Floating badge -->
             <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-              <div class="px-3 py-1.5 glass-strong text-xs font-semibold rounded-full shadow-glow animate-pulse border"
+               <div class="px-3 py-1.5 glass-strong text-xs font-semibold rounded-full shadow-glow animate-pulse border"
                    style="color: var(--color-accent); border-color: rgba(var(--accent-rgb), 0.3);">
-                Open For Freelance
+                {{ $t('hero.freelance') }}
               </div>
             </div>
           </div>
@@ -85,15 +94,15 @@
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <BaseButton as="router-link" to="/projects" variant="primary">
             <i class="fas fa-code mr-2"></i>
-            <span>View My Work</span>
+            <span>{{ $t('hero.cta_projects') }}</span>
           </BaseButton>
           <BaseButton as="router-link" to="/contact" variant="outline">
             <i class="fas fa-envelope mr-2"></i>
-            <span>Get In Touch</span>
+            <span>{{ $t('hero.cta_contact') }}</span>
           </BaseButton>
           <BaseButton as="router-link" to="/about" variant="ghost">
             <i class="fas fa-user mr-2"></i>
-            <span>About Me</span>
+            <span>{{ $t('nav.about') }}</span>
           </BaseButton>
         </div>
       </div>
@@ -102,15 +111,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import BaseButton from '../atoms/Button.vue'
 import { getProfileSettings, type ProfileData } from '../../services/profile'
+
+const { locale } = useI18n()
 
 const profileData = ref<ProfileData>({
   name: 'Rizky Haffiyan Roseno',
   title: 'Backend Engineer · Go · Microservices · Cloud',
   bio: 'Passionate about building high-performance APIs, cloud-native architectures, and scalable backend systems that power exceptional user experiences.',
-  avatarUrl: '/profile.jpg',
+  avatarUrl: '', // Start empty to show skeleton
   aboutSubtitle: '',
   aboutDescription1: '',
   aboutDescription2: '',
@@ -121,13 +133,33 @@ const profileData = ref<ProfileData>({
   phone: ''
 })
 
-onMounted(async () => {
+const isImageLoaded = ref(false)
+const displayAvatarUrl = ref('')
+
+const loadProfile = async () => {
   try {
-    profileData.value = await getProfileSettings()
+    const data = await getProfileSettings(locale.value)
+    if (data && data.avatarUrl) {
+      if (displayAvatarUrl.value !== data.avatarUrl) {
+        isImageLoaded.value = false // reset for new image load
+      }
+      profileData.value = data
+      displayAvatarUrl.value = data.avatarUrl
+    } else {
+      // Keep existing data if fetch succeeded but has incomplete info
+      profileData.value = { ...profileData.value, ...data }
+      displayAvatarUrl.value = '/profile.jpg'
+    }
   } catch (e) {
     console.error("Error loading profile:", e)
+    displayAvatarUrl.value = '/profile.jpg'
   }
-})
+}
+
+onMounted(loadProfile)
+
+// Re-fetch when locale changes
+watch(locale, loadProfile)
 
 const socialLinks = [
   {
@@ -147,9 +179,16 @@ const socialLinks = [
   }
 ]
 
-const handleImageError = (event: Event) => {
-  const target = event.target as HTMLImageElement
-  target.src = '/default-avatar.svg'
+const handleImageError = () => {
+  // Prevent infinite loop if the fallback itself somehow fails
+  if (displayAvatarUrl.value === '/profile.jpg') {
+    displayAvatarUrl.value = '/default-avatar.svg'
+    isImageLoaded.value = true
+    return
+  }
+  
+  // Primary fallback as requested: if API image fetch fails, route to /profile.jpg
+  displayAvatarUrl.value = '/profile.jpg'
 }
 </script>
 

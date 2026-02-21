@@ -8,10 +8,10 @@
       @mouseleave="handleMouseLeave"
     >
       <Eye class="w-4 h-4" />
-      <span v-if="!isLoading">{{ formatNumber(totalViews) }} views</span>
-      <span v-else class="animate-pulse">Loading...</span>
+      <span v-if="!isLoading">{{ formatNumber(totalViews) }}</span>
+      <span v-else class="animate-pulse">{{ $t('common.loading') || 'Loading...' }}</span>
       <span v-if="todayViews > 0 && !isLoading" style="color: var(--color-accent);">
-        (+{{ todayViews }} today)
+        (+{{ todayViews }})
       </span>
     </div>
 
@@ -31,24 +31,24 @@
       >
         <div class="space-y-1 text-xs">
           <div class="flex justify-between space-x-4">
-            <span style="color: var(--color-text-secondary);">Total Views:</span>
+            <span style="color: var(--color-text-secondary);">{{ $t('analytics.total_views') || 'Total Views:' }}</span>
             <span class="font-semibold" style="color: var(--color-text-primary);">{{ formatNumber(totalViews) }}</span>
           </div>
           <div class="flex justify-between space-x-4">
-            <span style="color: var(--color-text-secondary);">Today:</span>
+            <span style="color: var(--color-text-secondary);">{{ $t('analytics.today') || 'Today:' }}</span>
             <span class="font-semibold" style="color: var(--color-accent);">{{ todayViews }}</span>
           </div>
           <div class="flex justify-between space-x-4">
-            <span style="color: var(--color-text-secondary);">This Week:</span>
+            <span style="color: var(--color-text-secondary);">{{ $t('analytics.this_week') || 'This Week:' }}</span>
             <span class="font-semibold" style="color: var(--color-text-primary);">{{ weekViews }}</span>
           </div>
           <div class="flex justify-between space-x-4">
-            <span style="color: var(--color-text-secondary);">This Month:</span>
+            <span style="color: var(--color-text-secondary);">{{ $t('analytics.this_month') || 'This Month:' }}</span>
             <span class="font-semibold" style="color: var(--color-text-primary);">{{ monthViews }}</span>
           </div>
           <div class="border-t pt-1 mt-1" style="border-color: rgba(255, 255, 255, 0.1);">
             <div class="flex justify-between space-x-4">
-              <span style="color: var(--color-text-secondary);">Unique Visitors:</span>
+              <span style="color: var(--color-text-secondary);">{{ $t('analytics.unique_visitors') || 'Unique Visitors:' }}</span>
               <span class="font-semibold" style="color: var(--color-accent);">{{ formatNumber(uniqueVisitors) }}</span>
             </div>
           </div>

@@ -2,10 +2,12 @@
   <section id="techstack-home" class="py-8 md:py-12 lg:py-16 xl:py-20 flex flex-col items-center relative overflow-visible">
     <div class="text-center mb-6 md:mb-8 lg:mb-10 xl:mb-12 relative z-10">
       <div class="flex flex-col items-center mb-4 md:mb-6 lg:mb-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">Tech Stack</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-2">{{ $t('techstack.title') }}</h2>
         <div class="w-20 h-1 rounded bg-accent transition-colors"></div>
       </div>      
-    <p class="max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto text-base md:text-lg lg:text-xl px-4" style="color: var(--color-text-secondary);">Technologies and tools I use to bring ideas to life</p>
+      <p class="max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto text-base md:text-lg lg:text-xl px-4" style="color: var(--color-text-secondary);">
+        {{ $t('techstack.subtitle') }}
+      </p>
     </div>
     
     <div class="w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-full mx-auto overflow-visible px-4 lg:px-6 xl:px-8" style="padding-top: 20px; padding-bottom: 20px;">

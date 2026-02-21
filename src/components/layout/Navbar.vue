@@ -39,12 +39,17 @@
             :class="isActive(item.path) ? 'nav-active' : 'nav-default'"
           >
             <i :class="item.icon" class="text-sm transition-colors duration-300"></i>
-            <span class="transition-colors duration-300">{{ item.name }}</span>
+            <span class="transition-colors duration-300">{{ $t(item.nameKey) }}</span>
           </router-link>
         </div>
 
         <!-- Right Section - Theme & Resume -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3 lg:gap-4">
+          <!-- Language Selector -->
+          <div class="hidden xl:block">
+            <LanguageSwitcher />
+          </div>
+
           <!-- Theme Selector -->
           <div class="hidden xl:block">
             <ThemeSelector />
@@ -69,7 +74,7 @@
                   style="color: var(--color-text-secondary);"
                 >
                   <FileText class="w-4 h-4" />
-                  <span>View Online</span>
+                  <span>{{ $t('resume.view_online') || 'View Online' }}</span>
                 </router-link>
                 <button
                   @click="downloadResume"
@@ -77,7 +82,7 @@
                   style="color: var(--color-text-secondary);"
                 >
                   <Download class="w-4 h-4" />
-                  <span>Download PDF</span>
+                  <span>{{ $t('resume.download_pdf') || 'Download PDF' }}</span>
                 </button>
                 <button
                   @click="openResumeInNewTab"
@@ -85,7 +90,7 @@
                   style="color: var(--color-text-secondary);"
                 >
                   <ExternalLink class="w-4 h-4" />
-                  <span>Open in New Tab</span>
+                  <span>{{ $t('resume.open_new_tab') || 'Open in New Tab' }}</span>
                 </button>
               </div>
             </div>
@@ -125,7 +130,7 @@
                 :class="isActive(item.path) ? 'nav-active' : 'nav-default'"
               >
                 <i :class="item.icon" class="text-sm"></i>
-                <span>{{ item.name }}</span>
+                <span>{{ $t(item.nameKey) }}</span>
               </router-link>
             </div>
 
@@ -136,7 +141,7 @@
             <div class="p-4">
               <div class="space-y-3">
                 <div class="text-xs font-semibold uppercase tracking-wide px-2" style="color: var(--color-text-secondary);">
-                  Resume
+                  {{ $t('resume.title') || 'Resume' }}
                 </div>
                 
                 <router-link 
@@ -146,7 +151,7 @@
                   style="background: rgba(var(--color-tertiary), 0.8); color: var(--color-text-primary);"
                 >
                   <FileText class="w-4 h-4" />
-                  <span>View Resume</span>
+                  <span>{{ $t('resume.view_resume') || 'View Resume' }}</span>
                 </router-link>
                 
                 <div class="grid grid-cols-2 gap-2">
@@ -156,7 +161,7 @@
                     style="background: rgba(var(--color-tertiary), 0.5); color: var(--color-text-primary);"
                   >
                     <Download class="w-4 h-4" />
-                    <span>Download</span>
+                    <span>{{ $t('resume.download') || 'Download' }}</span>
                   </button>
                   
                   <button
@@ -165,7 +170,7 @@
                     style="background: rgba(var(--color-tertiary), 0.5); color: var(--color-text-primary);"
                   >
                     <ExternalLink class="w-4 h-4" />
-                    <span>New Tab</span>
+                    <span>{{ $t('resume.new_tab') || 'New Tab' }}</span>
                   </button>
                 </div>
               </div>
@@ -174,10 +179,21 @@
             <!-- Divider -->
             <div class="border-t" style="border-color: rgba(255, 255, 255, 0.1);"></div>
 
+            <!-- Language Switcher Mobile -->
+            <div class="p-4">
+              <div class="text-xs font-semibold uppercase tracking-wide px-2 mb-3" style="color: var(--color-text-secondary);">
+                {{ $t('nav.language') || 'Language' }}
+              </div>
+              <LanguageSwitcher />
+            </div>
+
+            <!-- Divider -->
+            <div class="border-t" style="border-color: rgba(255, 255, 255, 0.1);"></div>
+
             <!-- Theme Selector -->
             <div class="p-4">
               <div class="text-xs font-semibold uppercase tracking-wide px-2 mb-3" style="color: var(--color-text-secondary);">
-                Theme
+                {{ $t('nav.theme') || 'Theme' }}
               </div>
               
               <!-- Mobile Theme Grid -->
@@ -231,6 +247,7 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { Menu, X, FileText, Download, ExternalLink, Check } from 'lucide-vue-next'
 import ThemeSelector from '../atoms/ThemeSelector.vue'
+import LanguageSwitcher from './LanguageSwitcher.vue'
 import { downloadResume, openResumeInNewTab } from '../../composables/useResume'
 import { useTheme } from '../../composables/useTheme'
 
@@ -245,11 +262,11 @@ const selectTheme = (themeId: string) => {
 }
 
 const navItems = [
-  { name: 'Home', path: '/', icon: 'fas fa-home' },
-  { name: 'About Me', path: '/about', icon: 'fas fa-user' },
-  { name: 'Projects', path: '/projects', icon: 'fas fa-code' },
-  { name: 'Articles', path: '/articles', icon: 'fas fa-newspaper' },
-  { name: 'Contact', path: '/contact', icon: 'fas fa-envelope' }
+  { nameKey: 'nav.home', path: '/', icon: 'fas fa-home' },
+  { nameKey: 'nav.about', path: '/about', icon: 'fas fa-user' },
+  { nameKey: 'nav.projects', path: '/projects', icon: 'fas fa-code' },
+  { nameKey: 'nav.articles', path: '/articles', icon: 'fas fa-newspaper' },
+  { nameKey: 'nav.contact', path: '/contact', icon: 'fas fa-envelope' }
 ]
 
 const isActive = (path: string) => {

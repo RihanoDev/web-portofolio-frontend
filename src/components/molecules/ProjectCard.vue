@@ -22,7 +22,7 @@
             class="px-3 py-1 rounded-full text-xs font-semibold"
             :class="getStatusClass(project.status)"
           >
-            {{ getStatusText(project.status) }}
+            {{ getTranslatedStatus(project.status) }}
           </span>
         </div>
 
@@ -79,7 +79,7 @@
         <!-- Key Features (shown on hover) -->
         <div class="max-h-0 overflow-hidden group-hover:max-h-40 transition-all duration-500 ease-in-out">
           <div class="pt-4 border-t border-white/5">
-            <h4 class="text-sm font-semibold text-primary mb-2">Key Features:</h4>
+            <h4 class="text-sm font-semibold text-primary mb-2">{{ $t('projects.key_features') || 'Key Features:' }}</h4>
             <ul class="space-y-1">
               <li 
                 v-for="feature in project.features.slice(0, 3)" 
@@ -97,15 +97,15 @@
         <div class="flex gap-3 mt-4 pt-4 border-t border-white/5">
           <BaseButton v-if="project.githubUrl" as="a" :href="project.githubUrl" target="_blank" rel="noopener noreferrer" variant="secondary" size="sm" class="flex-1" @click.stop>
             <Github class="w-4 h-4 mr-2" />
-            <span>Code</span>
+            <span>{{ $t('projects.cta_code') || 'Code' }}</span>
           </BaseButton>
           <BaseButton v-if="project.liveUrl" as="a" :href="project.liveUrl" target="_blank" rel="noopener noreferrer" variant="primary" size="sm" class="flex-1" @click.stop>
             <ExternalLink class="w-4 h-4 mr-2" />
-            <span>Live Demo</span>
+            <span>{{ $t('projects.cta_live') || 'Live Demo' }}</span>
           </BaseButton>
           <BaseButton v-if="!project.liveUrl && project.githubUrl" variant="primary" size="sm" class="flex-1">
             <Eye class="w-4 h-4 mr-2" />
-            <span>View Details</span>
+            <span>{{ $t('projects.cta_details') || 'View Details' }}</span>
           </BaseButton>
         </div>
       </div>
@@ -115,9 +115,13 @@
 
 <script setup lang="ts">
 import { Github, ExternalLink, CheckCircle, Eye } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
 import BaseButton from '../atoms/Button.vue'
 import Badge from '../atoms/Badge.vue'
 import type { ProjectListItem } from '../../types/project'
+import { getLocalized } from '../../utils/i18n'
+
+const { locale, t } = useI18n()
 
 // Adapter for backward compatibility
 interface ProjectCardProps {
@@ -135,17 +139,18 @@ const getDefaultImage = () => {
 // Computed properties to map new data structure to the expected format
 const project = {
   get id() { return props.project.id },
-  get title() { return props.project.title },
-  get description() { return props.project.description },
+  get title() { return getLocalized(props.project, 'title', locale.value) },
+  get description() { return getLocalized(props.project, 'description', locale.value) },
   get category() { return props.project.category || 'Uncategorized' },
   get technologies() { return props.project.technologies || [] },
   get image() { return props.project.thumbnailUrl || getDefaultImage() },
   get githubUrl() { return props.project.githubUrl },
   get liveUrl() { return props.project.liveDemoUrl },
   get features() { 
-    // Extract features from description if available, otherwise use placeholder
-    const descParts = props.project.description.split('. ')
-    return descParts.length > 1 ? descParts : ['Feature information unavailable']
+    // Extract features from localized description if available
+    const desc = getLocalized(props.project, 'description', locale.value)
+    const descParts = desc.split('. ')
+    return descParts.length > 1 ? descParts : [desc]
   },
   get status() {
     // Map status from ProjectStatus to UI status
@@ -176,16 +181,16 @@ const getStatusClass = (status: string) => {
   }
 }
 
-const getStatusText = (status: string) => {
+const getTranslatedStatus = (status: string) => {
   switch (status) {
     case 'completed':
-      return 'Completed'
+      return t('projects.status_completed') || 'Completed'
     case 'in-progress':
-      return 'In Progress'
+      return t('projects.status_in_progress') || 'In Progress'
     case 'planned':
-      return 'Planned'
+      return t('projects.status_planned') || 'Planned'
     default:
-      return 'Unknown'
+      return t('projects.status_unknown') || 'Unknown'
   }
 }
 </script>

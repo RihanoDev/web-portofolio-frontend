@@ -26,7 +26,7 @@
           <div class="absolute top-4 right-4">
             <span class="px-3 py-1 bg-black/70 text-white text-xs font-medium rounded-full flex items-center gap-1">
               <Clock class="w-3 h-3" />
-              {{ article.readTime }} min
+              {{ article.readTime }} {{ $t('articles.min_read') || 'min' }}
             </span>
           </div>
 
@@ -42,12 +42,12 @@
         <div class="p-6">
           <!-- Title -->
           <h3 class="text-xl font-bold text-primary mb-3 line-clamp-2 group-hover:text-accent transition-colors duration-300">
-            {{ article.title }}
+            {{ getLocalized(article, 'title', locale) }}
           </h3>
 
           <!-- Excerpt -->
           <p class="text-secondary text-sm leading-relaxed mb-4 line-clamp-3">
-            {{ article.excerpt }}
+            {{ getLocalized(article, 'excerpt', locale) }}
           </p>
 
           <!-- Tags -->
@@ -79,7 +79,7 @@
 
             <!-- Read More -->
             <div class="flex items-center space-x-1 text-accent hover:text-primary transition-colors duration-300 text-sm font-medium">
-              <span>Read More</span>
+              <span>{{ $t('articles.read_more') || 'Read More' }}</span>
               <ArrowRight class="w-4 h-4" />
             </div>
           </div>
@@ -91,9 +91,12 @@
 
 <script setup lang="ts">
 import { Clock, ArrowRight } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
 import { formatDate } from '../../utils/date'
-
 import type { ArticleListItem } from '../../types/article'
+import { getLocalized } from '../../utils/i18n'
+
+const { locale } = useI18n()
 
 interface Props {
   article: ArticleListItem

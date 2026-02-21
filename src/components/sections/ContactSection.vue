@@ -4,10 +4,10 @@
       <div class="max-w-6xl mx-auto">
         <!-- Section Header -->
         <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-interactive-primary">Get In Touch</h2>
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-interactive-primary">{{ $t('contact.title') }}</h2>
           <div class="w-24 h-1 bg-accent mx-auto mb-6"></div>
           <p class="text-xl text-secondary max-w-3xl mx-auto">
-            Have a project in mind? Let's discuss how we can work together to bring your ideas to life
+            {{ $t('contact.subtitle') }}
           </p>
         </div>
 
@@ -15,11 +15,8 @@
           <!-- Contact Info -->
           <div class="space-y-8">
             <div>
-              <h3 class="text-2xl font-bold text-interactive-theme mb-6">Let's Talk</h3>
-              <p class="text-secondary leading-relaxed mb-8">
-                I'm always open to discussing <span class="text-highlight-interactive">new opportunities</span>, interesting projects, 
-                and potential collaborations. Whether you have a specific project in mind 
-                or just want to connect, feel free to reach out.
+              <h3 class="text-2xl font-bold text-interactive-theme mb-6">{{ $t('contact.talk_title') }}</h3>
+              <p class="text-secondary leading-relaxed mb-8" v-html="$t('contact.talk_desc')">
               </p>
             </div>
 
@@ -46,20 +43,20 @@
               <ContactInfo 
                 icon="Clock"
                 title="Response Time"
-                content="Usually within 24 hours"
+                :content="$t('contact.response_time')"
               />
             </div>
           </div>
 
           <!-- Contact Form -->
           <div class="glass-card p-8 rounded-xl">
-            <h3 class="text-2xl font-bold text-primary mb-6">Send Message</h3>
+            <h3 class="text-2xl font-bold text-primary mb-6">{{ $t('contact.form_title') }}</h3>
             
             <form @submit.prevent="handleSubmit" class="space-y-6">
               <!-- Name Field -->
               <div class="form-group">
                 <label for="name" class="block text-sm font-medium text-primary mb-2">
-                  Full Name *
+                  {{ $t('contact.label_name') }}
                 </label>
                 <input
                   id="name"
@@ -67,14 +64,14 @@
                   type="text"
                   required
                   class="form-input"
-                  placeholder="Enter your full name"
+                  :placeholder="$t('contact.placeholder_name')"
                 />
               </div>
 
               <!-- Email Field -->
               <div class="form-group">
                 <label for="email" class="block text-sm font-medium text-primary mb-2">
-                  Email Address *
+                  {{ $t('contact.label_email') }}
                 </label>
                 <input
                   id="email"
@@ -82,14 +79,14 @@
                   type="email"
                   required
                   class="form-input"
-                  placeholder="Enter your email address"
+                  :placeholder="$t('contact.placeholder_email')"
                 />
               </div>
 
               <!-- Subject Field -->
               <div class="form-group">
                 <label for="subject" class="block text-sm font-medium text-primary mb-2">
-                  Subject *
+                  {{ $t('contact.label_subject') }}
                 </label>
                 <input
                   id="subject"
@@ -97,14 +94,14 @@
                   type="text"
                   required
                   class="form-input"
-                  placeholder="What's this about?"
+                  :placeholder="$t('contact.placeholder_subject')"
                 />
               </div>
 
               <!-- Message Field -->
               <div class="form-group">
                 <label for="message" class="block text-sm font-medium text-primary mb-2">
-                  Message *
+                  {{ $t('contact.label_message') }}
                 </label>
                 <textarea
                   id="message"
@@ -112,7 +109,7 @@
                   required
                   rows="5"
                   class="form-input resize-none"
-                  placeholder="Tell me about your project or inquiry..."
+                  :placeholder="$t('contact.placeholder_message')"
                 ></textarea>
               </div>
 
@@ -124,8 +121,8 @@
                 size="lg"
                 class="w-full"
               >
-                <span v-if="!isSubmitting">Send Message</span>
-                <span v-else>Sending...</span>
+                <span v-if="!isSubmitting">{{ $t('contact.btn_send') }}</span>
+                <span v-else>{{ $t('contact.btn_sending') }}</span>
                 <Send class="w-5 h-5 ml-2" v-if="!isSubmitting" />
                 <Loader2 class="w-5 h-5 ml-2 animate-spin" v-else />
               </BaseButton>
@@ -144,31 +141,31 @@
         <!-- Additional Info -->
         <div class="mt-16 text-center">
           <div class="glass-card p-8 rounded-xl max-w-4xl mx-auto">
-            <h3 class="text-2xl font-bold text-primary mb-4">Ready to Start Your Project?</h3>
+            <h3 class="text-2xl font-bold text-primary mb-4">{{ $t('contact.ready_title') }}</h3>
             <p class="text-secondary mb-6">
-              Let's discuss your requirements and see how I can help bring your backend systems to life
+              {{ $t('contact.ready_desc') }}
             </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               <div>
                 <div class="w-12 h-12 mx-auto mb-3 bg-gradient rounded-lg flex items-center justify-center">
                   <Lightbulb class="w-6 h-6 text-white" />
                 </div>
-                <h4 class="font-semibold text-primary">Consultation</h4>
-                <p class="text-sm text-secondary">Free initial consultation to understand your needs</p>
+                <h4 class="font-semibold text-primary">{{ $t('contact.info_consult_title') }}</h4>
+                <p class="text-sm text-secondary">{{ $t('contact.info_consult_desc') }}</p>
               </div>
               <div>
                 <div class="w-12 h-12 mx-auto mb-3 bg-gradient rounded-lg flex items-center justify-center">
                   <Code class="w-6 h-6 text-white" />
                 </div>
-                <h4 class="font-semibold text-primary">Development</h4>
-                <p class="text-sm text-secondary">Clean, scalable code following best practices</p>
+                <h4 class="font-semibold text-primary">{{ $t('contact.info_dev_title') }}</h4>
+                <p class="text-sm text-secondary">{{ $t('contact.info_dev_desc') }}</p>
               </div>
               <div>
                 <div class="w-12 h-12 mx-auto mb-3 bg-gradient rounded-lg flex items-center justify-center">
                   <Rocket class="w-6 h-6 text-white" />
                 </div>
-                <h4 class="font-semibold text-primary">Deployment</h4>
-                <p class="text-sm text-secondary">Full deployment and ongoing support</p>
+                <h4 class="font-semibold text-primary">{{ $t('contact.info_deploy_title') }}</h4>
+                <p class="text-sm text-secondary">{{ $t('contact.info_deploy_desc') }}</p>
               </div>
             </div>
           </div>
@@ -180,10 +177,13 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Send, Loader2, Lightbulb, Code, Rocket } from 'lucide-vue-next'
 import ContactInfo from '../molecules/ContactInfo.vue'
 import BaseButton from '../atoms/Button.vue'
 import { getProfileSettings, type ProfileData } from '../../services/profile'
+
+const { t, locale } = useI18n()
 
 const profileData = ref<ProfileData>({
   name: 'Rizky Haffiyan Roseno',
@@ -202,7 +202,7 @@ const profileData = ref<ProfileData>({
 
 onMounted(async () => {
   try {
-    profileData.value = await getProfileSettings()
+    profileData.value = await getProfileSettings(locale.value)
   } catch (e) {
     console.error("Error loading profile:", e)
   }
@@ -242,11 +242,11 @@ const handleSubmit = async () => {
     })
     
     submitStatus.type = 'success'
-    submitStatus.message = 'Thank you for your message! I\'ll get back to you soon.'
+    submitStatus.message = t('contact.msg_success')
   } catch (error) {
     console.error('Form submission error:', error)
     submitStatus.type = 'error'
-    submitStatus.message = 'Something went wrong. Please try again or contact me directly.'
+    submitStatus.message = t('contact.msg_error')
   } finally {
     isSubmitting.value = false
   }

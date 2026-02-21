@@ -5,18 +5,18 @@
         <!-- Loading State -->
         <div v-if="loading" class="flex flex-col items-center justify-center py-20">
           <div class="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-          <p class="mt-4 text-lg text-secondary">Loading project...</p>
+          <p class="mt-4 text-lg text-secondary">{{ $t('projects.loading') }}</p>
         </div>
 
         <!-- Error State -->
         <div v-else-if="error" class="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 p-6 rounded-lg">
-          <h2 class="text-2xl font-bold text-red-700 dark:text-red-400 mb-2">Error Loading Project</h2>
+          <h2 class="text-2xl font-bold text-red-700 dark:text-red-400 mb-2">{{ $t('common.error_loading') || 'Error Loading Project' }}</h2>
           <p class="text-red-600 dark:text-red-300">{{ error }}</p>
           <button 
             @click="fetchProject()" 
             class="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-300"
           >
-            Retry
+            {{ $t('common.retry') || 'Retry' }}
           </button>
         </div>
 
@@ -36,7 +36,7 @@
 
             <!-- Title -->
             <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 leading-tight">
-              {{ project.title }}
+              {{ getLocalized(project, 'title', locale) }}
             </h1>
 
             <!-- Meta Info -->
@@ -58,7 +58,7 @@
               <!-- View Count -->
               <div class="flex items-center gap-2">
                 <Eye class="w-4 h-4" />
-                <span>{{ viewCount.total || 0 }} views</span>
+                <span>{{ viewCount.total || 0 }} {{ $t('projects.views') || 'views' }}</span>
               </div>
             </div>
 
@@ -111,11 +111,11 @@
           <!-- Project Content -->
           <div class="prose prose-lg dark:prose-invert prose-headings:text-primary prose-a:text-accent max-w-none">
             <!-- If content is provided as HTML -->
-            <div v-if="project.content" v-html="sanitizeHtml(project.content)"></div>
+            <div v-if="getLocalized(project, 'content', locale)" v-html="sanitizeHtml(getLocalized(project, 'content', locale))"></div>
             
             <!-- If no content, show description -->
-            <div v-else-if="project.description" class="text-secondary">
-              {{ project.description }}
+            <div v-else-if="getLocalized(project, 'description', locale)" class="text-secondary">
+              {{ getLocalized(project, 'description', locale) }}
             </div>
             
             <!-- If no description, show placeholder -->
@@ -136,11 +136,11 @@
               >
                 <img 
                   :src="image.url" 
-                  :alt="image.caption || `${project.title} screenshot ${index + 1}`" 
+                  :alt="getLocalized(image, 'caption', locale) || `${getLocalized(project, 'title', locale)} screenshot ${index + 1}`" 
                   class="w-full h-auto object-cover"
                 />
-                <p v-if="image.caption" class="py-2 px-3 text-sm text-secondary text-center">
-                  {{ image.caption }}
+                <p v-if="getLocalized(image, 'caption', locale)" class="py-2 px-3 text-sm text-secondary text-center">
+                  {{ getLocalized(image, 'caption', locale) }}
                 </p>
               </div>
             </div>
@@ -151,7 +151,7 @@
             <div class="flex justify-between">
               <router-link to="/projects" class="flex items-center gap-2 text-accent hover:text-primary transition-colors">
                 <ArrowLeft class="w-5 h-5" />
-                <span>Back to Projects</span>
+                <span>{{ $t('projects.back_to_list') || 'Back to Projects' }}</span>
               </router-link>
             </div>
           </div>
@@ -159,13 +159,13 @@
 
         <!-- Not Found State -->
         <div v-else class="text-center py-16">
-          <h2 class="text-3xl font-bold text-primary mb-4">Project Not Found</h2>
-          <p class="text-secondary mb-8">The project you're looking for doesn't exist or has been removed.</p>
+          <h2 class="text-3xl font-bold text-primary mb-4">{{ $t('projects.not_found_title') || 'Project Not Found' }}</h2>
+          <p class="text-secondary mb-8">{{ $t('projects.not_found_desc') || 'The project you\'re looking for doesn\'t exist or has been removed.' }}</p>
           <router-link 
             to="/projects" 
             class="px-6 py-3 bg-accent hover:bg-accent-dark text-white rounded-lg inline-block transition-colors"
           >
-            Browse All Projects
+            {{ $t('projects.browse_all') || 'Browse All Projects' }}
           </router-link>
         </div>
       </div>
@@ -176,12 +176,16 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { Calendar, Eye, ExternalLink, ArrowLeft } from 'lucide-vue-next';
 import { formatDate } from '../utils/date';
 import { analyticsService } from '../services/analytics';
 import type { ViewCountData } from '../types/analytics';
 import type { Project } from '../types/project';
 import { fetchProjectBySlug } from '../services/projects';
+import { getLocalized } from '../utils/i18n';
+
+const { locale } = useI18n();
 
 // Route and params
 const route = useRoute();

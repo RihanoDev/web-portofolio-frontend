@@ -19,8 +19,7 @@
               </div>
             </div>
             <p class="text-sm leading-relaxed mb-6" style="color: var(--color-text-secondary);">
-              Specialized in building robust backend systems, APIs, and cloud solutions. 
-              Passionate about creating scalable and efficient software architecture.
+              {{ $t('footer.brand_desc') }}
             </p>
           </div>
 
@@ -28,7 +27,7 @@
           <div class="md:col-span-1">
             <h3 class="font-semibold text-lg mb-6 inline-flex items-center gap-3" style="color: var(--color-text-primary);">
               <i class="fas fa-link flex-shrink-0" style="color: var(--color-accent);"></i>
-              <span>Quick Links</span>
+              <span>{{ $t('footer.quick_links') }}</span>
             </h3>
             <ul class="space-y-3">
               <li><router-link to="/" class="footer-link inline-flex items-center gap-3 transition-all duration-300"><i class="fas fa-home flex-shrink-0" style="color: var(--color-accent);"></i><span>Home</span></router-link></li>
@@ -44,7 +43,7 @@
           <div class="md:col-span-1">
             <h3 class="font-semibold text-lg mb-6 inline-flex items-center gap-3" style="color: var(--color-text-primary);">
               <i class="fas fa-address-book flex-shrink-0" style="color: var(--color-accent);"></i>
-              <span>Get in Touch</span>
+              <span>{{ $t('footer.get_in_touch') }}</span>
             </h3>
             
             <!-- Contact Info -->
@@ -102,18 +101,18 @@
         <!-- Newsletter Section -->
         <div class="glass-subtle rounded-2xl p-8 mb-12">
           <div class="text-center max-w-2xl mx-auto">
-            <h3 class="text-2xl font-bold mb-4" style="color: var(--color-text-primary);">Stay Updated</h3>
-            <p class="mb-6" style="color: var(--color-text-secondary);">Get notified about new projects, articles, and backend development insights.</p>
+            <h3 class="text-2xl font-bold mb-4" style="color: var(--color-text-primary);">{{ $t('footer.stay_updated') }}</h3>
+            <p class="mb-6" style="color: var(--color-text-secondary);">{{ $t('footer.newsletter_desc') }}</p>
             <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input 
                 type="email" 
-                placeholder="Enter your email"
+                :placeholder="$t('footer.placeholder_email')"
                 class="flex-1 px-4 py-3 rounded-lg glass-subtle focus:outline-none transition-colors"
                 style="color: var(--color-text-primary); border-color: rgba(var(--accent-rgb), 0.5);"
               >
               <button class="px-6 py-3 glass-subtle border rounded-lg font-semibold transition-all duration-300 inline-flex items-center justify-center gap-2"
                       style="border-color: var(--color-accent); color: var(--color-accent);">
-                <span>Subscribe</span>
+                <span>{{ $t('footer.subscribe') }}</span>
                 <i class="fas fa-paper-plane flex-shrink-0"></i>
               </button>
             </div>
@@ -124,19 +123,19 @@
         <div class="border-t pt-8" style="border-color: rgba(255, 255, 255, 0.05);">
           <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div class="flex items-center space-x-4 text-sm" style="color: var(--color-text-secondary);">
-              <span>&copy; 2024 RihanoDev. All rights reserved.</span>
+              <span>&copy; 2026 RihanoDev. {{ $t('footer.rights') }}</span>
               <span class="inline-flex items-center gap-1">
                 <i class="fas fa-heart flex-shrink-0" style="color: var(--color-accent);"></i>
-                <span>Made with passion in Indonesia</span>
+                <span>{{ $t('footer.made_with') }}</span>
               </span>
             </div>
             
             <div class="flex items-center space-x-6 text-sm" style="color: var(--color-text-secondary);">
-              <a href="/privacy" class="footer-link transition-colors">Privacy Policy</a>
-              <a href="/terms" class="footer-link transition-colors">Terms of Service</a>
+              <router-link to="/privacy" class="footer-link transition-colors">{{ $t('footer.privacy') }}</router-link>
+              <router-link to="/terms" class="footer-link transition-colors">{{ $t('footer.terms') }}</router-link>
               <div class="inline-flex items-center gap-1">
                 <i class="fas fa-code flex-shrink-0" style="color: var(--color-accent);"></i>
-                <span>Built with Vue.js & Tailwind CSS</span>
+                <span>{{ $t('footer.built_with') || 'Built with Vue.js & Tailwind CSS' }}</span>
               </div>
             </div>
           </div>
