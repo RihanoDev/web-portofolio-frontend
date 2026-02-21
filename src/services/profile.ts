@@ -1,5 +1,4 @@
-// Gunakan API base url yang konsisten dengan aplikasi Frontend (vite-env.d.ts / .env)
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1';
+import { API_BASE_URL } from './config';
 
 export interface ProfileData {
     name: string;
@@ -18,7 +17,7 @@ export interface ProfileData {
 
 export const getProfileSettings = async (): Promise<ProfileData> => {
     try {
-        const response = await fetch(`${API_URL}/settings?keys=profile.name,profile.title,profile.bio,profile.avatarUrl,about.subtitle,about.desc1,about.desc2,about.desc3,about.expertise,about.location,about.email,about.phone`);
+        const response = await fetch(`${API_BASE_URL}/settings?keys=profile.name,profile.title,profile.bio,profile.avatarUrl,about.subtitle,about.desc1,about.desc2,about.desc3,about.expertise,about.location,about.email,about.phone`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
