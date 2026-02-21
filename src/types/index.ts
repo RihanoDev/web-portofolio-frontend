@@ -2,3 +2,4 @@
 export * from './project'
 export * from './experience'  
 export * from './article'
+export * from './analytics'

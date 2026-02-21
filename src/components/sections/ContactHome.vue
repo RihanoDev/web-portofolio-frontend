@@ -4,10 +4,10 @@
       <div class="max-w-4xl mx-auto text-center">
         <!-- Section Header -->
         <div class="mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">Get In Touch</h2>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">{{ $t('contact.title') }}</h2>
           <div class="w-16 h-1 bg-accent mx-auto mb-6"></div>
           <p class="text-secondary max-w-2xl mx-auto">
-            Ready to discuss your next project? Let's connect and bring your ideas to life.
+            {{ $t('contact.home_subtitle') }}
           </p>
         </div>
 
@@ -15,26 +15,26 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <!-- Email -->
           <a 
-            href="mailto:rihanodev@gmail.com"
+            :href="'mailto:' + profileData.email"
             class="glass-card rounded-xl p-6 border border-white/5 hover:border-accent/20 transition-all duration-300 group"
           >
             <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors">
               <i class="fas fa-envelope text-accent text-xl"></i>
             </div>
             <h3 class="text-lg font-semibold text-primary mb-2">Email</h3>
-            <p class="text-secondary text-sm">rihanodev@gmail.com</p>
+            <p class="text-secondary text-sm">{{ profileData.email }}</p>
           </a>
 
           <!-- Phone -->
           <a 
-            href="tel:+628123456789"
+            :href="'tel:' + profileData.phone.replace(/[^0-9+]/g, '')"
             class="glass-card rounded-xl p-6 border border-white/5 hover:border-accent/20 transition-all duration-300 group"
           >
             <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors">
               <i class="fas fa-phone text-accent text-xl"></i>
             </div>
             <h3 class="text-lg font-semibold text-primary mb-2">Phone</h3>
-            <p class="text-secondary text-sm">+62 812-3456-7890</p>
+            <p class="text-secondary text-sm">{{ profileData.phone }}</p>
           </a>
 
           <!-- Location -->
@@ -43,13 +43,13 @@
               <i class="fas fa-map-marker-alt text-accent text-xl"></i>
             </div>
             <h3 class="text-lg font-semibold text-primary mb-2">Location</h3>
-            <p class="text-secondary text-sm">Jakarta, Indonesia</p>
+            <p class="text-secondary text-sm">{{ profileData.location }}</p>
           </div>
         </div>
 
         <!-- Social Links -->
         <div class="mb-12">
-          <p class="text-secondary mb-8 text-lg">You can also find me on</p>
+          <p class="text-secondary mb-8 text-lg">{{ $t('contact.find_me') }}</p>
           <div class="flex justify-center items-center space-x-4 sm:space-x-6">
             <a 
               href="https://github.com/RihanoDev"
@@ -117,7 +117,7 @@
             class="inline-flex items-center px-8 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-accent-hover transition-colors duration-300"
             style="outline: none !important; -webkit-tap-highlight-color: transparent !important;"
           >
-            Send Message
+            {{ $t('contact.btn_send') || 'Send Message' }}
             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
             </svg>
@@ -127,6 +127,34 @@
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { getProfileSettings, type ProfileData } from '../../services/profile'
+
+const profileData = ref<ProfileData>({
+  name: '',
+  title: '',
+  bio: '',
+  avatarUrl: '',
+  aboutSubtitle: '',
+  aboutDescription1: '',
+  aboutDescription2: '',
+  aboutDescription3: '',
+  coreExpertise: [],
+  location: 'Jakarta, Indonesia',
+  email: 'rihanodev@gmail.com',
+  phone: '+62 812-3456-7890'
+})
+
+onMounted(async () => {
+  try {
+    profileData.value = await getProfileSettings()
+  } catch (e) {
+    
+  }
+})
+</script>
 
 <style scoped>
 /* Using global glass effects - no local styles needed */

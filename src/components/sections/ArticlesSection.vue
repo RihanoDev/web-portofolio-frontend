@@ -4,11 +4,9 @@
       <div class="max-w-6xl mx-auto">
         <!-- Section Header -->
         <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-interactive-primary">Latest Articles</h2>
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-interactive-primary">{{ $t('articles.title') }}</h2>
           <div class="w-24 h-1 bg-gradient mx-auto mb-6"></div>
-          <p class="text-xl text-secondary max-w-3xl mx-auto">
-            Sharing knowledge and insights about backend development, system design, and technology trends
-          </p>
+          <p class="text-xl text-secondary max-w-3xl mx-auto">{{ $t('articles.subtitle') }}</p>
         </div>
 
         <!-- Filter Tabs -->
@@ -16,11 +14,12 @@
           <button
             v-for="category in categories"
             :key="category"
-            @click="activeCategory = category; currentPage = 1"
+            @click="
+              activeCategory = category;
+              currentPage = 1;
+            "
             class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300"
-            :class="activeCategory === category 
-              ? 'bg-gradient text-white shadow-lg' 
-              : 'glass text-secondary hover:text-primary border border-white/10'"
+            :class="activeCategory === category ? 'bg-gradient text-white shadow-lg' : 'glass text-secondary hover:text-primary border border-white/10'"
           >
             {{ category }}
           </button>
@@ -28,11 +27,20 @@
 
         <!-- Articles Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          <ArticleCard
-            v-for="article in paginatedArticles"
-            :key="article.id"
-            :article="article"
-          />
+          <!-- Loading State -->
+          <div v-if="isLoading" class="col-span-3 py-16 text-center">
+            <p class="text-secondary text-lg">{{ $t('articles.loading') }}</p>
+          </div>
+          <!-- Empty State -->
+          <div v-else-if="filteredArticles.length === 0" class="col-span-3 py-16 text-center">
+            <p class="text-secondary text-lg">
+              {{ activeCategory === "All" ? $t('articles.empty') : $t('articles.empty_category', { category: activeCategory }) }}
+            </p>
+          </div>
+          <!-- Articles List -->
+          <template v-else>
+            <ArticleCard v-for="article in paginatedArticles" :key="article.id" :article="article" />
+          </template>
         </div>
 
         <!-- Pagination -->
@@ -45,7 +53,7 @@
             :class="{ 'opacity-50 cursor-not-allowed': currentPage === 1 }"
           >
             <ChevronLeft class="w-4 h-4" />
-            <span>Previous</span>
+            <span>{{ $t('common.previous') }}</span>
           </button>
 
           <!-- Page Numbers -->
@@ -55,9 +63,7 @@
               :key="page"
               @click="goToPage(page)"
               class="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300"
-              :class="currentPage === page 
-                ? 'bg-gradient text-white shadow-lg' 
-                : 'glass text-secondary hover:text-primary border border-white/10'"
+              :class="currentPage === page ? 'bg-gradient text-white shadow-lg' : 'glass text-secondary hover:text-primary border border-white/10'"
             >
               {{ page }}
             </button>
@@ -70,14 +76,14 @@
             class="flex items-center px-4 py-2 rounded-lg glass border border-white/10 text-secondary font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-accent hover:text-white hover:scale-105 space-x-2"
             :class="{ 'opacity-50 cursor-not-allowed': currentPage === totalPages }"
           >
-            <span>Next</span>
+            <span>{{ $t('common.next') }}</span>
             <ChevronRight class="w-4 h-4" />
           </button>
         </div>
 
         <!-- Pagination Info -->
         <div class="text-center mt-4 text-sm text-secondary">
-          Showing {{ startItem }} to {{ endItem }} of {{ totalArticles }} articles
+          {{ $t('common.showing', { start: startItem, end: endItem, total: totalArticles, items: $t('common.articles') }) }}
         </div>
       </div>
     </div>
@@ -85,98 +91,112 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
-import ArticleCard from '../molecules/ArticleCard.vue'
-import type { Article } from '../../types/article'
-import { getArticles } from '../../data/articles'
+import { ref, computed, onMounted } from "vue";
+import { ChevronLeft, ChevronRight } from "lucide-vue-next";
+import ArticleCard from "../molecules/ArticleCard.vue";
+import type { ArticleListItem, ArticleCategory } from "../../types/article";
+import { fetchArticles, fetchArticleCategories } from "../../services/articles";
 
 // Reactive states
-const activeCategory = ref('All')
-const articles = ref<Article[]>([])
-const currentPage = ref(1)
-const articlesPerPage = 6 // Jumlah artikel per halaman
+const activeCategory = ref("All");
+const articles = ref<ArticleListItem[]>([]);
+const currentPage = ref(1);
+const articlesPerPage = 6; // Jumlah artikel per halaman
+const isLoading = ref(true);
 
-// Categories from articles data
-const categories = ref(['All', 'Backend Development', 'DevOps', 'Database', 'Architecture', 'Frontend Development'])
+// Categories
+const categories = ref<string[]>(["All"]);
+const categoryData = ref<ArticleCategory[]>([]);
 
-// Load articles on component mount
+// Load articles and categories on component mount
 onMounted(async () => {
-  articles.value = await getArticles()
-})
+  try {
+    isLoading.value = true;
+    // Load categories first
+    categoryData.value = await fetchArticleCategories();
+    categories.value = ["All", ...categoryData.value.map((cat) => cat.name)];
+
+    // Then load articles
+    articles.value = await fetchArticles();
+  } catch (error) {
+    
+  } finally {
+    isLoading.value = false;
+  }
+});
 
 // Computed properties for filtering and pagination
 const filteredArticles = computed(() => {
-  if (activeCategory.value === 'All') {
-    return articles.value
+  if (activeCategory.value === "All") {
+    return articles.value;
   }
-  return articles.value.filter(article => article.category === activeCategory.value)
-})
+  return articles.value.filter((article) => article.categories.includes(activeCategory.value));
+});
 
-const totalArticles = computed(() => filteredArticles.value.length)
+const totalArticles = computed(() => filteredArticles.value.length);
 
-const totalPages = computed(() => Math.ceil(totalArticles.value / articlesPerPage))
+const totalPages = computed(() => Math.ceil(totalArticles.value / articlesPerPage));
 
 const paginatedArticles = computed(() => {
-  const start = (currentPage.value - 1) * articlesPerPage
-  const end = start + articlesPerPage
-  return filteredArticles.value.slice(start, end)
-})
+  const start = (currentPage.value - 1) * articlesPerPage;
+  const end = start + articlesPerPage;
+  return filteredArticles.value.slice(start, end);
+});
 
 const startItem = computed(() => {
-  if (totalArticles.value === 0) return 0
-  return (currentPage.value - 1) * articlesPerPage + 1
-})
+  if (totalArticles.value === 0) return 0;
+  return (currentPage.value - 1) * articlesPerPage + 1;
+});
 
 const endItem = computed(() => {
-  const end = currentPage.value * articlesPerPage
-  return end > totalArticles.value ? totalArticles.value : end
-})
+  const end = currentPage.value * articlesPerPage;
+  return end > totalArticles.value ? totalArticles.value : end;
+});
 
 // Visible page numbers (show max 5 pages)
 const visiblePages = computed(() => {
-  const total = totalPages.value
-  const current = currentPage.value
-  const pages = []
-  
+  const total = totalPages.value;
+  const current = currentPage.value;
+  const pages = [];
+
   if (total <= 5) {
     // Show all pages if total is 5 or less
     for (let i = 1; i <= total; i++) {
-      pages.push(i)
+      pages.push(i);
     }
   } else {
     // Show 5 pages with current page in middle when possible
-    let start = Math.max(1, current - 2)
-    let end = Math.min(total, current + 2)
-    
+    let start = Math.max(1, current - 2);
+    let end = Math.min(total, current + 2);
+
     // Adjust if we're near the beginning
     if (current <= 3) {
-      start = 1
-      end = 5
+      start = 1;
+      end = 5;
     }
-    
+
     // Adjust if we're near the end
     if (current >= total - 2) {
-      start = total - 4
-      end = total
+      start = total - 4;
+      end = total;
     }
-    
+
     for (let i = start; i <= end; i++) {
-      pages.push(i)
+      pages.push(i);
     }
   }
-  
-  return pages
-})
+
+  return pages;
+});
 
 // Methods
 const goToPage = (page: number) => {
   if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page
+    currentPage.value = page;
     // Scroll to top of articles section
-    document.getElementById('articles')?.scrollIntoView({ behavior: 'smooth' })
+    document.getElementById("articles")?.scrollIntoView({ behavior: "smooth" });
   }
-}
+};
 </script>
 
 <style scoped>

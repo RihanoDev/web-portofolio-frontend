@@ -1,5 +1,9 @@
 <template>
-  <div class="project-card group cursor-pointer glass-card rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+  <router-link 
+    :to="{ name: 'project-detail', params: { slug: props.project.slug } }"
+    class="block"
+  >
+    <div class="project-card group cursor-pointer glass-card rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl">
       <!-- Project Image -->
       <div class="relative h-48 overflow-hidden">
         <img 
@@ -18,7 +22,7 @@
             class="px-3 py-1 rounded-full text-xs font-semibold"
             :class="getStatusClass(project.status)"
           >
-            {{ getStatusText(project.status) }}
+            {{ getTranslatedStatus(project.status) }}
           </span>
         </div>
 
@@ -75,7 +79,7 @@
         <!-- Key Features (shown on hover) -->
         <div class="max-h-0 overflow-hidden group-hover:max-h-40 transition-all duration-500 ease-in-out">
           <div class="pt-4 border-t border-white/5">
-            <h4 class="text-sm font-semibold text-primary mb-2">Key Features:</h4>
+            <h4 class="text-sm font-semibold text-primary mb-2">{{ $t('projects.key_features') || 'Key Features:' }}</h4>
             <ul class="space-y-1">
               <li 
                 v-for="feature in project.features.slice(0, 3)" 
@@ -91,52 +95,77 @@
 
         <!-- Action Buttons -->
         <div class="flex gap-3 mt-4 pt-4 border-t border-white/5">
-          <BaseButton v-if="project.githubUrl" as="a" :href="project.githubUrl" target="_blank" rel="noopener noreferrer" variant="secondary" size="sm" class="flex-1">
+          <BaseButton v-if="project.githubUrl" as="a" :href="project.githubUrl" target="_blank" rel="noopener noreferrer" variant="secondary" size="sm" class="flex-1" @click.stop>
             <Github class="w-4 h-4 mr-2" />
-            <span>Code</span>
+            <span>{{ $t('projects.cta_code') || 'Code' }}</span>
           </BaseButton>
-          <BaseButton v-if="project.liveUrl" as="a" :href="project.liveUrl" target="_blank" rel="noopener noreferrer" variant="primary" size="sm" class="flex-1">
+          <BaseButton v-if="project.liveUrl" as="a" :href="project.liveUrl" target="_blank" rel="noopener noreferrer" variant="primary" size="sm" class="flex-1" @click.stop>
             <ExternalLink class="w-4 h-4 mr-2" />
-            <span>Live Demo</span>
+            <span>{{ $t('projects.cta_live') || 'Live Demo' }}</span>
           </BaseButton>
-          <BaseButton v-if="!project.liveUrl && project.githubUrl" variant="primary" size="sm" class="flex-1" @click="openProject">
+          <BaseButton v-if="!project.liveUrl && project.githubUrl" variant="primary" size="sm" class="flex-1">
             <Eye class="w-4 h-4 mr-2" />
-            <span>View</span>
+            <span>{{ $t('projects.cta_details') || 'View Details' }}</span>
           </BaseButton>
         </div>
       </div>
-  </div>
+    </div>
+  </router-link>
 </template>
 
 <script setup lang="ts">
 import { Github, ExternalLink, CheckCircle, Eye } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
 import BaseButton from '../atoms/Button.vue'
 import Badge from '../atoms/Badge.vue'
+import type { ProjectListItem } from '../../types/project'
+import { getLocalized } from '../../utils/i18n'
 
-interface Project {
-  id: number
-  title: string
-  description: string
-  longDescription?: string
-  category: string
-  technologies: string[]
-  image: string
-  githubUrl?: string
-  liveUrl?: string
-  features: string[]
-  status: 'completed' | 'in-progress' | 'planned'
+const { locale, t } = useI18n()
+
+// Adapter for backward compatibility
+interface ProjectCardProps {
+  project: ProjectListItem
 }
 
-interface Props {
-  project: Project
+// Define props using the adapter interface
+const props = defineProps<ProjectCardProps>()
+
+// Function to get default image
+const getDefaultImage = () => {
+  return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23374151'/%3E%3Ctext x='200' y='150' text-anchor='middle' fill='%23ffffff' font-family='Arial' font-size='16'%3EProject Image%3C/text%3E%3C/svg%3E"
 }
 
-defineProps<Props>()
+// Computed properties to map new data structure to the expected format
+const project = {
+  get id() { return props.project.id },
+  get title() { return getLocalized(props.project, 'title', locale.value) },
+  get description() { return getLocalized(props.project, 'description', locale.value) },
+  get category() { return props.project.category || 'Uncategorized' },
+  get technologies() { return props.project.technologies || [] },
+  get image() { return props.project.thumbnailUrl || getDefaultImage() },
+  get githubUrl() { return props.project.githubUrl },
+  get liveUrl() { return props.project.liveDemoUrl },
+  get features() { 
+    // Extract features from localized description if available
+    const desc = getLocalized(props.project, 'description', locale.value)
+    const descParts = desc.split('. ')
+    return descParts.length > 1 ? descParts : [desc]
+  },
+  get status() {
+    // Map status from ProjectStatus to UI status
+    switch (props.project.status) {
+      case 'published': return 'completed'
+      case 'draft': return 'in-progress'
+      case 'private': return 'planned'
+      default: return 'in-progress'
+    }
+  }
+}
 
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement
-  // Use a data URL SVG placeholder
-  target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23374151'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='%23ffffff' font-family='Arial' font-size='16'%3EProject Image%3C/text%3E%3Ctext x='200' y='160' text-anchor='middle' fill='%23ffffff' font-family='Arial' font-size='12'%3ELoading Failed%3C/text%3E%3C/svg%3E"
+  target.src = getDefaultImage()
 }
 
 const getStatusClass = (status: string) => {
@@ -152,22 +181,17 @@ const getStatusClass = (status: string) => {
   }
 }
 
-const getStatusText = (status: string) => {
+const getTranslatedStatus = (status: string) => {
   switch (status) {
     case 'completed':
-      return 'Completed'
+      return t('projects.status_completed') || 'Completed'
     case 'in-progress':
-      return 'In Progress'
+      return t('projects.status_in_progress') || 'In Progress'
     case 'planned':
-      return 'Planned'
+      return t('projects.status_planned') || 'Planned'
     default:
-      return 'Unknown'
+      return t('projects.status_unknown') || 'Unknown'
   }
-}
-
-const openProject = () => {
-  // Could open a modal or navigate to project detail page
-  console.log('Open project details')
 }
 </script>
 

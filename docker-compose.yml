@@ -1,11 +1,12 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  web:
-    image: ghcr.io/rihanodev/web-portofolio-frontend:latest
-    container_name: web-portofolio-frontend
+  # Production service (Port 1500-2000)
+  web-prod:
+    image: rihanodev/web-porto-frontend:latest
+    container_name: web-porto-frontend-prod
     ports:
-      - "8080:80"
+      - "1500:80"
     restart: unless-stopped
     environment:
       - NODE_ENV=production
@@ -16,4 +17,24 @@ services:
       retries: 3
       start_period: 40s
     labels:
-      - "com.docker.compose.project=web-portofolio" 
+      - "com.docker.compose.project=web-porto"
+      - "com.docker.compose.environment=production"
+
+  # Development service (Port 2500-3000)
+  web-dev:
+    image: rihanodev/web-porto-frontend:dev-latest
+    container_name: web-porto-frontend-dev
+    ports:
+      - "2500:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "com.docker.compose.project=web-porto"
+      - "com.docker.compose.environment=development"

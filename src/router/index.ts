@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import type { 
+import type {
   RouteRecordRaw,
   RouteLocationNormalized,
-  RouteLocationNormalizedLoaded 
+  RouteLocationNormalizedLoaded
 } from 'vue-router'
 import Home from '../views/Home.vue'
 
@@ -23,9 +23,21 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../views/Projects.vue')
   },
   {
+    path: '/project/:slug',
+    name: 'project-detail',
+    component: () => import('../views/ProjectDetail.vue'),
+    props: true
+  },
+  {
     path: '/articles',
     name: 'articles',
     component: () => import('../views/Articles.vue')
+  },
+  {
+    path: '/article/:slug',
+    name: 'article-detail',
+    component: () => import('../views/ArticleDetail.vue'),
+    props: true
   },
   {
     path: '/contact',
@@ -36,6 +48,16 @@ const routes: RouteRecordRaw[] = [
     path: '/resume',
     name: 'resume',
     component: () => import('../views/Resume.vue')
+  },
+  {
+    path: '/privacy',
+    name: 'privacy',
+    component: () => import('../views/Privacy.vue')
+  },
+  {
+    path: '/terms',
+    name: 'terms',
+    component: () => import('../views/Terms.vue')
   },
   // Handle 404
   {

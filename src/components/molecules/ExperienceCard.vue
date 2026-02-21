@@ -20,15 +20,15 @@
       <!-- Period Badge -->
       <div class="mb-4">
         <span class="inline-block px-4 py-2 bg-gradient text-white text-sm font-semibold rounded-full">
-          {{ experience.period }}
+          {{ formatPeriod(experience) }}
         </span>
       </div>
 
       <!-- Company & Logo -->
       <div class="flex items-center mb-4" :class="{ 'md:justify-end': !isLeft }">
-        <div v-if="experience.logo && isLeft" class="w-12 h-12 mr-4 rounded-lg overflow-hidden bg-white/10 flex items-center justify-center">
+        <div v-if="experience.logoUrl && isLeft" class="w-12 h-12 mr-4 rounded-lg overflow-hidden bg-white/10 flex items-center justify-center">
           <img 
-            :src="experience.logo" 
+            :src="experience.logoUrl" 
             :alt="experience.company"
             class="w-8 h-8 object-contain"
             @error="handleImageError"
@@ -39,16 +39,16 @@
           <h3 class="text-xl font-bold text-primary mb-1">{{ experience.title }}</h3>
           <div class="flex items-center gap-2" :class="{ 'md:justify-end': !isLeft }">
             <h4 class="text-accent font-semibold">{{ experience.company }}</h4>
-            <span class="text-xs px-2 py-1 rounded-full" :class="getTypeClass(experience.type)">
-              {{ getTypeText(experience.type) }}
+            <span class="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-400">
+              Full-time
             </span>
           </div>
           <p class="text-sm text-secondary">{{ experience.location }}</p>
         </div>
 
-        <div v-if="experience.logo && !isLeft" class="w-12 h-12 ml-4 rounded-lg overflow-hidden bg-white/10 flex items-center justify-center">
+        <div v-if="experience.logoUrl && !isLeft" class="w-12 h-12 ml-4 rounded-lg overflow-hidden bg-white/10 flex items-center justify-center">
           <img 
-            :src="experience.logo" 
+            :src="experience.logoUrl" 
             :alt="experience.company"
             class="w-8 h-8 object-contain"
             @error="handleImageError"
@@ -61,34 +61,34 @@
         {{ experience.description }}
       </p>
 
-      <!-- Key Achievements -->
+      <!-- Key Responsibilities -->
       <div class="mb-6">
         <h5 class="font-semibold text-primary mb-3 flex items-center gap-2" :class="{ 'md:justify-end': !isLeft }">
           <Trophy class="w-4 h-4 text-accent" />
-          Key Achievements
+          Key Responsibilities
         </h5>
         <ul class="space-y-2" :class="{ 'md:text-right': !isLeft }">
           <li 
-            v-for="achievement in experience.achievements.slice(0, 3)" 
-            :key="achievement"
+            v-for="responsibility in experience.responsibilities.slice(0, 3)" 
+            :key="responsibility"
             class="flex items-start gap-2 text-sm text-secondary"
             :class="{ 'md:flex-row-reverse': !isLeft }"
           >
             <CheckCircle class="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-            <span>{{ achievement }}</span>
+            <span>{{ responsibility }}</span>
           </li>
           
-          <!-- Show more achievements on hover -->
-          <div v-if="experience.achievements.length > 3" class="overflow-hidden">
+          <!-- Show more responsibilities on hover -->
+          <div v-if="experience.responsibilities.length > 3" class="overflow-hidden">
             <div class="max-h-0 group-hover:max-h-40 transition-all duration-500 space-y-2">
               <li 
-                v-for="achievement in experience.achievements.slice(3)" 
-                :key="achievement"
+                v-for="responsibility in experience.responsibilities.slice(3)" 
+                :key="responsibility"
                 class="flex items-start gap-2 text-sm text-secondary opacity-70"
                 :class="{ 'md:flex-row-reverse': !isLeft }"
               >
                 <CheckCircle class="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-                <span>{{ achievement }}</span>
+                <span>{{ responsibility }}</span>
               </li>
             </div>
           </div>
@@ -104,10 +104,10 @@
         <div class="flex flex-wrap gap-2" :class="{ 'md:justify-end': !isLeft }">
           <span 
             v-for="tech in experience.technologies" 
-            :key="tech"
+            :key="tech.id"
             class="px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full border border-accent/20"
           >
-            {{ tech }}
+            {{ tech.name }}
           </span>
         </div>
       </div>
@@ -117,19 +117,7 @@
 
 <script setup lang="ts">
 import { Trophy, CheckCircle, Code } from 'lucide-vue-next'
-
-interface Experience {
-  id: number
-  title: string
-  company: string
-  location: string
-  period: string
-  type: 'full-time' | 'freelance' | 'contract'
-  description: string
-  achievements: string[]
-  technologies: string[]
-  logo?: string
-}
+import type { Experience } from '../../types/experience'
 
 interface Props {
   experience: Experience
@@ -144,30 +132,25 @@ const handleImageError = (event: Event) => {
   target.src = '/default-company.svg'
 }
 
-const getTypeClass = (type: string) => {
-  switch (type) {
-    case 'full-time':
-      return 'bg-green-500/20 text-green-400'
-    case 'freelance':
-      return 'bg-blue-500/20 text-blue-400'
-    case 'contract':
-      return 'bg-yellow-500/20 text-yellow-400'
-    default:
-      return 'bg-gray-500/20 text-gray-400'
+const formatPeriod = (experience: Experience): string => {
+  const startDate = new Date(experience.startDate).toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'short' 
+  })
+  
+  if (experience.current) {
+    return `${startDate} - Present`
   }
-}
-
-const getTypeText = (type: string) => {
-  switch (type) {
-    case 'full-time':
-      return 'Full-time'
-    case 'freelance':
-      return 'Freelance'
-    case 'contract':
-      return 'Contract'
-    default:
-      return 'Unknown'
+  
+  if (experience.endDate) {
+    const endDate = new Date(experience.endDate).toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short' 
+    })
+    return `${startDate} - ${endDate}`
   }
+  
+  return startDate
 }
 </script>
 

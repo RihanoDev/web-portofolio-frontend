@@ -5,9 +5,16 @@ import './styles/variables.css'
 import './styles/global-background.css'
 import './styles/components/floating-tech-icons.css'
 import { useTheme } from './composables/useTheme'
+import { useGlobalAnalytics } from './composables/useAnalytics'
+import { useRoute } from 'vue-router'
+import FloatingViewCounter from './components/molecules/FloatingViewCounter.vue'
 
 // Initialize theme system
-const { currentTheme } = useTheme()
+useTheme()
+
+// Initialize analytics
+const analytics = useGlobalAnalytics()
+const route = useRoute()
 
 // Lazy load FontAwesome only when needed
 const loadFontAwesome = async () => {
@@ -22,18 +29,32 @@ const loadFontAwesome = async () => {
   }
 }
 
+// Initialize session and track visitor
+const initializeAnalytics = () => {
+  analytics.initializeAnalytics()
+  
+  // Ensure we track the root page view
+  if (route.path === '/') {
+    analytics.trackPageView('/')
+  }
+}
+
 onMounted(() => {
   // Theme is automatically applied by the useTheme composable
-  console.log('Current theme:', currentTheme.value.name)
+  
   
   // Load FontAwesome lazily
   loadFontAwesome()
+  
+  // Initialize analytics
+  initializeAnalytics()
 })
 </script>
 
 <template>
   <DefaultLayout>
     <router-view />
+    <FloatingViewCounter />
   </DefaultLayout>
 </template>
 
