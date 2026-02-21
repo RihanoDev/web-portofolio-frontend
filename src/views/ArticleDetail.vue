@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen pt-20">
+  <div class="min-h-screen">
     <div class="container mx-auto px-4 py-10">
       <div class="max-w-4xl mx-auto">
         <!-- Loading State -->
