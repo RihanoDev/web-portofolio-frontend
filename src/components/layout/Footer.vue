@@ -49,23 +49,23 @@
             
             <!-- Contact Info -->
             <div class="space-y-4 mb-6">
-              <a href="mailto:rihanodev@gmail.com" class="flex items-center gap-3 footer-link group transition-all duration-300">
+              <a :href="'mailto:' + profileData.email" class="flex items-center gap-3 footer-link group transition-all duration-300">
                 <div class="w-8 h-8 rounded-lg glass-subtle flex items-center justify-center transition-colors flex-shrink-0">
                   <Mail class="w-4 h-4" style="color: var(--color-accent);" />
                 </div>
-                <span class="text-sm">rihanodev@gmail.com</span>
+                <span class="text-sm">{{ profileData.email }}</span>
               </a>
-              <a href="tel:+6281214768206" class="flex items-center gap-3 footer-link group transition-all duration-300">
+              <a :href="'tel:' + profileData.phone.replace(/[^0-9+]/g, '')" class="flex items-center gap-3 footer-link group transition-all duration-300">
                 <div class="w-8 h-8 rounded-lg glass-subtle flex items-center justify-center transition-colors flex-shrink-0">
                   <Phone class="w-4 h-4" style="color: var(--color-accent);" />
                 </div>
-                <span class="text-sm">+62 812-1476-8206</span>
+                <span class="text-sm">{{ profileData.phone }}</span>
               </a>
               <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-lg glass-subtle flex items-center justify-center flex-shrink-0">
                   <MapPin class="w-4 h-4" style="color: var(--color-accent);" />
                 </div>
-                <span class="text-sm" style="color: var(--color-text-secondary);">Bandung, West Java, Indonesia</span>
+                <span class="text-sm" style="color: var(--color-text-secondary);">{{ profileData.location }}</span>
               </div>
             </div>
 
@@ -147,7 +147,32 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { Mail, Phone, MapPin, Linkedin, Github, Instagram } from 'lucide-vue-next'
+import { getProfileSettings, type ProfileData } from '../../services/profile'
+
+const profileData = ref<ProfileData>({
+  name: '',
+  title: '',
+  bio: '',
+  avatarUrl: '',
+  aboutSubtitle: '',
+  aboutDescription1: '',
+  aboutDescription2: '',
+  aboutDescription3: '',
+  coreExpertise: [],
+  location: 'Jakarta, Indonesia',
+  email: 'rihanodev@gmail.com',
+  phone: '+62 812-3456-7890'
+})
+
+onMounted(async () => {
+  try {
+    profileData.value = await getProfileSettings()
+  } catch (e) {
+    console.error("Error loading profile:", e)
+  }
+})
 </script>
 
 <style scoped>

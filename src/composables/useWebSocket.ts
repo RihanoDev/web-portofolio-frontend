@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
 // Using event emitter pattern for view count updates
 import mitt from 'mitt'
 
@@ -48,11 +48,11 @@ export function useWebSocket() {
     }
 
     connectionStatus.value = 'connecting'
-    
+
     // Determine WebSocket URL based on environment
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
     let wsUrl: string
-    
+
     if (import.meta.env.DEV) {
       // Development WebSocket endpoint (hardcoded for now)
       wsUrl = 'ws://localhost:8080/ws/analytics'
@@ -60,28 +60,28 @@ export function useWebSocket() {
       // Production WebSocket endpoint (same domain as the API)
       wsUrl = `${protocol}://${window.location.host}/ws/analytics`
     }
-    
+
     try {
       socket.value = new WebSocket(wsUrl)
-      
+
       socket.value.onopen = () => {
         connectionStatus.value = 'connected'
         reconnectAttempts.value = 0
         console.log('WebSocket connection established')
       }
-      
+
       socket.value.onmessage = (event: MessageEvent) => {
         try {
           const message: WebSocketMessage = JSON.parse(event.data)
           lastMessage.value = message
-          
+
           if (message.type === 'view_counts' && message.data) {
             const counts = message.data as ViewCountsUpdate
             const channel = message.channel || 'global'
-            
+
             // Update view counts for the specific page or global
             viewCounts.value[channel] = counts
-            
+
             // Emit event with updated view counts
             viewCountEventEmitter.emit('viewCountsUpdated', {
               channel,
@@ -92,7 +92,7 @@ export function useWebSocket() {
           console.error('Failed to parse WebSocket message:', err)
         }
       }
-      
+
       socket.value.onclose = (event) => {
         if (event.wasClean) {
           console.log(`WebSocket connection closed cleanly, code=${event.code}, reason=${event.reason}`)
@@ -103,7 +103,7 @@ export function useWebSocket() {
         }
         connectionStatus.value = 'disconnected'
       }
-      
+
       socket.value.onerror = (error) => {
         console.error('WebSocket error:', error)
         connectionStatus.value = 'error'
@@ -114,7 +114,7 @@ export function useWebSocket() {
       reconnect()
     }
   }
-  
+
   // Close WebSocket connection
   const disconnectWebSocket = () => {
     if (socket.value) {
@@ -123,28 +123,28 @@ export function useWebSocket() {
       connectionStatus.value = 'disconnected'
     }
   }
-  
+
   // Reconnect with exponential backoff
   const reconnect = () => {
     if (reconnectAttempts.value >= maxReconnectAttempts) {
       console.log('Max reconnect attempts reached')
       return
     }
-    
+
     reconnectAttempts.value++
     const delay = reconnectDelay * Math.pow(2, reconnectAttempts.value - 1)
-    
+
     setTimeout(() => {
       console.log(`Attempting to reconnect (${reconnectAttempts.value}/${maxReconnectAttempts})`)
       connectWebSocket()
     }, delay)
   }
-  
+
   // Check if WebSocket is connected
   const isConnected = () => {
     return socket.value?.readyState === WebSocket.OPEN
   }
-  
+
   // Send message to WebSocket server
   const sendMessage = (message: any) => {
     if (isConnected() && socket.value) {
@@ -153,7 +153,7 @@ export function useWebSocket() {
     }
     return false
   }
-  
+
   // Get view counts for a specific page
   const getViewCounts = (page?: string) => {
     if (!page) {
@@ -166,7 +166,7 @@ export function useWebSocket() {
         unique: 0
       }
     }
-    
+
     // Look for page-specific counts
     const key = `page:${page}`
     return viewCounts.value[key] || {
@@ -179,13 +179,9 @@ export function useWebSocket() {
     }
   }
 
-  onMounted(() => {
-    connectWebSocket()
-  })
-
-  onUnmounted(() => {
-    disconnectWebSocket()
-  })
+  // Note: connectWebSocket and disconnectWebSocket are called explicitly by the consumer.
+  // onMounted/onUnmounted are intentionally NOT used here because this composable
+  // may be called outside of a component's synchronous setup() context.
 
   return {
     socket,

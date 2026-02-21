@@ -22,10 +22,7 @@
                style="background: var(--gradient-primary);"></div>
           <p class="text-xl max-w-3xl mx-auto leading-relaxed" 
              style="color: var(--color-text-secondary);">
-            <span class="font-semibold" style="color: var(--color-accent);">Passionate backend engineer</span> with expertise in building 
-            <span class="font-semibold" style="color: var(--color-accent);">scalable, high-performance systems</span>. 
-            Dedicated to <span class="font-semibold" style="color: var(--color-accent);">clean code</span>, best practices, and 
-            <span class="font-semibold" style="color: var(--color-accent);">continuous learning</span> in the ever-evolving tech landscape.
+            {{ profileData.aboutSubtitle || profileData.aboutDescription1 }}
           </p>
         </div>
 
@@ -34,13 +31,13 @@
           <div class="glass-subtle rounded-xl p-6 border transition-all duration-300 group hover:scale-105"
                style="border-color: rgba(255, 255, 255, 0.1);">
             <div class="text-3xl font-bold mb-2 group-hover:scale-110 transition-transform" 
-                 style="color: var(--color-accent);">3+</div>
+                 style="color: var(--color-accent);">{{ yearsExperience }}+</div>
             <div class="text-sm" style="color: var(--color-text-secondary);">Years of Experience</div>
           </div>
           <div class="glass-subtle rounded-xl p-6 border transition-all duration-300 group hover:scale-105"
                style="border-color: rgba(255, 255, 255, 0.1);">
             <div class="text-3xl font-bold mb-2 group-hover:scale-110 transition-transform" 
-                 style="color: var(--color-accent);">50+</div>
+                 style="color: var(--color-accent);">{{ projectsCompleted }}+</div>
             <div class="text-sm" style="color: var(--color-text-secondary);">Projects Completed</div>
           </div>
           <div class="glass-subtle rounded-xl p-6 border transition-all duration-300 group hover:scale-105"
@@ -154,7 +151,50 @@
 </template>
 
 <script setup lang="ts">
-// Component logic will be here if needed
+import { ref, onMounted } from 'vue'
+import { getProfileSettings, type ProfileData } from '../../services/profile'
+import { fetchExperiences } from '../../services/experiences'
+import { fetchPublishedProjects } from '../../services/projects'
+
+const yearsExperience = ref<number>(0)
+const projectsCompleted = ref<number>(0)
+
+const profileData = ref<ProfileData>({
+  name: 'Rizky Haffiyan Roseno',
+  title: 'Backend Engineer · Go · Microservices · Cloud',
+  bio: 'Passionate about building high-performance APIs, cloud-native architectures, and scalable backend systems that power exceptional user experiences.',
+  avatarUrl: '/profile.jpg',
+  aboutSubtitle: 'Backend engineer yang fokus pada hasil: reliabel, terukur, dan sederhana untuk dioperasikan.',
+  aboutDescription1: 'Saya membangun backend yang cepat dan robust dengan Go, fokus pada microservices, transaksi konsisten, dan API ber-throughput tinggi.',
+  aboutDescription2: 'Beberapa hasil: memangkas p95 response hingga 40% lewat indexing dan caching, meningkatkan uptime jadi 99.9% dengan observability dan circuit breaker, serta menurunkan waktu rilis lewat CI/CD yang rapih.',
+  aboutDescription3: 'Prinsip saya: kirim bernilai bisnis, ukur dengan metrik, dan jaga agar sistem mudah dirawat.',
+  coreExpertise: [],
+  location: 'Jakarta, Indonesia',
+  email: 'rihanodev@gmail.com',
+  phone: '+62 812-3456-7890'
+})
+
+onMounted(async () => {
+  try {
+    profileData.value = await getProfileSettings()
+  } catch (e) {
+    console.error("Error loading profile:", e)
+  }
+
+  try {
+    const experiences = await fetchExperiences()
+    if (experiences && experiences.length > 0) {
+      const earliestYear = Math.min(...experiences.map(exp => new Date(exp.startDate).getFullYear()))
+      const currentYear = new Date().getFullYear()
+      yearsExperience.value = currentYear - earliestYear
+    }
+  } catch(e) { console.error(e) }
+
+  try {
+    const projects = await fetchPublishedProjects()
+    projectsCompleted.value = projects.length
+  } catch(e) { console.error(e) }
+})
 </script>
 
 <style scoped>

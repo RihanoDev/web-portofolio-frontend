@@ -2,9 +2,10 @@
   <div class="floating-view-counter">
     <!-- Floating View Counter -->
     <div 
-      class="fixed bottom-6 right-6 z-40 view-counter-glass rounded-full p-3 shadow-lg cursor-pointer group transition-all duration-300 hover:scale-105"
+      class="fixed bottom-6 right-6 z-50 view-counter-glass rounded-full p-3 shadow-lg cursor-pointer group transition-all duration-300 hover:scale-105"
       @mouseenter="showDetails = true"
       @mouseleave="showDetails = false"
+      @click.stop="showDetails = !showDetails"
     >
       <!-- Main Counter Display -->
       <div class="flex items-center space-x-2 text-sm">
@@ -23,8 +24,9 @@
         leave-to-class="transform scale-95 opacity-0"
       >
         <div 
-          v-if="showDetails && !isLoading"
+          v-if="showDetails"
           class="absolute bottom-full right-0 mb-3 view-counter-tooltip rounded-lg p-4 shadow-xl whitespace-nowrap min-w-[200px]"
+          @click.stop
         >
           <div class="space-y-2">
             <div class="text-sm font-semibold mb-3 flex items-center gap-2" style="color: var(--color-accent);">
@@ -97,7 +99,7 @@ const currentPath = computed(() => route.path)
 const analytics = useGlobalAnalytics()
 
 // WebSocket composable for real-time updates
-const { connectionStatus, connectWebSocket } = useWebSocket()
+const { connectionStatus, connectWebSocket, disconnectWebSocket } = useWebSocket()
 const isConnected = computed(() => connectionStatus.value === 'connected')
 
 // Visibility state to reconnect when tab becomes visible
@@ -114,6 +116,11 @@ watch(isVisible, (visible) => {
 const showDetails = ref(false)
 let cleanup: (() => void) | null = null
 
+// Close tooltip when clicking outside
+const handleOutsideClick = () => {
+  showDetails.value = false
+}
+
 // Computed properties from analytics
 const totalViews = computed(() => analytics.totalViews)
 const todayViews = computed(() => analytics.todayViews)
@@ -128,36 +135,18 @@ const formatNumber = (num: number) => {
   return analytics.formatNumber(num)
 }
 
-// Initialize analytics on mount
-onMounted(async () => {
+  onMounted(async () => {
   try {
     console.log('FloatingViewCounter: Initializing analytics...')
-    console.log('FloatingViewCounter: Environment variables:', {
-      VITE_ANALYTICS_API_URL: import.meta.env.VITE_ANALYTICS_API_URL,
-      VITE_ENABLE_ANALYTICS: import.meta.env.VITE_ENABLE_ANALYTICS,
-      VITE_DEBUG_ANALYTICS: import.meta.env.VITE_DEBUG_ANALYTICS
-    })
     
     // Initialize analytics with demo data
     await analytics.initializeAnalytics()
-    console.log('FloatingViewCounter: Demo data initialized')
     
     // Start tracking for current page with WebSocket support
-    cleanup = analytics.startTracking(currentPath.value, 60000) // WebSocket for real-time, fallback to polling every minute
-    console.log('FloatingViewCounter: Started tracking for path:', currentPath.value)
-    
-    // Monitor loading state
-    const monitor = setInterval(() => {
-      console.log('FloatingViewCounter: Loading state:', isLoading.value, 'Total views:', totalViews.value)
-      if (!isLoading.value) {
-        clearInterval(monitor)
-        console.log('FloatingViewCounter: Loading completed!')
-      }
-    }, 1000)
-    
-    // Clear monitor after 10 seconds anyway
-    setTimeout(() => clearInterval(monitor), 10000)
-    
+    cleanup = analytics.startTracking(currentPath.value, 60000)
+
+    // Listen for outside clicks to close tooltip
+    document.addEventListener('click', handleOutsideClick)
   } catch (err) {
     console.error('Failed to initialize floating view counter:', err)
   }
@@ -168,6 +157,8 @@ onUnmounted(() => {
   if (cleanup) {
     cleanup()
   }
+  disconnectWebSocket()
+  document.removeEventListener('click', handleOutsideClick)
 })
 </script>
 

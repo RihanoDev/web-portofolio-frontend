@@ -28,20 +28,20 @@
               <ContactInfo 
                 icon="Mail"
                 title="Email"
-                content="rihanodev@gmail.com"
-                href="mailto:rihanodev@gmail.com"
+                :content="profileData.email"
+                :href="'mailto:' + profileData.email"
               />
               <ContactInfo 
                 icon="Phone"
                 title="Phone"
-                content="+62 812-3456-7890"
-                href="tel:+628123456789"
+                :content="profileData.phone"
+                :href="'tel:' + profileData.phone.replace(/[^0-9+]/g, '')"
               />
               <ContactInfo 
                 icon="MapPin"
                 title="Location"
-                content="Jakarta, Indonesia"
-                href="https://maps.google.com/?q=Jakarta,Indonesia"
+                :content="profileData.location"
+                :href="'https://maps.google.com/?q=' + profileData.location"
               />
               <ContactInfo 
                 icon="Clock"
@@ -179,10 +179,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { Send, Loader2, Lightbulb, Code, Rocket } from 'lucide-vue-next'
 import ContactInfo from '../molecules/ContactInfo.vue'
 import BaseButton from '../atoms/Button.vue'
+import { getProfileSettings, type ProfileData } from '../../services/profile'
+
+const profileData = ref<ProfileData>({
+  name: 'Rizky Haffiyan Roseno',
+  title: 'Backend Engineer',
+  bio: '',
+  avatarUrl: '/profile.jpg',
+  aboutSubtitle: '',
+  aboutDescription1: '',
+  aboutDescription2: '',
+  aboutDescription3: '',
+  coreExpertise: [],
+  location: 'Jakarta, Indonesia',
+  email: 'rihanodev@gmail.com',
+  phone: '+62 812-3456-7890'
+})
+
+onMounted(async () => {
+  try {
+    profileData.value = await getProfileSettings()
+  } catch (e) {
+    console.error("Error loading profile:", e)
+  }
+})
 
 const isSubmitting = ref(false)
 const submitStatus = reactive({
