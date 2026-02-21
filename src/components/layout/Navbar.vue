@@ -107,18 +107,37 @@
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- Mobile Menu Overlay Background -->
+      <transition
+        enter-active-class="transition-opacity duration-300"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition-opacity duration-300"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <div 
+          v-if="isOpen" 
+          @click="isOpen = false"
+          class="absolute bg-black/50 z-40 xl:hidden backdrop-blur-sm"
+          style="top: 100%; left: 0; right: 0; height: calc(100dvh - 4rem);"
+        ></div>
+      </transition>
 
       <!-- Mobile Navigation Dropdown -->
       <transition
-        enter-active-class="transition duration-200 ease-out"
-        enter-from-class="transform scale-95 opacity-0"
-        enter-to-class="transform scale-100 opacity-100"
-        leave-active-class="transition duration-150 ease-in"
-        leave-from-class="transform scale-100 opacity-100"
-        leave-to-class="transform scale-95 opacity-0"
+        enter-active-class="transition duration-300 ease-out"
+        enter-from-class="transform translate-x-full opacity-0"
+        enter-to-class="transform translate-x-0 opacity-100"
+        leave-active-class="transition duration-300 ease-in"
+        leave-from-class="transform translate-x-0 opacity-100"
+        leave-to-class="transform translate-x-full opacity-0"
       >
-        <div v-if="isOpen" class="absolute top-full xl:hidden mt-2 left-4 right-4">
-          <div class="mobile-dropdown rounded-xl shadow-2xl overflow-hidden ml-auto max-w-sm">
+        <div v-if="isOpen" class="absolute z-50 xl:hidden w-[85vw] sm:w-80 overflow-y-auto bg-transparent border-l border-white/10 hide-scrollbar"
+             style="top: 100%; right: 0; height: calc(100dvh - 4rem);">
+          <div class="mobile-dropdown min-h-full rounded-none shadow-2xl flex flex-col bg-opacity-95 backdrop-blur-xl pb-8" style="min-width: unset; width: 100%; border-top: none; border-right: none;">
             <!-- Navigation Links -->
             <div class="p-4 space-y-2">
               <router-link
@@ -184,7 +203,31 @@
               <div class="text-xs font-semibold uppercase tracking-wide px-2 mb-3" style="color: var(--color-text-secondary);">
                 {{ $t('nav.language') || 'Language' }}
               </div>
-              <LanguageSwitcher />
+              <!-- Mobile Language Selector -->
+              <div class="flex flex-col gap-2">
+                <button
+                  v-for="lang in availableLanguages"
+                  :key="lang.code"
+                  @click="selectLanguage(lang.code)"
+                  class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 group"
+                  :style="{ 
+                    background: currentLocale === lang.code ? 'var(--color-tertiary)' : 'transparent',
+                    borderColor: currentLocale === lang.code ? 'var(--color-accent)' : 'transparent',
+                    borderWidth: '1px',
+                    borderStyle: 'solid'
+                  }"
+                >
+                  <span class="text-lg">{{ lang.flag }}</span>
+                  <span class="text-xs transition-colors" style="color: var(--color-text-primary);">
+                    {{ lang.name }}
+                  </span>
+                  <Check 
+                    v-if="currentLocale === lang.code"
+                    class="w-3 h-3 ml-auto"
+                    style="color: var(--color-accent);"
+                  />
+                </button>
+              </div>
             </div>
 
             <!-- Divider -->
@@ -196,17 +239,18 @@
                 {{ $t('nav.theme') || 'Theme' }}
               </div>
               
-              <!-- Mobile Theme Grid -->
-              <div class="grid grid-cols-2 gap-2">
+              <!-- Mobile Theme Selector -->
+              <div class="flex flex-col gap-2">
                 <button
                   v-for="theme in availableThemes"
                   :key="theme.id"
                   @click="selectTheme(theme.id); isOpen = false"
-                  class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 group"
+                  class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 group"
                   :style="{ 
-                    background: currentThemeId === theme.id ? 'rgba(var(--color-tertiary), 0.7)' : 'rgba(var(--color-tertiary), 0.5)',
-                    borderColor: currentThemeId === theme.id ? 'rgba(var(--accent-rgb), 0.3)' : 'transparent',
-                    border: currentThemeId === theme.id ? '1px solid' : 'none'
+                    background: currentThemeId === theme.id ? 'var(--color-tertiary)' : 'transparent',
+                    borderColor: currentThemeId === theme.id ? 'var(--color-accent)' : 'transparent',
+                    borderWidth: '1px',
+                    borderStyle: 'solid'
                   }"
                 >
                   <!-- Color Preview -->
@@ -238,13 +282,13 @@
           </div>
         </div>
       </transition>
-    </div>
   </nav>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { Menu, X, FileText, Download, ExternalLink, Check } from 'lucide-vue-next'
 import ThemeSelector from '../atoms/ThemeSelector.vue'
 import LanguageSwitcher from './LanguageSwitcher.vue'
@@ -252,6 +296,18 @@ import { downloadResume, openResumeInNewTab } from '../../composables/useResume'
 import { useTheme } from '../../composables/useTheme'
 
 const route = useRoute()
+const { locale: currentLocale } = useI18n()
+
+const availableLanguages = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'id', name: 'Indonesia', flag: '🇮🇩' }
+]
+
+const selectLanguage = (code: string) => {
+  currentLocale.value = code
+  localStorage.setItem('locale', code)
+  isOpen.value = false
+}
 const isOpen = ref(false)
 
 // Theme functionality
@@ -275,13 +331,21 @@ const isActive = (path: string) => {
 </script>
 
 <style scoped>
-/* Custom Navbar */
 .custom-navbar {
   background: rgba(var(--color-secondary-rgb), 0.9);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hide scrollbar for mobile menu */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Clean Navigation Styles */
@@ -398,10 +462,9 @@ const isActive = (path: string) => {
 /* Responsive dropdown positioning */
 @media (max-width: 480px) {
   .mobile-dropdown {
-    width: calc(100vw - 2rem) !important;
-    right: 1rem !important;
-    left: 1rem !important;
-    transform-origin: top center;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: unset;
   }
 }
 
@@ -434,13 +497,6 @@ const isActive = (path: string) => {
     min-height: 44px;
     align-items: center;
     justify-content: center;
-  }
-  
-  /* Better touch targets for tablets */
-  .nav-link {
-    min-height: 44px;
-    display: flex;
-    align-items: center;
   }
 }
 
@@ -481,18 +537,16 @@ const isActive = (path: string) => {
 /* Small mobile devices */
 @media (max-width: 767px) {
   .mobile-dropdown {
-    max-width: 280px;
-    min-width: 260px;
-    margin-right: 0; /* Hapus margin extra, cukup dari right-4 saja */
+    max-width: 100%;
+    min-width: unset;
   }
 }
 
 /* Very small mobile devices */
 @media (max-width: 480px) {
   .mobile-dropdown {
-    max-width: 260px;
-    min-width: 240px;
-    margin-right: 0; /* Hapus margin extra */
+    max-width: 100%;
+    min-width: unset;
   }
 }
 </style>
