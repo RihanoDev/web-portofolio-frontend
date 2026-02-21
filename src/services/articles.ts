@@ -1,156 +1,145 @@
-import type { 
-  Article, 
-  ArticleListItem, 
-  ArticleTag, 
-  ArticleCategory 
-} from '../types/article'
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/v1'
+import type { Article, ArticleListItem, ArticleTag, ArticleCategory } from "../types/article";
+import { API_BASE_URL } from "./config";
 
 export async function fetchArticles(): Promise<ArticleListItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/articles`)
-    
+    const response = await fetch(`${API_BASE_URL}/articles`);
+
     if (!response.ok) {
-      throw new Error('Failed to fetch articles')
+      throw new Error("Failed to fetch articles");
     }
-    
-    const data = await response.json()
-    
+
+    const data = await response.json();
+
     // Handle paginated response format: { data: { data: [...], pagination: {...} } }
-    const responseData = data.data
-    const articles = Array.isArray(responseData?.data) ? responseData.data : 
-                    Array.isArray(responseData) ? responseData : []
-    
-    return articles
+    const responseData = data.data;
+    const articles = Array.isArray(responseData?.data) ? responseData.data : Array.isArray(responseData) ? responseData : [];
+
+    return articles;
   } catch (error) {
-    console.error('Error fetching articles:', error)
-    return []
+    console.error("Error fetching articles:", error);
+    return [];
   }
 }
 
 export async function fetchArticleBySlug(slug: string): Promise<Article | null> {
   try {
-    const response = await fetch(`${API_BASE_URL}/articles/slug/${slug}`)
-    
+    const response = await fetch(`${API_BASE_URL}/articles/slug/${slug}`);
+
     if (!response.ok) {
-      throw new Error(`Failed to fetch article with slug: ${slug}`)
+      throw new Error(`Failed to fetch article with slug: ${slug}`);
     }
-    
-    const data = await response.json()
-    return data.data
+
+    const data = await response.json();
+    return data.data;
   } catch (error) {
-    console.error(`Error fetching article with slug ${slug}:`, error)
-    return null
+    console.error(`Error fetching article with slug ${slug}:`, error);
+    return null;
   }
 }
 
 export async function fetchArticlesByCategory(slug: string): Promise<ArticleListItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/articles/category/${slug}`)
-    
+    const response = await fetch(`${API_BASE_URL}/articles/category/${slug}`);
+
     if (!response.ok) {
-      throw new Error(`Failed to fetch articles for category: ${slug}`)
+      throw new Error(`Failed to fetch articles for category: ${slug}`);
     }
-    
-    const data = await response.json()
-    
+
+    const data = await response.json();
+
     // Handle paginated response format: { data: { data: [...], pagination: {...} } }
-    const responseData = data.data
-    const articles = Array.isArray(responseData?.data) ? responseData.data : 
-                    Array.isArray(responseData) ? responseData : []
-    
-    return articles
+    const responseData = data.data;
+    const articles = Array.isArray(responseData?.data) ? responseData.data : Array.isArray(responseData) ? responseData : [];
+
+    return articles;
   } catch (error) {
-    console.error(`Error fetching articles for category ${slug}:`, error)
-    return []
+    console.error(`Error fetching articles for category ${slug}:`, error);
+    return [];
   }
 }
 
 export async function fetchArticlesByTag(name: string): Promise<ArticleListItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/articles/tag/${name}`)
-    
+    const response = await fetch(`${API_BASE_URL}/articles/tag/${name}`);
+
     if (!response.ok) {
-      throw new Error(`Failed to fetch articles for tag: ${name}`)
+      throw new Error(`Failed to fetch articles for tag: ${name}`);
     }
-    
-    const data = await response.json()
-    
+
+    const data = await response.json();
+
     // Handle paginated response format: { data: { data: [...], pagination: {...} } }
-    const responseData = data.data
-    const articles = Array.isArray(responseData?.data) ? responseData.data : 
-                    Array.isArray(responseData) ? responseData : []
-    
-    return articles
+    const responseData = data.data;
+    const articles = Array.isArray(responseData?.data) ? responseData.data : Array.isArray(responseData) ? responseData : [];
+
+    return articles;
   } catch (error) {
-    console.error(`Error fetching articles for tag ${name}:`, error)
-    return []
+    console.error(`Error fetching articles for tag ${name}:`, error);
+    return [];
   }
 }
 
 export async function fetchArticleCategories(): Promise<ArticleCategory[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/categories`)
-    
+    const response = await fetch(`${API_BASE_URL}/categories`);
+
     if (!response.ok) {
-      throw new Error('Failed to fetch article categories')
+      throw new Error("Failed to fetch article categories");
     }
-    
-    const data = await response.json()
-    
+
+    const data = await response.json();
+
     // Handle paginated response format: { data: { data: [...], pagination: {...} } }
-    const responseData = data.data
-    const categories = Array.isArray(responseData?.data) ? responseData.data : 
-                      Array.isArray(responseData) ? responseData : []
-    
-    return categories
+    const responseData = data.data;
+    const categories = Array.isArray(responseData?.data) ? responseData.data : Array.isArray(responseData) ? responseData : [];
+
+    return categories;
   } catch (error) {
-    console.error('Error fetching article categories:', error)
-    return []
+    console.error("Error fetching article categories:", error);
+    return [];
   }
 }
 
 export async function fetchArticleTags(): Promise<ArticleTag[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/tags`)
-    
+    const response = await fetch(`${API_BASE_URL}/tags`);
+
     if (!response.ok) {
-      throw new Error('Failed to fetch article tags')
+      throw new Error("Failed to fetch article tags");
     }
-    
-    const data = await response.json()
-    
+
+    const data = await response.json();
+
     // Handle paginated response format: { data: { data: [...], pagination: {...} } }
-    const responseData = data.data
-    const tags = Array.isArray(responseData?.data) ? responseData.data : 
-                Array.isArray(responseData) ? responseData : []
-    
-    return tags
+    const responseData = data.data;
+    const tags = Array.isArray(responseData?.data) ? responseData.data : Array.isArray(responseData) ? responseData : [];
+
+    return tags;
   } catch (error) {
-    console.error('Error fetching article tags:', error)
-    return []
+    console.error("Error fetching article tags:", error);
+    return [];
   }
 }
 
-// Track article view 
+// Track article view
 export async function trackArticleView(articleId: string): Promise<void> {
   try {
     const response = await fetch(`${API_BASE_URL}/analytics/track`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        type: 'article_view',
+        type: "article_view",
         entityId: articleId,
       }),
-    })
-    
+    });
+
     if (!response.ok) {
-      throw new Error(`Failed to track article view for ID: ${articleId}`)
+      throw new Error(`Failed to track article view for ID: ${articleId}`);
     }
   } catch (error) {
-    console.error(`Error tracking article view for ID ${articleId}:`, error)
+    console.error(`Error tracking article view for ID ${articleId}:`, error);
   }
 }
