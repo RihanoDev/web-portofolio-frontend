@@ -33,24 +33,35 @@
 
         <!-- Experiences Horizontal Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <BaseCard v-for="exp in experiences" :key="exp.id" padding="lg">
-            <div class="flex items-start gap-3 mb-3">
-              <div class="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
-                <i class="fas fa-briefcase text-accent"></i>
+          <!-- Loading State -->
+          <div v-if="isLoading" class="col-span-3 py-16 text-center">
+            <p class="text-secondary text-lg">Loading experiences...</p>
+          </div>
+          <!-- Empty State -->
+          <div v-else-if="experiences.length === 0" class="col-span-3 py-16 text-center">
+            <p class="text-secondary text-lg">No experience data available yet.</p>
+          </div>
+          <!-- Experience Cards -->
+          <template v-else>
+            <BaseCard v-for="exp in experiences" :key="exp.id" padding="lg">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
+                  <i class="fas fa-briefcase text-accent"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-primary">{{ exp.title }}</h3>
+                  <p class="text-sm text-secondary">{{ exp.company }} • {{ exp.location }}</p>
+                  <p class="text-xs text-accent">{{ formatPeriod(exp.startDate, exp.endDate, exp.current) }}</p>
+                </div>
               </div>
-              <div>
-                <h3 class="text-lg font-semibold text-primary">{{ exp.title }}</h3>
-                <p class="text-sm text-secondary">{{ exp.company }} • {{ exp.location }}</p>
-                <p class="text-xs text-accent">{{ formatPeriod(exp.startDate, exp.endDate, exp.current) }}</p>
+              <p class="text-sm text-secondary mb-3">{{ exp.description }}</p>
+              <div class="flex flex-wrap gap-1">
+                <span v-for="t in exp.technologies" :key="t.id" class="px-2 py-1 text-xs bg-accent/10 text-accent rounded">
+                  {{ t.name }}
+                </span>
               </div>
-            </div>
-            <p class="text-sm text-secondary mb-3">{{ exp.description }}</p>
-            <div class="flex flex-wrap gap-1">
-              <span v-for="t in exp.technologies" :key="t.id" class="px-2 py-1 text-xs bg-accent/10 text-accent rounded">
-                {{ t.name }}
-              </span>
-            </div>
-          </BaseCard>
+            </BaseCard>
+          </template>
         </div>
       </div>
     </div>
@@ -62,13 +73,21 @@ import { ref, onMounted } from "vue";
 import { Server, Database, Cloud, Code } from "lucide-vue-next";
 import BaseCard from "../molecules/Card.vue";
 import type { Experience } from "../../types/experience";
-import { getExperiences } from "../../data/experiences";
+import { fetchExperiences } from "../../services/experiences";
 
 const experiences = ref<Experience[]>([]);
+const isLoading = ref(true);
 
 // Load experiences on component mount
 onMounted(async () => {
-  experiences.value = await getExperiences();
+  try {
+    isLoading.value = true;
+    experiences.value = await fetchExperiences();
+  } catch (error) {
+    console.error("Error loading experiences:", error);
+  } finally {
+    isLoading.value = false;
+  }
 });
 
 // Format date period helper

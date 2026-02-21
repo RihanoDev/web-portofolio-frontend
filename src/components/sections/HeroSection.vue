@@ -15,8 +15,8 @@
             <div class="w-40 h-40 mx-auto rounded-full glass-strong p-1 group-hover:scale-105 transition-all duration-500">
               <div class="w-full h-full rounded-full overflow-hidden border-2 border-primary-500/20">
                 <img 
-                  src="/profile.jpg" 
-                  alt="Rizky Haffiyan Roseno" 
+                  :src="profileData.avatarUrl" 
+                  :alt="profileData.name" 
                   class="w-full h-full object-cover"
                   @error="handleImageError"
                 />
@@ -36,14 +36,14 @@
         <div class="mb-6 space-y-2">
           <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight"
               style="color: var(--color-text-primary);">
-            Rizky Haffiyan Roseno
+            {{ profileData.name }}
           </h1>
           
           <!-- Subheadline -->
           <div class="relative">
             <p class="text-lg md:text-xl font-normal"
                style="color: var(--color-text-secondary);">
-              Backend Engineer · Go · Microservices · Cloud
+              {{ profileData.title }}
             </p>
           </div>
         </div>
@@ -52,8 +52,7 @@
         <div class="mb-10">
           <p class="text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
              style="color: var(--color-text-secondary);">
-            Passionate about building high-performance APIs, cloud-native architectures, 
-            and scalable backend systems that power exceptional user experiences.
+            {{ profileData.bio }}
           </p>
         </div>
 
@@ -103,7 +102,33 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import BaseButton from '../atoms/Button.vue'
+import { getProfileSettings, type ProfileData } from '../../services/profile'
+
+const profileData = ref<ProfileData>({
+  name: 'Rizky Haffiyan Roseno',
+  title: 'Backend Engineer · Go · Microservices · Cloud',
+  bio: 'Passionate about building high-performance APIs, cloud-native architectures, and scalable backend systems that power exceptional user experiences.',
+  avatarUrl: '/profile.jpg',
+  aboutSubtitle: '',
+  aboutDescription1: '',
+  aboutDescription2: '',
+  aboutDescription3: '',
+  coreExpertise: [],
+  location: '',
+  email: '',
+  phone: ''
+})
+
+onMounted(async () => {
+  try {
+    profileData.value = await getProfileSettings()
+  } catch (e) {
+    console.error("Error loading profile:", e)
+  }
+})
+
 const socialLinks = [
   {
     name: 'LinkedIn',
