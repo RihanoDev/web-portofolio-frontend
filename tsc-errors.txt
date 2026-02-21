@@ -1,0 +1,2 @@
+src/App.vue(13,7): error TS6133: 'currentTheme' is declared but its value is never read.
+src/composables/useWebSocket.ts(100,31): error TS6133: 'error' is declared but its value is never read.

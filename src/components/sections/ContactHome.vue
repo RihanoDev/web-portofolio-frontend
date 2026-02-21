@@ -151,7 +151,7 @@ onMounted(async () => {
   try {
     profileData.value = await getProfileSettings()
   } catch (e) {
-    console.error("Error loading profile:", e)
+    
   }
 })
 </script>

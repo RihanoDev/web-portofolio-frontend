@@ -1,4 +1,4 @@
-import { API_BASE_URL } from './config';
+import {  API_BASE_URL , apiFetch } from "./config";
 
 export interface ProfileData {
     name: string;
@@ -27,7 +27,7 @@ export const getProfileSettings = async (locale: string = 'en'): Promise<Profile
         const localizedKeys = baseKeys.map(key => `${key}.${locale}`);
         const allKeys = [...baseKeys, ...localizedKeys].join(',');
 
-        const response = await fetch(`${API_BASE_URL}/settings?keys=${allKeys}`);
+        const response = await apiFetch(`${API_BASE_URL}/settings?keys=${allKeys}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -64,7 +64,7 @@ export const getProfileSettings = async (locale: string = 'en'): Promise<Profile
             phone: getValue('about.phone') || '+62 812-3456-7890'
         };
     } catch (error) {
-        console.error('Failed to fetch profile settings:', error);
+        
         // Fallback default
         return {
             name: 'Rizky Haffiyan Roseno',

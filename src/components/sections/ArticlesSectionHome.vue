@@ -56,7 +56,7 @@ onMounted(async () => {
     articles.value = await fetchArticles();
     featuredArticles.value = articles.value.slice(0, 3); // Reduce to 3 items for better layout
   } catch (error) {
-    console.error("Error loading articles for homepage:", error);
+    
   } finally {
     isLoading.value = false;
   }

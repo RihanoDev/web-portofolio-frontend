@@ -43,7 +43,7 @@ export function useWebSocket() {
   // Initialize WebSocket connection
   const connectWebSocket = () => {
     if (socket.value && (socket.value.readyState === WebSocket.OPEN || socket.value.readyState === WebSocket.CONNECTING)) {
-      console.log('WebSocket already connected or connecting')
+
       return
     }
 
@@ -60,7 +60,7 @@ export function useWebSocket() {
       socket.value.onopen = () => {
         connectionStatus.value = 'connected'
         reconnectAttempts.value = 0
-        console.log('WebSocket connection established')
+
       }
 
       socket.value.onmessage = (event: MessageEvent) => {
@@ -82,27 +82,27 @@ export function useWebSocket() {
             })
           }
         } catch (err) {
-          console.error('Failed to parse WebSocket message:', err)
+
         }
       }
 
       socket.value.onclose = (event) => {
         if (event.wasClean) {
-          console.log(`WebSocket connection closed cleanly, code=${event.code}, reason=${event.reason}`)
+
         } else {
-          console.warn('WebSocket connection died')
+
           // Try to reconnect if the connection was not closed cleanly
           reconnect()
         }
         connectionStatus.value = 'disconnected'
       }
 
-      socket.value.onerror = (error) => {
-        console.error('WebSocket error:', error)
+      socket.value.onerror = () => {
+
         connectionStatus.value = 'error'
       }
     } catch (error) {
-      console.error('WebSocket connection error:', error)
+
       connectionStatus.value = 'error'
       reconnect()
     }
@@ -120,7 +120,7 @@ export function useWebSocket() {
   // Reconnect with exponential backoff
   const reconnect = () => {
     if (reconnectAttempts.value >= maxReconnectAttempts) {
-      console.log('Max reconnect attempts reached')
+
       return
     }
 
@@ -128,7 +128,7 @@ export function useWebSocket() {
     const delay = reconnectDelay * Math.pow(2, reconnectAttempts.value - 1)
 
     setTimeout(() => {
-      console.log(`Attempting to reconnect (${reconnectAttempts.value}/${maxReconnectAttempts})`)
+
       connectWebSocket()
     }, delay)
   }

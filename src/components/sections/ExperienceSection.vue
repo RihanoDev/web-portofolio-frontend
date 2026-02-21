@@ -93,7 +93,7 @@ onMounted(async () => {
     isLoading.value = true;
     experiences.value = await fetchExperiences();
   } catch (error) {
-    console.error("Error loading experiences:", error);
+    
   } finally {
     isLoading.value = false;
   }

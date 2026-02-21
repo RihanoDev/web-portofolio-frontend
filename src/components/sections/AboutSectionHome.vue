@@ -181,7 +181,7 @@ const loadProfile = async () => {
   try {
     profileData.value = await getProfileSettings(locale.value)
   } catch (e) {
-    console.error("Error loading profile:", e)
+    
   }
 }
 
@@ -195,12 +195,12 @@ onMounted(async () => {
       const currentYear = new Date().getFullYear()
       yearsExperience.value = currentYear - earliestYear
     }
-  } catch(e) { console.error(e) }
+  } catch(e) {  }
 
   try {
     const projects = await fetchPublishedProjects()
     projectsCompleted.value = projects.length
-  } catch(e) { console.error(e) }
+  } catch(e) {  }
 })
 
 watch(locale, loadProfile)

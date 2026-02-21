@@ -10,7 +10,7 @@ import { useRoute } from 'vue-router'
 import FloatingViewCounter from './components/molecules/FloatingViewCounter.vue'
 
 // Initialize theme system
-const { currentTheme } = useTheme()
+useTheme()
 
 // Initialize analytics
 const analytics = useGlobalAnalytics()
@@ -41,7 +41,7 @@ const initializeAnalytics = () => {
 
 onMounted(() => {
   // Theme is automatically applied by the useTheme composable
-  console.log('Current theme:', currentTheme.value.name)
+  
   
   // Load FontAwesome lazily
   loadFontAwesome()

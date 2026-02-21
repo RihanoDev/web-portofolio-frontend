@@ -123,14 +123,14 @@ export const getExperiences = async (): Promise<Experience[]> => {
     
     // If API returns data, use it; otherwise fallback to dummy data
     if (apiExperiences && apiExperiences.length > 0) {
-      console.log('Using experiences from API:', apiExperiences)
+      
       return apiExperiences
     } else {
-      console.log('No API data, using fallback experiences')
+      
       return experiencesData
     }
   } catch (error) {
-    console.error('API failed, using fallback experiences:', error)
+    
     return experiencesData
   }
 }

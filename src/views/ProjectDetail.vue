@@ -220,7 +220,7 @@ const fetchProject = async () => {
       document.title = `${projectData.title} | Rizky's Portfolio`;
     }
   } catch (err) {
-    console.error('Error fetching project:', err);
+    
     error.value = 'Failed to load project. Please try again later.';
   } finally {
     loading.value = false;
@@ -250,10 +250,10 @@ const trackProjectView = async () => {
     
     // Update view count data from the track response
     if (result.data) {
-      console.log('View count updated:', result.data);
+      
       viewCount.value = result.data;
     } else {
-      console.warn('No view count data received from tracking');
+      
       // Fallback to getting view count if tracking doesn't return data
       try {
         const pageViewCount = await analyticsService.getViewCount(`/project/${slug.value}`);
@@ -261,11 +261,11 @@ const trackProjectView = async () => {
           viewCount.value = pageViewCount;
         }
       } catch (viewErr) {
-        console.error('Failed to fetch view count:', viewErr);
+        
       }
     }
   } catch (err) {
-    console.error('Failed to track project view:', err);
+    
     
     // Try to get at least the view count on error
     try {
@@ -274,7 +274,7 @@ const trackProjectView = async () => {
         viewCount.value = pageViewCount;
       }
     } catch (viewErr) {
-      console.error('Failed to fetch view count after tracking error:', viewErr);
+      
     }
   }
 };

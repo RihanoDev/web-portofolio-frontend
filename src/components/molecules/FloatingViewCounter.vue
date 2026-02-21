@@ -137,7 +137,7 @@ const formatNumber = (num: number) => {
 
   onMounted(async () => {
   try {
-    console.log('FloatingViewCounter: Initializing analytics...')
+    
     
     // Initialize analytics with demo data
     await analytics.initializeAnalytics()
@@ -148,7 +148,7 @@ const formatNumber = (num: number) => {
     // Listen for outside clicks to close tooltip
     document.addEventListener('click', handleOutsideClick)
   } catch (err) {
-    console.error('Failed to initialize floating view counter:', err)
+    
   }
 })
 

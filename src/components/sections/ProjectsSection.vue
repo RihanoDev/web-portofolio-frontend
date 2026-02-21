@@ -115,7 +115,7 @@ onMounted(async () => {
     // Then load projects
     projects.value = await fetchProjects();
   } catch (error) {
-    console.error("Error loading projects data:", error);
+    
   } finally {
     isLoading.value = false;
   }
