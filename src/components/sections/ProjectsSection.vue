@@ -28,11 +28,16 @@
 
         <!-- Projects Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <ProjectCard
-            v-for="project in paginatedProjects"
-            :key="project.id"
-            :project="project"
-          />
+          <div v-if="projects.length === 0" class="col-span-3 py-16 text-center">
+            <p class="text-secondary text-lg">Loading projects...</p>
+          </div>
+          <template v-else>
+            <ProjectCard
+              v-for="project in paginatedProjects"
+              :key="project.id"
+              :project="project"
+            />
+          </template>
         </div>
 
         <!-- Pagination -->
@@ -88,20 +93,30 @@
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 import ProjectCard from '../molecules/ProjectCard.vue'
-import type { Project } from '../../types/project'
-import { getProjects } from '../../data/projects'
+import type { ProjectListItem, ProjectCategory } from '../../types/project'
+import { fetchProjects, fetchProjectCategories } from '../../services/projects'
 
 const activeCategory = ref('All')
 const currentPage = ref(1)
 const projectsPerPage = 6
 
-const categories = ['All', 'Backend', 'Microservices', 'API', 'Full Stack', 'DevOps']
+const categories = ref<string[]>(['All'])
+const categoryData = ref<ProjectCategory[]>([])
 
-const projects = ref<Project[]>([])
+const projects = ref<ProjectListItem[]>([])
 
 // Load projects on component mount
 onMounted(async () => {
-  projects.value = await getProjects()
+  try {
+    // Load categories first
+    categoryData.value = await fetchProjectCategories()
+    categories.value = ['All', ...categoryData.value.map(cat => cat.name)]
+    
+    // Then load projects
+    projects.value = await fetchProjects()
+  } catch (error) {
+    console.error('Error loading projects data:', error)
+  }
 })
 
 const filteredProjects = computed(() => {
@@ -162,10 +177,8 @@ const goToPage = async (page: number) => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page
     await nextTick()
-    const element = document.getElementById('projects')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+    // Scroll to top of projects section
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 }
 </script>

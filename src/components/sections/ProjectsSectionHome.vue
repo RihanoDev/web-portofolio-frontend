@@ -37,19 +37,23 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { getProjects } from '@/data'
-import type { Project } from '@/types'
-import { ProjectCard } from '@/components'
+import { fetchProjects } from '@/services/projects'
+import type { ProjectListItem } from '@/types/project'
+import ProjectCard from '@/components/molecules/ProjectCard.vue'
 import { ExternalLink } from 'lucide-vue-next'
 
-const projects = ref<Project[]>([])
+const projects = ref<ProjectListItem[]>([])
 
 // Show only first 6 projects for home page
-const featuredProjects = ref<Project[]>([])
+const featuredProjects = ref<ProjectListItem[]>([])
 
 onMounted(async () => {
-  projects.value = await getProjects()
-  featuredProjects.value = projects.value.slice(0, 6)
+  try {
+    projects.value = await fetchProjects()
+    featuredProjects.value = projects.value.slice(0, 3) // Reduce to 3 items for better layout
+  } catch (error) {
+    console.error('Error loading projects for homepage:', error)
+  }
 })
 </script>
 

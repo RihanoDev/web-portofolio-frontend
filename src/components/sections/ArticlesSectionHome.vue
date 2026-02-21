@@ -37,19 +37,23 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { getArticles } from '@/data'
-import type { Article } from '@/types'
-import { ArticleCard } from '@/components'
+import { fetchArticles } from '@/services/articles'
+import type { ArticleListItem } from '@/types/article'
+import ArticleCard from '@/components/molecules/ArticleCard.vue'
 import { ExternalLink } from 'lucide-vue-next'
 
-const articles = ref<Article[]>([])
+const articles = ref<ArticleListItem[]>([])
 
-// Show only first 6 articles for home page
-const featuredArticles = ref<Article[]>([])
+// Show only first 3 articles for home page
+const featuredArticles = ref<ArticleListItem[]>([])
 
 onMounted(async () => {
-  articles.value = await getArticles()
-  featuredArticles.value = articles.value.slice(0, 6)
+  try {
+    articles.value = await fetchArticles()
+    featuredArticles.value = articles.value.slice(0, 3) // Reduce to 3 items for better layout
+  } catch (error) {
+    console.error('Error loading articles for homepage:', error)
+  }
 })
 </script>
 

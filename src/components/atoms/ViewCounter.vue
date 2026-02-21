@@ -2,13 +2,15 @@
   <div class="view-counter">
     <!-- Main Counter Display -->
     <div 
-      class="flex items-center space-x-2 text-sm text-gray-400"
+      class="flex items-center space-x-2 text-sm"
+      style="color: var(--color-text-secondary);"
       @mouseenter="handleMouseEnter"
       @mouseleave="handleMouseLeave"
     >
       <Eye class="w-4 h-4" />
-      <span>{{ formatNumber(totalViews) }} views</span>
-      <span v-if="todayViews > 0" class="text-primary-400">
+      <span v-if="!isLoading">{{ formatNumber(totalViews) }} views</span>
+      <span v-else class="animate-pulse">Loading...</span>
+      <span v-if="todayViews > 0 && !isLoading" style="color: var(--color-accent);">
         (+{{ todayViews }} today)
       </span>
     </div>
@@ -23,52 +25,81 @@
       leave-to-class="transform scale-95 opacity-0"
     >
       <div 
-        v-if="showDetails"
-        class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-black/90 backdrop-blur-sm text-white text-xs rounded-lg p-3 shadow-xl z-10 whitespace-nowrap"
+        v-if="showDetails && !isLoading"
+        class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 z-10 whitespace-nowrap rounded-lg p-3 shadow-xl"
+        style="background: rgba(var(--color-secondary-rgb), 0.95); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1);"
       >
-        <div class="space-y-1">
+        <div class="space-y-1 text-xs">
           <div class="flex justify-between space-x-4">
-            <span>Total Views:</span>
-            <span class="font-semibold">{{ formatNumber(totalViews) }}</span>
+            <span style="color: var(--color-text-secondary);">Total Views:</span>
+            <span class="font-semibold" style="color: var(--color-text-primary);">{{ formatNumber(totalViews) }}</span>
           </div>
           <div class="flex justify-between space-x-4">
-            <span>Today:</span>
-            <span class="font-semibold text-green-400">{{ todayViews }}</span>
+            <span style="color: var(--color-text-secondary);">Today:</span>
+            <span class="font-semibold" style="color: var(--color-accent);">{{ todayViews }}</span>
           </div>
           <div class="flex justify-between space-x-4">
-            <span>This Week:</span>
-            <span class="font-semibold">{{ weekViews }}</span>
+            <span style="color: var(--color-text-secondary);">This Week:</span>
+            <span class="font-semibold" style="color: var(--color-text-primary);">{{ weekViews }}</span>
           </div>
           <div class="flex justify-between space-x-4">
-            <span>This Month:</span>
-            <span class="font-semibold">{{ monthViews }}</span>
+            <span style="color: var(--color-text-secondary);">This Month:</span>
+            <span class="font-semibold" style="color: var(--color-text-primary);">{{ monthViews }}</span>
           </div>
-          <div class="border-t border-gray-600 pt-1 mt-1">
+          <div class="border-t pt-1 mt-1" style="border-color: rgba(255, 255, 255, 0.1);">
             <div class="flex justify-between space-x-4">
-              <span>Unique Visitors:</span>
-              <span class="font-semibold text-blue-400">{{ formatNumber(uniqueVisitors) }}</span>
+              <span style="color: var(--color-text-secondary);">Unique Visitors:</span>
+              <span class="font-semibold" style="color: var(--color-accent);">{{ formatNumber(uniqueVisitors) }}</span>
             </div>
+          </div>
+          <div v-if="error" class="text-xs text-red-400 mt-2">
+            {{ error }}
           </div>
         </div>
         <!-- Arrow -->
-        <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90"></div>
+        <div 
+          class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent"
+          style="border-top-color: rgba(var(--color-secondary-rgb), 0.95);"
+        ></div>
       </div>
     </transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { Eye } from 'lucide-vue-next'
+import { useGlobalAnalytics } from '../../composables/useAnalytics'
 
-const totalViews = ref(0)
-const todayViews = ref(0)
-const weekViews = ref(0)
-const monthViews = ref(0)
-const uniqueVisitors = ref(0)
+// Props
+interface Props {
+  page?: string
+  autoTrack?: boolean
+  updateInterval?: number
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  page: undefined,
+  autoTrack: true,
+  updateInterval: 60000 // 1 minute
+})
+
+// Analytics composable
+const analytics = useGlobalAnalytics()
+
+// Local state
 const showDetails = ref(false)
-
 let detailsTimeout: number
+let cleanup: (() => void) | null = null
+
+// Computed properties from analytics
+const totalViews = computed(() => analytics.totalViews)
+const todayViews = computed(() => analytics.todayViews)
+const weekViews = computed(() => analytics.weekViews)
+const monthViews = computed(() => analytics.monthViews)
+const uniqueVisitors = computed(() => analytics.uniqueVisitors)
+const isLoading = computed(() => analytics.isLoading)
+const error = computed(() => analytics.error)
 
 // Mouse events for showing details
 const handleMouseEnter = () => {
@@ -85,140 +116,39 @@ const handleMouseLeave = () => {
 
 // Format large numbers
 const formatNumber = (num: number): string => {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + 'M'
-  } else if (num >= 1000) {
-    return (num / 1000).toFixed(1) + 'k'
-  }
-  return num.toString()
+  return analytics.formatNumber(num)
 }
 
-// Track page view with realistic data
-const trackPageView = async () => {
+// Initialize analytics on mount
+onMounted(async () => {
   try {
-    // Get visitor info
-    const visitorId = getOrCreateVisitorId()
-    const timestamp = new Date().toISOString()
-    const currentDate = new Date().toDateString()
-
-    // Store view data locally with realistic baseline
-    const viewData = {
-      visitorId,
-      timestamp,
-      url: window.location.href,
-      date: currentDate
+    // Initialize analytics with demo data
+    analytics.initializeAnalytics()
+    
+    if (props.autoTrack) {
+      // Start tracking for current page
+      cleanup = analytics.startTracking(props.page, props.updateInterval)
+    } else {
+      // Just fetch current view count
+      await analytics.fetchViewCount(props.page)
     }
-
-    // Get existing views from localStorage
-    const existingViews = JSON.parse(localStorage.getItem('portfolio_views') || '[]')
-    
-    // Add realistic baseline data if first time
-    if (existingViews.length === 0) {
-      initializeRealisticData()
-    }
-    
-    existingViews.push(viewData)
-    
-    // Keep only last 1000 views
-    if (existingViews.length > 1000) {
-      existingViews.splice(0, existingViews.length - 1000)
-    }
-    const recentViews = existingViews.slice(-1000)
-    localStorage.setItem('portfolio_views', JSON.stringify(recentViews))
-
-    // Update counters
-    updateCounters(recentViews)
-
-    // In a real application, you would send this data to your analytics API
-    // await sendToAnalytics(viewData)
-    
-  } catch (error) {
-    console.error('Error tracking page view:', error)
+  } catch (err) {
+    console.error('Failed to initialize view counter:', err)
   }
-}
+})
 
-// Initialize realistic baseline data
-const initializeRealisticData = () => {
-  const now = new Date()
-  const baselineViews = []
-  
-  // Generate realistic view history for past 30 days
-  for (let i = 30; i >= 0; i--) {
-    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000)
-    const dailyViews = Math.floor(Math.random() * 25) + 10 // 10-35 views per day
-    
-    for (let j = 0; j < dailyViews; j++) {
-      baselineViews.push({
-        visitorId: `visitor_baseline_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        timestamp: new Date(date.getTime() + Math.random() * 24 * 60 * 60 * 1000).toISOString(),
-        url: '/',
-        date: date.toDateString()
-      })
-    }
+// Cleanup on unmount
+onUnmounted(() => {
+  clearTimeout(detailsTimeout)
+  if (cleanup) {
+    cleanup()
   }
-  
-  localStorage.setItem('portfolio_views', JSON.stringify(baselineViews))
-  return baselineViews
-}
+})
 
-// Get or create unique visitor ID
-const getOrCreateVisitorId = (): string => {
-  let visitorId = localStorage.getItem('portfolio_visitor_id')
-  if (!visitorId) {
-    visitorId = 'visitor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
-    localStorage.setItem('portfolio_visitor_id', visitorId)
-  }
-  return visitorId
-}
-
-// Update view counters based on stored data
-const updateCounters = (views: any[]) => {
-  const now = new Date()
-  const today = now.toDateString()
-  const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-  const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
-
-  // Count total views
-  totalViews.value = views.length
-
-  // Count today's views
-  todayViews.value = views.filter(view => view.date === today).length
-
-  // Count this week's views
-  weekViews.value = views.filter(view => new Date(view.timestamp) >= weekAgo).length
-
-  // Count this month's views
-  monthViews.value = views.filter(view => new Date(view.timestamp) >= monthAgo).length
-
-  // Count unique visitors
-  const uniqueVisitorIds = new Set(views.map(view => view.visitorId))
-  uniqueVisitors.value = uniqueVisitorIds.size
-
-  // Add some demo numbers if views are too low (for demonstration)
-//   if (totalViews.value < 100) {
-//     totalViews.value += 1247
-//     uniqueVisitors.value += 892
-//     weekViews.value += 156
-//     monthViews.value += 634
-//   }
-}
-
-// Initialize counters on mount
-onMounted(() => {
-  // Track this page view
-  trackPageView()
-
-  // Set up periodic updates (every 30 seconds)
-  const interval = setInterval(() => {
-    const views = JSON.parse(localStorage.getItem('portfolio_views') || '[]')
-    updateCounters(views)
-  }, 30000)
-
-  // Cleanup
-  onUnmounted(() => {
-    clearInterval(interval)
-    clearTimeout(detailsTimeout)
-  })
+// Expose methods for parent components
+defineExpose({
+  refresh: () => analytics.fetchViewCount(props.page),
+  trackView: () => analytics.trackPageView(props.page || window.location.pathname)
 })
 </script>
 
@@ -230,6 +160,19 @@ onMounted(() => {
 }
 
 .view-counter:hover .flex {
-  color: var(--color-primary);
+  color: var(--color-accent);
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
 }
 </style>

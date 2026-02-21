@@ -14,11 +14,11 @@
               <i class="fas fa-briefcase text-accent text-lg"></i>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="font-semibold text-lg" style="color: var(--color-text-primary);">{{ exp.role }}</h3>
+              <h3 class="font-semibold text-lg" style="color: var(--color-text-primary);">{{ exp.title }}</h3>
               <p class="text-sm" style="color: var(--color-text-secondary);">{{ exp.company }}</p>
             </div>
           </div>
-          <p class="text-sm text-accent font-medium">{{ exp.period }}</p>
+          <p class="text-sm text-accent font-medium">{{ formatPeriod(exp) }}</p>
         </BaseCard>
       </div>
       
@@ -30,11 +30,11 @@
               <i class="fas fa-briefcase text-accent"></i>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="font-semibold" style="color: var(--color-text-primary);">{{ exp.role }}</h3>
+              <h3 class="font-semibold" style="color: var(--color-text-primary);">{{ exp.title }}</h3>
               <p class="text-sm" style="color: var(--color-text-secondary);">{{ exp.company }}</p>
             </div>
           </div>
-          <p class="text-xs text-accent">{{ exp.period }}</p>
+          <p class="text-xs text-accent">{{ formatPeriod(exp) }}</p>
         </BaseCard>
       </div>
     </div>
@@ -43,13 +43,41 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import BaseCard from '../molecules/Card.vue'
+import { getExperiences } from '../../data/experiences'
+import type { Experience } from '../../types/experience'
 
-const experiences = [
-  { role: 'Backend Engineer', company: 'TechCorp', period: '2022 - Sekarang' },
-  { role: 'Software Engineer', company: 'StartupX', period: '2020 - 2022' },
-  { role: 'Intern', company: 'BigData Inc.', period: '2019 - 2020' }
-]
+const experiences = ref<Experience[]>([])
+
+// Format period from startDate, endDate, and current
+const formatPeriod = (experience: Experience): string => {
+  const startDate = new Date(experience.startDate).toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'short' 
+  })
+  
+  if (experience.current) {
+    return `${startDate} - Present`
+  }
+  
+  if (experience.endDate) {
+    const endDate = new Date(experience.endDate).toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short' 
+    })
+    return `${startDate} - ${endDate}`
+  }
+  
+  return startDate
+}
+
+// Load experiences on component mount
+onMounted(async () => {
+  const allExperiences = await getExperiences()
+  // Take only first 3 experiences for home page
+  experiences.value = allExperiences.slice(0, 3)
+})
 </script>
 
 <style scoped>

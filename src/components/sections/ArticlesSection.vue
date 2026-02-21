@@ -88,21 +88,31 @@
 import { ref, computed, onMounted } from 'vue'
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 import ArticleCard from '../molecules/ArticleCard.vue'
-import type { Article } from '../../types/article'
-import { getArticles } from '../../data/articles'
+import type { ArticleListItem, ArticleCategory } from '../../types/article'
+import { fetchArticles, fetchArticleCategories } from '../../services/articles'
 
 // Reactive states
 const activeCategory = ref('All')
-const articles = ref<Article[]>([])
+const articles = ref<ArticleListItem[]>([])
 const currentPage = ref(1)
 const articlesPerPage = 6 // Jumlah artikel per halaman
 
-// Categories from articles data
-const categories = ref(['All', 'Backend Development', 'DevOps', 'Database', 'Architecture', 'Frontend Development'])
+// Categories
+const categories = ref<string[]>(['All'])
+const categoryData = ref<ArticleCategory[]>([])
 
-// Load articles on component mount
+// Load articles and categories on component mount
 onMounted(async () => {
-  articles.value = await getArticles()
+  try {
+    // Load categories first
+    categoryData.value = await fetchArticleCategories()
+    categories.value = ['All', ...categoryData.value.map(cat => cat.name)]
+    
+    // Then load articles
+    articles.value = await fetchArticles()
+  } catch (error) {
+    console.error('Error loading articles data:', error)
+  }
 })
 
 // Computed properties for filtering and pagination
@@ -110,7 +120,7 @@ const filteredArticles = computed(() => {
   if (activeCategory.value === 'All') {
     return articles.value
   }
-  return articles.value.filter(article => article.category === activeCategory.value)
+  return articles.value.filter(article => article.categories.includes(activeCategory.value))
 })
 
 const totalArticles = computed(() => filteredArticles.value.length)

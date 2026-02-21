@@ -1,5 +1,9 @@
 <template>
-  <div class="project-card group cursor-pointer glass-card rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+  <router-link 
+    :to="{ name: 'project-detail', params: { slug: props.project.slug } }"
+    class="block"
+  >
+    <div class="project-card group cursor-pointer glass-card rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl">
       <!-- Project Image -->
       <div class="relative h-48 overflow-hidden">
         <img 
@@ -91,52 +95,72 @@
 
         <!-- Action Buttons -->
         <div class="flex gap-3 mt-4 pt-4 border-t border-white/5">
-          <BaseButton v-if="project.githubUrl" as="a" :href="project.githubUrl" target="_blank" rel="noopener noreferrer" variant="secondary" size="sm" class="flex-1">
+          <BaseButton v-if="project.githubUrl" as="a" :href="project.githubUrl" target="_blank" rel="noopener noreferrer" variant="secondary" size="sm" class="flex-1" @click.stop>
             <Github class="w-4 h-4 mr-2" />
             <span>Code</span>
           </BaseButton>
-          <BaseButton v-if="project.liveUrl" as="a" :href="project.liveUrl" target="_blank" rel="noopener noreferrer" variant="primary" size="sm" class="flex-1">
+          <BaseButton v-if="project.liveUrl" as="a" :href="project.liveUrl" target="_blank" rel="noopener noreferrer" variant="primary" size="sm" class="flex-1" @click.stop>
             <ExternalLink class="w-4 h-4 mr-2" />
             <span>Live Demo</span>
           </BaseButton>
-          <BaseButton v-if="!project.liveUrl && project.githubUrl" variant="primary" size="sm" class="flex-1" @click="openProject">
+          <BaseButton v-if="!project.liveUrl && project.githubUrl" variant="primary" size="sm" class="flex-1">
             <Eye class="w-4 h-4 mr-2" />
-            <span>View</span>
+            <span>View Details</span>
           </BaseButton>
         </div>
       </div>
-  </div>
+    </div>
+  </router-link>
 </template>
 
 <script setup lang="ts">
 import { Github, ExternalLink, CheckCircle, Eye } from 'lucide-vue-next'
 import BaseButton from '../atoms/Button.vue'
 import Badge from '../atoms/Badge.vue'
+import type { ProjectListItem } from '../../types/project'
 
-interface Project {
-  id: number
-  title: string
-  description: string
-  longDescription?: string
-  category: string
-  technologies: string[]
-  image: string
-  githubUrl?: string
-  liveUrl?: string
-  features: string[]
-  status: 'completed' | 'in-progress' | 'planned'
+// Adapter for backward compatibility
+interface ProjectCardProps {
+  project: ProjectListItem
 }
 
-interface Props {
-  project: Project
+// Define props using the adapter interface
+const props = defineProps<ProjectCardProps>()
+
+// Function to get default image
+const getDefaultImage = () => {
+  return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23374151'/%3E%3Ctext x='200' y='150' text-anchor='middle' fill='%23ffffff' font-family='Arial' font-size='16'%3EProject Image%3C/text%3E%3C/svg%3E"
 }
 
-defineProps<Props>()
+// Computed properties to map new data structure to the expected format
+const project = {
+  get id() { return props.project.id },
+  get title() { return props.project.title },
+  get description() { return props.project.description },
+  get category() { return props.project.category || 'Uncategorized' },
+  get technologies() { return props.project.technologies || [] },
+  get image() { return props.project.thumbnailUrl || getDefaultImage() },
+  get githubUrl() { return props.project.githubUrl },
+  get liveUrl() { return props.project.liveDemoUrl },
+  get features() { 
+    // Extract features from description if available, otherwise use placeholder
+    const descParts = props.project.description.split('. ')
+    return descParts.length > 1 ? descParts : ['Feature information unavailable']
+  },
+  get status() {
+    // Map status from ProjectStatus to UI status
+    switch (props.project.status) {
+      case 'published': return 'completed'
+      case 'draft': return 'in-progress'
+      case 'private': return 'planned'
+      default: return 'in-progress'
+    }
+  }
+}
 
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement
-  // Use a data URL SVG placeholder
-  target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23374151'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='%23ffffff' font-family='Arial' font-size='16'%3EProject Image%3C/text%3E%3Ctext x='200' y='160' text-anchor='middle' fill='%23ffffff' font-family='Arial' font-size='12'%3ELoading Failed%3C/text%3E%3C/svg%3E"
+  target.src = getDefaultImage()
 }
 
 const getStatusClass = (status: string) => {
@@ -163,11 +187,6 @@ const getStatusText = (status: string) => {
     default:
       return 'Unknown'
   }
-}
-
-const openProject = () => {
-  // Could open a modal or navigate to project detail page
-  console.log('Open project details')
 }
 </script>
 
