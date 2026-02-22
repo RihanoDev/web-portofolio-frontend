@@ -119,7 +119,7 @@ const loadProfile = async () => {
   try {
     profileData.value = await getProfileSettings(locale.value)
   } catch (e) {
-    console.error("Error loading profile:", e)
+    
   }
 }
 
@@ -146,12 +146,12 @@ onMounted(async () => {
       const calculatedYears = Math.floor(totalMonths / 12)
       yearsExperience.value = calculatedYears > 0 ? calculatedYears : (totalMonths > 0 ? 1 : 0)
     }
-  } catch(e) { console.error(e) }
+  } catch(e) {  }
 
   try {
     const projects = await fetchPublishedProjects()
     projectsCompleted.value = projects.length
-  } catch(e) { console.error(e) }
+  } catch(e) {  }
 })
 
 watch(locale, loadProfile)

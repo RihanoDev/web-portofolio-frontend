@@ -133,7 +133,7 @@ onMounted(async () => {
       await analytics.fetchViewCount(props.page)
     }
   } catch (err) {
-    console.error('Failed to initialize view counter:', err)
+    
   }
 })
 

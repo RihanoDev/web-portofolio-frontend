@@ -178,7 +178,7 @@ const fetchArticle = async () => {
       document.title = `${articleData.title} | Rizky's Portfolio`;
     }
   } catch (err) {
-    console.error('Error fetching article:', err);
+    
     error.value = 'Failed to load article. Please try again later.';
   } finally {
     loading.value = false;
@@ -208,10 +208,10 @@ const trackArticleView = async () => {
     
     // Update view count data from the track response
     if (result.data) {
-      console.log('View count updated:', result.data);
+      
       viewCount.value = result.data;
     } else {
-      console.warn('No view count data received from tracking');
+      
       // Fallback to getting view count if tracking doesn't return data
       try {
         const pageViewCount = await analyticsService.getViewCount(`/article/${slug.value}`);
@@ -219,11 +219,11 @@ const trackArticleView = async () => {
           viewCount.value = pageViewCount;
         }
       } catch (viewErr) {
-        console.error('Failed to fetch view count:', viewErr);
+        
       }
     }
   } catch (err) {
-    console.error('Failed to track article view:', err);
+    
     
     // Try to get at least the view count on error
     try {
@@ -232,7 +232,7 @@ const trackArticleView = async () => {
         viewCount.value = pageViewCount;
       }
     } catch (viewErr) {
-      console.error('Failed to fetch view count after tracking error:', viewErr);
+      
     }
   }
 };

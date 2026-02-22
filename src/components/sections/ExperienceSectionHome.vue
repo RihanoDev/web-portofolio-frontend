@@ -108,7 +108,7 @@ onMounted(async () => {
     // Take only first 3 experiences for home page
     experiences.value = allExperiences.slice(0, 3);
   } catch (error) {
-    console.error("Error loading experiences for homepage:", error);
+    
   } finally {
     isLoading.value = false;
   }

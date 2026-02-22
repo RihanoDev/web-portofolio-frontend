@@ -32,3 +32,30 @@ export const ANALYTICS_API_URL = import.meta.env.VITE_ANALYTICS_API_URL || API_B
 export const ANALYTICS_API_KEY = import.meta.env.VITE_ANALYTICS_API_KEY || "";
 export const ENABLE_ANALYTICS = import.meta.env.VITE_ENABLE_ANALYTICS === "true";
 export const DEBUG_ANALYTICS = import.meta.env.VITE_DEBUG_ANALYTICS === "true";
+
+function decodeBase64Utf8(base64: string): string {
+  try {
+    const binaryString = window.atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return new TextDecoder().decode(bytes);
+  } catch (e) {
+    return "";
+  }
+}
+
+export async function apiFetch(url: string, init?: RequestInit): Promise<Response> {
+  const response = await fetch(url, init);
+  if (response.headers.get("x-encoded-response") === "true") {
+    const text = await response.text();
+    const decoded = decodeBase64Utf8(text);
+    return new Response(decoded, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers
+    });
+  }
+  return response;
+}

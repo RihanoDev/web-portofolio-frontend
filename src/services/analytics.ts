@@ -1,5 +1,5 @@
 import type { ViewCountData, TrackViewRequest, AnalyticsResponse, AnalyticsFilter } from "../types/analytics";
-import { API_BASE_URL } from "./config";
+import {  API_BASE_URL , apiFetch } from "./config";
 
 // Configuration from environment variables
 const config = {
@@ -20,11 +20,7 @@ class AnalyticsService {
     this.enabled = config.enableAnalytics;
 
     if (config.debugMode) {
-      console.log("Analytics Service initialized:", {
-        baseUrl: this.baseUrl,
-        hasApiKey: !!this.apiKey,
-        enabled: this.enabled,
-      });
+      
     }
   }
 
@@ -34,7 +30,7 @@ class AnalyticsService {
   async trackView(data: TrackViewRequest): Promise<AnalyticsResponse> {
     if (!this.enabled) {
       if (config.debugMode) {
-        console.log("Analytics tracking disabled, using fallback data");
+        
       }
       return await this.getFallbackResponse();
     }
@@ -48,7 +44,7 @@ class AnalyticsService {
 
     try {
       // Race between the actual request and a timeout
-      const responsePromise = fetch(`${this.baseUrl}/analytics/track`, {
+      const responsePromise = apiFetch(`${this.baseUrl}/analytics/track`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +71,7 @@ class AnalyticsService {
 
       return await response.json();
     } catch (error) {
-      console.error("Error tracking view:", error);
+      
 
       // Clear timeout if it's an error other than timeout
       if (requestTimeout) clearTimeout(requestTimeout);
@@ -99,7 +95,7 @@ class AnalyticsService {
     try {
       const url = page ? `${this.baseUrl}/analytics/views?page=${encodeURIComponent(page)}` : `${this.baseUrl}/analytics/views`;
 
-      const responsePromise = fetch(url, {
+      const responsePromise = apiFetch(url, {
         headers: {
           ...(this.apiKey && { Authorization: `Bearer ${this.apiKey}` }),
           ...(this.apiKey && { "X-API-Key": this.apiKey }),
@@ -122,12 +118,12 @@ class AnalyticsService {
 
       // Add debug logging
       if (config.debugMode) {
-        console.log(`View count for ${page || "all pages"}:`, result.data);
+        
       }
 
       return result.data;
     } catch (error) {
-      console.error("Error fetching view count:", error);
+      
 
       // Clear timeout if it's an error other than timeout
       if (requestTimeout) clearTimeout(requestTimeout);
@@ -147,7 +143,7 @@ class AnalyticsService {
         if (value) params.append(key, value);
       });
 
-      const response = await fetch(`${this.baseUrl}/analytics?${params}`, {
+      const response = await apiFetch(`${this.baseUrl}/analytics?${params}`, {
         headers: {
           Authorization: `Bearer ${this.apiKey}`,
           "X-API-Key": this.apiKey,
@@ -161,7 +157,7 @@ class AnalyticsService {
       const result: AnalyticsResponse = await response.json();
       return result.data;
     } catch (error) {
-      console.error("Error fetching analytics:", error);
+      
       return this.fallbackGetViewCount();
     }
   }
@@ -198,7 +194,7 @@ class AnalyticsService {
         message: "View tracked locally (API unavailable)",
       };
     } catch (error) {
-      console.error("Fallback tracking failed:", error);
+      
       return {
         success: false,
         data: { total: 0, today: 0, week: 0, month: 0, unique: 0 },
@@ -215,7 +211,7 @@ class AnalyticsService {
       const views = JSON.parse(localStorage.getItem("portfolio_analytics") || "[]");
       return this.calculateStats(views, page);
     } catch (error) {
-      console.error("Fallback view count failed:", error);
+      
       return { total: 0, today: 0, week: 0, month: 0, unique: 0 };
     }
   }

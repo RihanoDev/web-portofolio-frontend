@@ -1,9 +1,9 @@
 import type { Project, ProjectListItem, ProjectTag, ProjectCategory } from "../types/project";
-import { API_BASE_URL } from "./config";
+import {  API_BASE_URL , apiFetch } from "./config";
 
 export async function fetchProjects(): Promise<ProjectListItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/projects`);
+    const response = await apiFetch(`${API_BASE_URL}/projects`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch projects");
@@ -17,14 +17,14 @@ export async function fetchProjects(): Promise<ProjectListItem[]> {
 
     return projects;
   } catch (error) {
-    console.error("Error fetching projects:", error);
+    
     return [];
   }
 }
 
 export async function fetchPublishedProjects(): Promise<ProjectListItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/projects/published`);
+    const response = await apiFetch(`${API_BASE_URL}/projects/published`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch published projects");
@@ -38,14 +38,14 @@ export async function fetchPublishedProjects(): Promise<ProjectListItem[]> {
 
     return projects;
   } catch (error) {
-    console.error("Error fetching published projects:", error);
+    
     return [];
   }
 }
 
 export async function fetchProjectBySlug(slug: string): Promise<Project | null> {
   try {
-    const response = await fetch(`${API_BASE_URL}/projects/slug/${slug}`);
+    const response = await apiFetch(`${API_BASE_URL}/projects/slug/${slug}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch project with slug: ${slug}`);
@@ -54,14 +54,14 @@ export async function fetchProjectBySlug(slug: string): Promise<Project | null> 
     const data = await response.json();
     return data.data;
   } catch (error) {
-    console.error(`Error fetching project with slug ${slug}:`, error);
+    
     return null;
   }
 }
 
 export async function fetchProjectsByCategory(slug: string): Promise<ProjectListItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/projects/category/${slug}`);
+    const response = await apiFetch(`${API_BASE_URL}/projects/category/${slug}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch projects for category: ${slug}`);
@@ -75,14 +75,14 @@ export async function fetchProjectsByCategory(slug: string): Promise<ProjectList
 
     return projects;
   } catch (error) {
-    console.error(`Error fetching projects for category ${slug}:`, error);
+    
     return [];
   }
 }
 
 export async function fetchProjectsByTechnology(name: string): Promise<ProjectListItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/projects/technology/${name}`);
+    const response = await apiFetch(`${API_BASE_URL}/projects/technology/${name}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch projects for technology: ${name}`);
@@ -96,14 +96,14 @@ export async function fetchProjectsByTechnology(name: string): Promise<ProjectLi
 
     return projects;
   } catch (error) {
-    console.error(`Error fetching projects for technology ${name}:`, error);
+    
     return [];
   }
 }
 
 export async function fetchProjectCategories(): Promise<ProjectCategory[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/categories`);
+    const response = await apiFetch(`${API_BASE_URL}/categories`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch project categories");
@@ -117,14 +117,14 @@ export async function fetchProjectCategories(): Promise<ProjectCategory[]> {
 
     return categories;
   } catch (error) {
-    console.error("Error fetching project categories:", error);
+    
     return [];
   }
 }
 
 export async function fetchTechnologies(): Promise<ProjectTag[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/tags`);
+    const response = await apiFetch(`${API_BASE_URL}/tags`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch technologies");
@@ -138,7 +138,7 @@ export async function fetchTechnologies(): Promise<ProjectTag[]> {
 
     return technologies;
   } catch (error) {
-    console.error("Error fetching technologies:", error);
+    
     return [];
   }
 }
@@ -146,7 +146,7 @@ export async function fetchTechnologies(): Promise<ProjectTag[]> {
 // Track project view
 export async function trackProjectView(projectId: string): Promise<void> {
   try {
-    const response = await fetch(`${API_BASE_URL}/analytics/track`, {
+    const response = await apiFetch(`${API_BASE_URL}/analytics/track`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -161,6 +161,6 @@ export async function trackProjectView(projectId: string): Promise<void> {
       throw new Error(`Failed to track project view for ID: ${projectId}`);
     }
   } catch (error) {
-    console.error(`Error tracking project view for ID ${projectId}:`, error);
+    
   }
 }

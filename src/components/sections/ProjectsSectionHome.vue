@@ -56,7 +56,7 @@ onMounted(async () => {
     projects.value = await fetchProjects();
     featuredProjects.value = projects.value.slice(0, 3); // Reduce to 3 items for better layout
   } catch (error) {
-    console.error("Error loading projects for homepage:", error);
+    
   } finally {
     isLoading.value = false;
   }

@@ -204,7 +204,7 @@ onMounted(async () => {
   try {
     profileData.value = await getProfileSettings(locale.value)
   } catch (e) {
-    console.error("Error loading profile:", e)
+    
   }
 })
 
@@ -231,7 +231,7 @@ const handleSubmit = async () => {
     await new Promise(resolve => setTimeout(resolve, 2000))
     
     // Here you would typically send the form data to your backend
-    console.log('Form submitted:', form)
+    
     
     // Reset form
     Object.assign(form, {
@@ -244,7 +244,7 @@ const handleSubmit = async () => {
     submitStatus.type = 'success'
     submitStatus.message = t('contact.msg_success')
   } catch (error) {
-    console.error('Form submission error:', error)
+    
     submitStatus.type = 'error'
     submitStatus.message = t('contact.msg_error')
   } finally {

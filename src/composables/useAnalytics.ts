@@ -89,7 +89,7 @@ export function useAnalytics() {
       }
 
     } catch (err) {
-      console.error('Failed to track page view:', err)
+      
       error.value = err instanceof Error ? err.message : 'Failed to track page view'
     } finally {
       // Always clear loading state after API call completes
@@ -110,7 +110,7 @@ export function useAnalytics() {
 
       return data
     } catch (err) {
-      console.error('Failed to fetch view count:', err)
+      
       error.value = err instanceof Error ? err.message : 'Failed to fetch view count'
       return viewCounts
     } finally {
@@ -180,7 +180,7 @@ export function useAnalytics() {
       analyticsService.initializeDemoData()
       await fetchViewCount()
     } catch (err) {
-      console.error('Failed to initialize analytics:', err)
+      
       error.value = err instanceof Error ? err.message : 'Failed to initialize analytics'
     } finally {
       isLoading.value = false
@@ -212,7 +212,7 @@ export function useAnalytics() {
         endDate: new Date().toISOString()
       })
     } catch (err) {
-      console.error('Failed to get analytics by period:', err)
+      
       return viewCounts
     }
   }

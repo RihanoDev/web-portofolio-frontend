@@ -147,7 +147,7 @@ const downloadPDF = () => {
     link.click()
     document.body.removeChild(link)
   } catch (error) {
-    console.error('Download failed:', error)
+    
     // Fallback: open in new tab
     window.open(resumePDF, '_blank')
   }
@@ -158,13 +158,13 @@ const openInNewTab = () => {
 }
 
 const onPDFLoad = () => {
-  console.log('PDF loaded successfully')
+  
   isLoading.value = false
   hasError.value = false
 }
 
 const onPDFError = () => {
-  console.error('PDF failed to load')
+  
   isLoading.value = false
   hasError.value = true
 }

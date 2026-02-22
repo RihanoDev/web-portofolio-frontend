@@ -151,7 +151,7 @@ const loadProfile = async () => {
       displayAvatarUrl.value = '/profile.jpg'
     }
   } catch (e) {
-    console.error("Error loading profile:", e)
+    
     displayAvatarUrl.value = '/profile.jpg'
   }
 }

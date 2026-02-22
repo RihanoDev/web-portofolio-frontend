@@ -119,7 +119,7 @@ onMounted(async () => {
     // Then load articles
     articles.value = await fetchArticles();
   } catch (error) {
-    console.error("Error loading articles data:", error);
+    
   } finally {
     isLoading.value = false;
   }

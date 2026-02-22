@@ -1,9 +1,9 @@
 import type { Article, ArticleListItem, ArticleTag, ArticleCategory } from "../types/article";
-import { API_BASE_URL } from "./config";
+import {  API_BASE_URL , apiFetch } from "./config";
 
 export async function fetchArticles(): Promise<ArticleListItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/articles`);
+    const response = await apiFetch(`${API_BASE_URL}/articles`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch articles");
@@ -17,14 +17,14 @@ export async function fetchArticles(): Promise<ArticleListItem[]> {
 
     return articles;
   } catch (error) {
-    console.error("Error fetching articles:", error);
+    
     return [];
   }
 }
 
 export async function fetchArticleBySlug(slug: string): Promise<Article | null> {
   try {
-    const response = await fetch(`${API_BASE_URL}/articles/slug/${slug}`);
+    const response = await apiFetch(`${API_BASE_URL}/articles/slug/${slug}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch article with slug: ${slug}`);
@@ -33,14 +33,14 @@ export async function fetchArticleBySlug(slug: string): Promise<Article | null> 
     const data = await response.json();
     return data.data;
   } catch (error) {
-    console.error(`Error fetching article with slug ${slug}:`, error);
+    
     return null;
   }
 }
 
 export async function fetchArticlesByCategory(slug: string): Promise<ArticleListItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/articles/category/${slug}`);
+    const response = await apiFetch(`${API_BASE_URL}/articles/category/${slug}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch articles for category: ${slug}`);
@@ -54,14 +54,14 @@ export async function fetchArticlesByCategory(slug: string): Promise<ArticleList
 
     return articles;
   } catch (error) {
-    console.error(`Error fetching articles for category ${slug}:`, error);
+    
     return [];
   }
 }
 
 export async function fetchArticlesByTag(name: string): Promise<ArticleListItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/articles/tag/${name}`);
+    const response = await apiFetch(`${API_BASE_URL}/articles/tag/${name}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch articles for tag: ${name}`);
@@ -75,14 +75,14 @@ export async function fetchArticlesByTag(name: string): Promise<ArticleListItem[
 
     return articles;
   } catch (error) {
-    console.error(`Error fetching articles for tag ${name}:`, error);
+    
     return [];
   }
 }
 
 export async function fetchArticleCategories(): Promise<ArticleCategory[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/categories`);
+    const response = await apiFetch(`${API_BASE_URL}/categories`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch article categories");
@@ -96,14 +96,14 @@ export async function fetchArticleCategories(): Promise<ArticleCategory[]> {
 
     return categories;
   } catch (error) {
-    console.error("Error fetching article categories:", error);
+    
     return [];
   }
 }
 
 export async function fetchArticleTags(): Promise<ArticleTag[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/tags`);
+    const response = await apiFetch(`${API_BASE_URL}/tags`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch article tags");
@@ -117,7 +117,7 @@ export async function fetchArticleTags(): Promise<ArticleTag[]> {
 
     return tags;
   } catch (error) {
-    console.error("Error fetching article tags:", error);
+    
     return [];
   }
 }
@@ -125,7 +125,7 @@ export async function fetchArticleTags(): Promise<ArticleTag[]> {
 // Track article view
 export async function trackArticleView(articleId: string): Promise<void> {
   try {
-    const response = await fetch(`${API_BASE_URL}/analytics/track`, {
+    const response = await apiFetch(`${API_BASE_URL}/analytics/track`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -140,6 +140,6 @@ export async function trackArticleView(articleId: string): Promise<void> {
       throw new Error(`Failed to track article view for ID: ${articleId}`);
     }
   } catch (error) {
-    console.error(`Error tracking article view for ID ${articleId}:`, error);
+    
   }
 }
