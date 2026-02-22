@@ -57,7 +57,7 @@
       </div>
 
       <!-- Description -->
-      <p class="text-secondary mb-6 leading-relaxed">
+      <p class="text-secondary mb-6 leading-relaxed break-words">
         {{ stripHtml(experience.description || '') }}
       </p>
 

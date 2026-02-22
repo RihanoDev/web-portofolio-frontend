@@ -152,7 +152,7 @@ const savedTheme = localStorage.getItem('portfolio-theme') || 'dark-orange'
 const currentThemeId = ref<string>(savedTheme)
 
 export const useTheme = () => {
-  const currentTheme = computed(() => 
+  const currentTheme = computed(() =>
     themes.find(theme => theme.id === currentThemeId.value) || themes[0]
   )
 
@@ -172,14 +172,35 @@ export const useTheme = () => {
     root.style.setProperty('--color-text-secondary', theme.colors.text.secondary)
     root.style.setProperty('--gradient-primary', theme.colors.gradient.primary)
     root.style.setProperty('--gradient-secondary', theme.colors.gradient.secondary)
-    
+
     // Extract RGB values from accent color for CSS custom properties
     const accentRgb = theme.colors.accent.replace('#', '')
     const r = parseInt(accentRgb.substring(0, 2), 16)
     const g = parseInt(accentRgb.substring(2, 4), 16)
     const b = parseInt(accentRgb.substring(4, 6), 16)
     root.style.setProperty('--accent-rgb', `${r}, ${g}, ${b}`)
-    
+
+    // Extract RGB from secondary for glass effects
+    const secondaryRgb = theme.colors.secondary.replace('#', '')
+    const sr = parseInt(secondaryRgb.substring(0, 2), 16)
+    const sg = parseInt(secondaryRgb.substring(2, 4), 16)
+    const sb = parseInt(secondaryRgb.substring(4, 6), 16)
+    root.style.setProperty('--color-secondary-rgb', `${sr}, ${sg}, ${sb}`)
+
+    // Set surface color
+    const surfaceHex = theme.id.includes('light') ? '#FFFFFF' : theme.colors.secondary
+    root.style.setProperty('--color-surface', surfaceHex)
+
+    // Extract RGB from surface
+    const surfaceRgb = surfaceHex.replace('#', '')
+    const surR = parseInt(surfaceRgb.substring(0, 2), 16)
+    const surG = parseInt(surfaceRgb.substring(2, 4), 16)
+    const surB = parseInt(surfaceRgb.substring(4, 6), 16)
+    root.style.setProperty('--surface-rgb', `${surR}, ${surG}, ${surB}`)
+
+    root.style.setProperty('--color-surface-elevated', theme.id.includes('light') ? '#F8FAFC' : theme.colors.tertiary)
+    root.style.setProperty('--color-border', theme.id.includes('light') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)')
+
     // Set theme data attribute for CSS targeting
     document.body.setAttribute('data-theme', theme.id)
     document.body.style.backgroundColor = theme.colors.primary

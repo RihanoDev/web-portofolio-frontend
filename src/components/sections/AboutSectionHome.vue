@@ -29,19 +29,19 @@
         <!-- Stats Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12" data-aos="fade-up" data-aos-delay="100">
           <div class="glass-subtle rounded-xl p-6 border transition-all duration-300 group hover:scale-105"
-               style="border-color: rgba(255, 255, 255, 0.1);">
+               style="border-color: var(--color-border);">
             <div class="text-3xl font-bold mb-2 group-hover:scale-110 transition-transform" 
                  style="color: var(--color-accent);">{{ yearsExperience }}+</div>
             <div class="text-sm" style="color: var(--color-text-secondary);">{{ $t('about.years_exp') }}</div>
           </div>
           <div class="glass-subtle rounded-xl p-6 border transition-all duration-300 group hover:scale-105"
-               style="border-color: rgba(255, 255, 255, 0.1);">
+               style="border-color: var(--color-border);">
             <div class="text-3xl font-bold mb-2 group-hover:scale-110 transition-transform" 
                  style="color: var(--color-accent);">{{ projectsCompleted }}+</div>
             <div class="text-sm" style="color: var(--color-text-secondary);">{{ $t('about.projects_done') }}</div>
           </div>
           <div class="glass-subtle rounded-xl p-6 border transition-all duration-300 group hover:scale-105"
-               style="border-color: rgba(255, 255, 255, 0.1);">
+               style="border-color: var(--color-border);">
             <div class="text-3xl font-bold mb-2 group-hover:scale-110 transition-transform" 
                  style="color: var(--color-accent);">∞</div>
             <div class="text-sm" style="color: var(--color-text-secondary);">{{ $t('about.learning') }}</div>
@@ -69,7 +69,7 @@
 
             <div class="group">
               <div class="glass-subtle rounded-xl p-6 border transition-all duration-300 hover:scale-105"
-                   style="border-color: rgba(255, 255, 255, 0.1);">
+                   style="border-color: var(--color-border);">
                 <div class="flex items-center space-x-3 mb-3">
                   <div class="w-12 h-12 rounded-lg flex items-center justify-center"
                        style="background-color: rgba(var(--accent-rgb), 0.1);">
@@ -208,15 +208,15 @@ watch(locale, loadProfile)
 
 <style scoped>
 .glass-subtle {
-  background: rgba(26, 30, 46, 0.3);
+  background: rgba(var(--color-secondary-rgb), 0.3);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 
 .glass-strong {
-  background: rgba(26, 30, 46, 0.6);
+  background: rgba(var(--color-secondary-rgb), 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-border);
 }
 </style>

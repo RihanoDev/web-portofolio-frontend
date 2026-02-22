@@ -109,7 +109,7 @@
           </figure>
 
           <!-- Project Content -->
-          <div class="prose prose-lg dark:prose-invert prose-headings:text-primary prose-a:text-accent max-w-none">
+          <div class="prose prose-lg dark:prose-invert prose-headings:text-primary prose-a:text-accent max-w-none break-words" style="overflow-wrap: anywhere;">
             <!-- If content is provided as HTML -->
             <div v-if="getLocalized(project, 'content', locale)" v-html="sanitizeHtml(getLocalized(project, 'content', locale))"></div>
             

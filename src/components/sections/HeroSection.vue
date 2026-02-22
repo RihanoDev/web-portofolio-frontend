@@ -13,7 +13,7 @@
         <div class="mb-8 group">
           <div class="relative inline-block">
             <div class="w-40 h-40 mx-auto rounded-full glass-strong p-1 group-hover:scale-105 transition-all duration-500">
-              <div class="w-full h-full rounded-full overflow-hidden border-2 border-primary-500/20 relative bg-gray-800/50">
+              <div class="w-full h-full rounded-full overflow-hidden border-2 border-accent/20 relative bg-secondary/50">
                 <!-- Skeleton Loader -->
                 <div 
                   v-if="!isImageLoaded" 
@@ -80,11 +80,11 @@
             style="outline: none !important; -webkit-tap-highlight-color: transparent !important;"
           >
             <div class="w-14 h-14 rounded-xl glass hover:glass-strong transition-all duration-300 flex items-center justify-center hover:scale-110 border group-hover:shadow-glow"
-                 style="color: var(--color-text-secondary); border-color: rgba(255, 255, 255, 0.1);">
+                 style="color: var(--color-text-secondary); border-color: var(--color-border);">
               <i :class="social.icon + ' text-xl'"></i>
             </div>
             <span class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 px-2 py-1 rounded-md border"
-                  style="color: var(--color-text-secondary); background-color: rgba(var(--color-secondary-rgb), 0.8); border-color: rgba(255, 255, 255, 0.1);">
+                  style="color: var(--color-text-secondary); background-color: rgba(var(--color-secondary-rgb), 0.8); border-color: var(--color-border);">
               {{ social.name }}
             </span>
           </a>
