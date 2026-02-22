@@ -6,9 +6,9 @@
         <div class="text-center mb-16">
           <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--color-text-primary);">{{ $t('about.title') }}</h2>
           <div class="w-24 h-1 mx-auto mb-6 rounded-full" style="background: var(--gradient-primary);"></div>
-          <p class="text-xl max-w-3xl mx-auto" style="color: var(--color-text-secondary);">
+          <div class="text-xl max-w-3xl mx-auto text-center !whitespace-pre-line" style="color: var(--color-text-secondary); text-align: center;">
             {{ profileData.aboutSubtitle }}
-          </p>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">

@@ -50,19 +50,19 @@
           
           <!-- Subheadline -->
           <div class="relative">
-            <p class="text-lg md:text-xl font-normal"
-               style="color: var(--color-text-secondary);">
+            <div class="text-lg md:text-xl font-normal text-center !whitespace-pre-line"
+               style="color: var(--color-text-secondary); text-align: center;">
               {{ profileData.title }}
-            </p>
+            </div>
           </div>
         </div>
 
         <!-- Enhanced description -->
         <div class="mb-10">
-          <p class="text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
+          <div class="text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
              style="color: var(--color-text-secondary);">
             {{ profileData.bio }}
-          </p>
+          </div>
         </div>
 
         
