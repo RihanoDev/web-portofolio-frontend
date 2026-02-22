@@ -51,7 +51,7 @@
                 <span class="text-xs" style="color: var(--color-text-secondary);">{{ $t('analytics.this_month') || 'This Month:' }}</span>
                 <span class="font-semibold text-xs" style="color: var(--color-text-primary);">{{ monthViews }}</span>
               </div>
-              <div class="border-t pt-1.5 mt-2" style="border-color: rgba(255, 255, 255, 0.1);">
+              <div class="border-t pt-1.5 mt-2" style="border-color: var(--color-border);">
                 <div class="flex justify-between space-x-6">
                   <span class="text-xs" style="color: var(--color-text-secondary);">{{ $t('analytics.unique_visitors') || 'Unique Visitors:' }}</span>
                   <span class="font-semibold text-xs text-blue-400">{{ formatNumber(uniqueVisitors) }}</span>
@@ -62,7 +62,7 @@
               </div>
               
               <!-- WebSocket status indicator -->
-              <div class="flex items-center justify-between mt-2 pt-1.5" style="border-top: 1px solid rgba(255, 255, 255, 0.1);">
+              <div class="flex items-center justify-between mt-2 pt-1.5" style="border-top: 1px solid var(--color-border);">
                 <span class="text-xs flex items-center gap-1" :class="isConnected ? 'text-green-400' : 'text-gray-400'">
                   <span class="inline-block w-2 h-2 rounded-full" :class="isConnected ? 'bg-green-400' : 'bg-gray-400'"></span>
                   {{ isConnected ? $t('analytics.live') : $t('analytics.offline') }}
@@ -173,7 +173,7 @@ onUnmounted(() => {
   background: rgba(var(--color-secondary-rgb), 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-border);
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -183,7 +183,7 @@ onUnmounted(() => {
   background: rgba(var(--color-secondary-rgb), 0.9);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-border);
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);

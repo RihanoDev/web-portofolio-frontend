@@ -106,7 +106,7 @@ import { useRouter } from 'vue-router'
 import { ArrowLeft, FileText, Download, AlertTriangle } from 'lucide-vue-next'
 
 // Import PDF
-import resumePDF from '../assets/0654test-Rizky Haffiyan Roseno-CV.pdf'
+import resumePDF from '../assets/NEW-CV_Rizky-Haffiyan-Roseno_Full-Stack-SE.pdf'
 
 const router = useRouter()
 const isLoading = ref(true)
