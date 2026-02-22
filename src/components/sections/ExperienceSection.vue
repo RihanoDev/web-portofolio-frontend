@@ -27,16 +27,16 @@
                   <i class="fas fa-briefcase text-accent"></i>
                 </div>
                 <div>
-                  <h3 class="text-lg font-bold text-primary group-hover:text-accent transition-colors">
+                  <h3 class="text-lg font-bold text-primary group-hover:text-accent transition-colors break-words" style="overflow-wrap: anywhere;">
                     {{ getLocalized(exp, 'title', locale) }}
                   </h3>
-                  <p class="text-sm font-medium text-secondary">
+                  <p class="text-sm font-medium text-secondary break-words" style="overflow-wrap: anywhere;">
                     {{ exp.company }} • {{ getLocalized(exp, 'location', locale) }}
                   </p>
                   <p class="text-xs text-accent font-semibold">{{ formatPeriod(exp.startDate, exp.endDate, exp.current) }}</p>
                 </div>
               </div>
-              <p class="text-sm text-secondary mb-4 flex-grow line-clamp-3">{{ stripHtml(getLocalized(exp, 'description', locale)) }}</p>
+              <p class="text-sm text-secondary mb-4 flex-grow line-clamp-3 break-words" style="overflow-wrap: anywhere;">{{ stripHtml(getLocalized(exp, 'description', locale)) }}</p>
               <div class="flex flex-wrap gap-2 mb-4">
                 <span v-for="t in exp.technologies" :key="t.id" class="px-3 py-1 text-xs bg-accent/5 border border-accent/10 text-accent rounded-full hover:bg-accent/10 transition-colors">
                   {{ t.name }}
@@ -97,7 +97,7 @@
             
             <!-- Modal Body -->
             <div class="p-6">
-              <div class="prose prose-invert prose-sm sm:prose-base max-w-none text-secondary mb-8 break-words" style="overflow-wrap: anywhere;" v-html="getLocalized(selectedExperience, 'description', locale)"></div>
+              <div class="prose prose-invert prose-sm sm:prose-base max-w-none text-secondary mb-8 break-words" v-html="getLocalized(selectedExperience, 'description', locale)"></div>
               
               <div v-if="selectedExperience.responsibilities && selectedExperience.responsibilities.length > 0" class="mb-8">
                 <h4 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
