@@ -130,27 +130,27 @@ body::before {
 
 /* Global utility classes - NORMAL (non-glass) untuk content, glass hanya untuk nav/footer */
 .glass {
-  background: rgba(26, 30, 46, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(var(--color-secondary-rgb), 0.9);
+  border: 1px solid var(--color-border);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .glass-strong {
-  background: rgba(20, 25, 40, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(var(--color-secondary-rgb), 0.95);
+  border: 1px solid var(--color-border);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .glass-subtle {
-  background: rgba(30, 35, 50, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(var(--color-secondary-rgb), 0.85);
+  border: 1px solid var(--color-border);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Enhanced glass card - NORMAL CARD (non-glass) untuk content */
 .glass-card {
-  background: rgba(26, 30, 46, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(var(--color-secondary-rgb), 0.95);
+  border: 1px solid var(--color-border);
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

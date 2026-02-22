@@ -77,9 +77,9 @@
         <!-- Experience Detail Modal -->
         <div v-if="isModalOpen && selectedExperience" class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" @click.self="closeModal">
           <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="closeModal"></div>
-          <div class="relative bg-surface border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl animate-fade-in flex flex-col">
+          <div class="relative bg-surface border border-border rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl animate-fade-in flex flex-col">
             <!-- Modal Header -->
-            <div class="sticky top-0 bg-surface/95 backdrop-blur z-10 p-6 border-b border-white/5 flex justify-between items-start">
+            <div class="sticky top-0 bg-surface/90 backdrop-blur z-10 p-6 border-b border-border flex justify-between items-start">
               <div class="flex items-center gap-4">
                 <div class="w-12 h-12 rounded-lg bg-accent/10 flex-shrink-0 flex items-center justify-center">
                   <i class="fas fa-briefcase text-accent text-xl"></i>
@@ -90,14 +90,14 @@
                   <p class="text-sm text-secondary">{{ formatPeriod(selectedExperience.startDate, selectedExperience.endDate, selectedExperience.current) }}</p>
                 </div>
               </div>
-              <button @click="closeModal" class="p-2 text-secondary hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
+              <button @click="closeModal" class="p-2 text-text-secondary hover:text-text-primary bg-secondary/10 hover:bg-secondary/20 rounded-lg transition-colors">
                 <i class="fas fa-times"></i>
               </button>
             </div>
             
             <!-- Modal Body -->
             <div class="p-6">
-              <div class="prose prose-invert prose-sm sm:prose-base max-w-none text-secondary mb-8" v-html="getLocalized(selectedExperience, 'description', locale)"></div>
+              <div class="prose prose-invert prose-sm sm:prose-base max-w-none text-secondary mb-8 break-words" style="overflow-wrap: anywhere;" v-html="getLocalized(selectedExperience, 'description', locale)"></div>
               
               <div v-if="selectedExperience.responsibilities && selectedExperience.responsibilities.length > 0" class="mb-8">
                 <h4 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
@@ -118,7 +118,7 @@
                   {{ locale === 'id' ? 'Teknologi' : 'Technologies' }}
                 </h4>
                 <div class="flex flex-wrap gap-2">
-                  <span v-for="tech in selectedExperience.technologies" :key="tech.id" class="px-3 py-1.5 bg-white/5 border border-white/10 text-primary rounded-lg text-sm">
+                  <span v-for="tech in selectedExperience.technologies" :key="tech.id" class="px-3 py-1.5 bg-secondary/10 border border-border text-text-primary rounded-lg text-sm">
                     {{ tech.name }}
                   </span>
                 </div>
