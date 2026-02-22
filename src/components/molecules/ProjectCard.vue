@@ -56,9 +56,11 @@
         <!-- Title and Category -->
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-semibold text-accent uppercase tracking-wider">
-              {{ project.category }}
-            </span>
+            <div class="flex flex-wrap gap-2">
+              <span v-for="cat in project.categories" :key="cat" class="text-xs font-semibold text-accent uppercase tracking-wider">
+                {{ cat }}
+              </span>
+            </div>
           </div>
           <h3 class="text-xl font-bold text-primary group-hover:text-accent transition-colors duration-300 break-words" style="overflow-wrap: anywhere;">
             {{ project.title }}
@@ -73,7 +75,14 @@
         <!-- Technologies -->
         <div class="flex flex-wrap gap-1.5 mb-3">
           <Badge v-for="tech in project.technologies.slice(0, 4)" :key="tech" color="gray">{{ tech }}</Badge>
-          <Badge v-if="project.technologies.length > 4">+{{ project.technologies.length - 4 }} more</Badge>
+          <Badge v-if="project.technologies.length > 4">+{{ project.technologies.length - 4 }}</Badge>
+        </div>
+
+        <!-- Tags -->
+        <div v-if="project.tags && project.tags.length > 0" class="flex flex-wrap gap-1.5 mb-3">
+          <span v-for="tag in project.tags.slice(0, 5)" :key="tag" class="text-[10px] text-secondary/70 italic">
+            #{{ tag }}
+          </span>
         </div>
 
         <!-- Key Features (shown on hover) -->
@@ -141,8 +150,19 @@ const project = {
   get id() { return props.project.id },
   get title() { return getLocalized(props.project, 'title', locale.value) },
   get description() { return getLocalized(props.project, 'description', locale.value) },
-  get category() { return props.project.category || 'Uncategorized' },
-  get technologies() { return props.project.technologies || [] },
+  get categories() { 
+    if (props.project.categories && props.project.categories.length > 0) {
+      return props.project.categories.map(c => typeof c === 'string' ? c : (c as any).name)
+    }
+    const cat = props.project.category
+    return [typeof cat === 'string' ? cat : (cat as any)?.name || 'Uncategorized']
+  },
+  get technologies() { 
+    return (props.project.technologies || []).map(t => typeof t === 'string' ? t : (t as any).name)
+  },
+  get tags() {
+    return (props.project.tags || []).map(t => typeof t === 'string' ? t : (t as any).name)
+  },
   get image() { return props.project.thumbnailUrl || getDefaultImage() },
   get githubUrl() { return props.project.githubUrl },
   get liveUrl() { return props.project.liveDemoUrl },
