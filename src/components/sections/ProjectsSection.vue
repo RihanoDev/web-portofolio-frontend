@@ -10,7 +10,7 @@
         </div>
 
         <!-- Filter Tabs -->
-        <div class="flex flex-wrap justify-center items-center mb-10 gap-2 relative z-20">
+        <div class="flex flex-wrap justify-center items-start mb-10 gap-2 relative z-20">
           <button
             v-for="category in visibleCategories"
             :key="category"
@@ -35,7 +35,7 @@
             <!-- Dropdown Menu -->
             <div
               v-if="isDropdownOpen"
-              class="absolute left-1/2 -translate-x-1/2 mt-2 w-56 p-2 z-[50] rounded-xl glass border border-white/10 shadow-2xl flex flex-col gap-1 max-h-60 overflow-y-auto"
+              class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 p-2 z-[50] rounded-xl glass border border-white/10 shadow-2xl flex flex-col gap-1 max-h-60 overflow-y-auto"
             >
               <button
                 v-for="category in hiddenCategories"
@@ -45,7 +45,7 @@
                   isDropdownOpen = false;
                 "
                 class="px-4 py-2 w-full text-left rounded-lg text-sm font-medium transition-all duration-300"
-                :class="activeCategory === category ? 'bg-accent/20 text-accent font-semibold' : 'text-secondary hover:bg-white/10 hover:text-primary'"
+                :class="activeCategory === category ? 'bg-gradient text-white font-semibold' : 'text-secondary hover:bg-white/10 hover:text-primary'"
               >
                 {{ category }}
               </button>
