@@ -83,7 +83,7 @@
           </figure>
 
           <!-- Article Content -->
-          <div class="prose prose-lg dark:prose-invert prose-headings:text-primary prose-a:text-accent max-w-none break-words" style="overflow-wrap: anywhere;">
+          <div class="prose prose-lg dark:prose-invert prose-headings:text-primary prose-a:text-accent max-w-none break-words">
             <!-- If content is provided as HTML -->
             <div v-if="getLocalized(article, 'content', locale)" v-html="sanitizeHtml(getLocalized(article, 'content', locale))"></div>
             

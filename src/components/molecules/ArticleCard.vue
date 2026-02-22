@@ -41,12 +41,12 @@
         <!-- Article Content -->
         <div class="p-6">
           <!-- Title -->
-          <h3 class="text-xl font-bold text-primary mb-3 line-clamp-2 group-hover:text-accent transition-colors duration-300">
+          <h3 class="text-xl font-bold text-primary mb-3 line-clamp-2 group-hover:text-accent transition-colors duration-300 break-words" style="overflow-wrap: anywhere;">
             {{ getLocalized(article, 'title', locale) }}
           </h3>
 
           <!-- Excerpt -->
-          <p class="text-secondary text-sm leading-relaxed mb-4 line-clamp-3">
+          <p class="text-secondary text-sm leading-relaxed mb-4 line-clamp-3 break-words" style="overflow-wrap: anywhere;">
             {{ getLocalized(article, 'excerpt', locale) }}
           </p>
 

@@ -60,13 +60,13 @@
               {{ project.category }}
             </span>
           </div>
-          <h3 class="text-xl font-bold text-primary group-hover:text-accent transition-colors duration-300">
+          <h3 class="text-xl font-bold text-primary group-hover:text-accent transition-colors duration-300 break-words" style="overflow-wrap: anywhere;">
             {{ project.title }}
           </h3>
         </div>
 
         <!-- Description -->
-        <p class="text-secondary text-sm leading-relaxed mb-4">
+        <p class="text-secondary text-sm leading-relaxed mb-4 break-words" style="overflow-wrap: anywhere;">
           {{ project.description }}
         </p>
 
