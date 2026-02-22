@@ -46,16 +46,53 @@ function decodeBase64Utf8(base64: string): string {
   }
 }
 
+function tryDecodeResponse(raw: string): string {
+  let current = raw.trim();
+  for (let i = 0; i < 3; i++) {
+    try {
+      const decoded = decodeBase64Utf8(current);
+      JSON.parse(decoded); // validate JSON
+      return decoded;
+    } catch {
+      try {
+        current = decodeBase64Utf8(current);
+      } catch {
+        break;
+      }
+    }
+  }
+  return raw;
+}
+
 export async function apiFetch(url: string, init?: RequestInit): Promise<Response> {
   const response = await fetch(url, init);
-  if (response.headers.get("x-encoded-response") === "true") {
-    const text = await response.text();
-    const decoded = decodeBase64Utf8(text);
-    return new Response(decoded, {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers
-    });
+  const text = await response.text();
+
+  const isExplicitlyEncoded = response.headers.get("x-encoded-response") === "true";
+  const looksLikeBase64 =
+    text.length > 20 && /^[A-Za-z0-9+/ \n\r]+={0,2}$/.test(text.trim());
+
+  if (isExplicitlyEncoded || looksLikeBase64) {
+    const decoded = tryDecodeResponse(text);
+
+    // Only alter response if it actually looks decoded (JSON)
+    if (decoded !== text) {
+      const newHeaders = new Headers(response.headers);
+      newHeaders.delete("content-length");
+      newHeaders.set("content-type", "application/json");
+
+      return new Response(decoded, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: newHeaders
+      });
+    }
   }
-  return response;
+
+  // Pass through normal text if not base64 encoded
+  return new Response(text, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: response.headers
+  });
 }

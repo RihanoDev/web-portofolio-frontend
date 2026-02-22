@@ -27,11 +27,11 @@
             <!-- Categories -->
             <div class="flex gap-2 mb-4">
               <span 
-                v-for="category in article.categories" 
-                :key="category.id"
+                v-for="(category, index) in article.categories" 
+                :key="typeof category === 'string' ? index : category.id"
                 class="px-3 py-1 text-xs font-medium bg-blue-500/20 text-blue-400 rounded-full border border-blue-500/30"
               >
-                {{ category.name }}
+                {{ typeof category === 'string' ? category : category.name }}
               </span>
             </div>
 
@@ -64,11 +64,11 @@
             <!-- Tags -->
             <div class="flex flex-wrap gap-2 mb-6">
               <span 
-                v-for="tag in article.tags" 
-                :key="tag.id"
+                v-for="(tag, index) in article.tags" 
+                :key="typeof tag === 'string' ? index : tag.id"
                 class="px-3 py-1 text-xs font-medium bg-surface/50 text-secondary rounded border border-white/10"
               >
-                #{{ tag.name }}
+                #{{ typeof tag === 'string' ? tag : tag.name }}
               </span>
             </div>
           </header>
