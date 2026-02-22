@@ -23,7 +23,7 @@
               </span>
               <span class="text-xs -mt-1" 
                     style="color: var(--color-text-secondary);">
-                Backend Engineer
+                Portofolio Website
               </span>
             </div>
           </router-link>

@@ -24,7 +24,8 @@ onMounted(() => {
   AOS.init({
     duration: 1000,
     once: true,
-    offset: 50
+    offset: 50,
+    disable: 'mobile' // optimizations for slow scroll
   })
 })
 </script>

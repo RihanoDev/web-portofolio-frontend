@@ -53,11 +53,11 @@
           <!-- Tags -->
           <div class="flex flex-wrap gap-2 mb-4">
             <span 
-              v-for="tag in article.tags.slice(0, 3)" 
-              :key="tag.id"
+              v-for="(tag, i) in article.tags.slice(0, 3)" 
+              :key="i"
               class="px-2 py-1 bg-surface/50 text-xs font-medium text-secondary rounded border border-white/5"
             >
-              #{{ tag.name }}
+              #{{ typeof tag === 'string' ? tag : tag.name }}
             </span>
             <span 
               v-if="article.tags.length > 3"

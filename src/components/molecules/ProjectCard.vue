@@ -154,10 +154,16 @@ const project = {
   },
   get status() {
     // Map status from ProjectStatus to UI status
-    switch (props.project.status) {
-      case 'published': return 'completed'
-      case 'draft': return 'in-progress'
-      case 'private': return 'planned'
+    switch (props.project.status?.toLowerCase()) {
+      case 'published':
+      case 'completed': return 'completed'
+      case 'draft':
+      case 'in-progress':
+      case 'ongoing': return 'in-progress'
+      case 'private':
+      case 'planned':
+      case 'planning': return 'planned'
+      case 'archived': return 'archived'
       default: return 'in-progress'
     }
   }
@@ -176,8 +182,10 @@ const getStatusClass = (status: string) => {
       return 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
     case 'planned':
       return 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-    default:
+    case 'archived':
       return 'bg-gray-500/20 text-gray-400 border border-gray-500/30'
+    default:
+      return 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
   }
 }
 
@@ -189,6 +197,8 @@ const getTranslatedStatus = (status: string) => {
       return t('projects.status_in_progress') || 'In Progress'
     case 'planned':
       return t('projects.status_planned') || 'Planned'
+    case 'archived':
+      return t('projects.status_archived') || 'Archived'
     default:
       return t('projects.status_unknown') || 'Unknown'
   }

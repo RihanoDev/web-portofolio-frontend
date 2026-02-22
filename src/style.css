@@ -87,7 +87,7 @@
   * {
     @apply border-border;
   }
-  
+
   html {
     @apply scroll-smooth antialiased;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
@@ -103,7 +103,12 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display font-semibold tracking-tight;
     font-family: 'Space Grotesk', sans-serif;
     line-height: 1.2;
@@ -112,11 +117,11 @@
   h1 {
     @apply text-4xl md:text-6xl lg:text-7xl;
   }
-  
+
   h2 {
     @apply text-3xl md:text-4xl lg:text-5xl;
   }
-  
+
   h3 {
     @apply text-2xl md:text-3xl;
   }
@@ -163,6 +168,7 @@
    Component Layer - Modern Components
 ========================================= */
 @layer components {
+
   /* Modern Button System */
   .btn {
     @apply inline-flex items-center justify-center px-6 py-3 rounded-xl font-medium text-sm transition-all duration-300 ease-out;
@@ -177,7 +183,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s;
   }
 
@@ -426,6 +432,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -437,6 +444,7 @@
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -444,18 +452,24 @@
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-20px);
   }
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   }
+
   50% {
     box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
   }
@@ -468,17 +482,42 @@
   .section {
     @apply py-16;
   }
-  
+
   .section-title {
     @apply text-3xl md:text-4xl;
   }
-  
+
   .card {
     @apply p-6;
   }
-  
+
   .btn {
     @apply px-4 py-2 text-sm;
+  }
+
+  /* Extreme Mobile Optimizations: Disable heavy blurs and animations */
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .glass,
+  .glass-subtle,
+  .glass-footer {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .glass {
+    background: var(--color-background-alt) !important;
+  }
+
+  /* Disable heavy continuous paints & shadows */
+  .animate-float,
+  .animate-pulse,
+  .pulse-glow {
+    animation: none !important;
+    transform: none !important;
+    box-shadow: none !important;
   }
 }
 
@@ -486,12 +525,13 @@
    Print Styles
 ========================================= */
 @media print {
+
   .btn,
   .nav-link,
   .footer-link {
     @apply text-black no-underline;
   }
-  
+
   .hero::before,
   .bg-gradient-hero,
   .bg-gradient-primary {

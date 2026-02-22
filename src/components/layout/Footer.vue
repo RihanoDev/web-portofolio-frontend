@@ -146,9 +146,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { Mail, Phone, MapPin, Linkedin, Github, Instagram } from 'lucide-vue-next'
 import { getProfileSettings, type ProfileData } from '../../services/profile'
+import { useI18n } from 'vue-i18n'
+
+const { locale } = useI18n()
 
 const profileData = ref<ProfileData>({
   name: '',
@@ -165,12 +168,20 @@ const profileData = ref<ProfileData>({
   phone: '+62 812-3456-7890'
 })
 
-onMounted(async () => {
+const fetchProfile = async () => {
   try {
-    profileData.value = await getProfileSettings()
+    profileData.value = await getProfileSettings(locale.value)
   } catch (e) {
-    
+    // silently fail and use default fallback
   }
+}
+
+onMounted(() => {
+  fetchProfile()
+})
+
+watch(locale, () => {
+  fetchProfile()
 })
 </script>
 
