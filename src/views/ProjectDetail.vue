@@ -30,7 +30,7 @@
                 v-if="project.category"
                 class="px-3 py-1 text-xs font-medium bg-accent/20 text-accent rounded-full border border-accent/30"
               >
-                {{ project.category.name }}
+                {{ typeof project.category === 'string' ? project.category : project.category.name }}
               </span>
             </div>
 
@@ -52,7 +52,7 @@
                 class="px-3 py-1 text-xs font-medium rounded-full"
                 :class="getStatusClass(project.status)"
               >
-                {{ project.status }}
+                {{ getTranslatedStatus(project.status) }}
               </div>
               
               <!-- View Count -->
@@ -65,11 +65,11 @@
             <!-- Technologies -->
             <div class="flex flex-wrap gap-2 mb-6">
               <span 
-                v-for="tech in project.technologies" 
-                :key="tech.id"
+                v-for="(tech, index) in project.technologies" 
+                :key="typeof tech === 'string' ? index : tech.id"
                 class="px-3 py-1 text-xs font-medium bg-blue-500/20 text-blue-400 rounded border border-blue-500/30"
               >
-                {{ tech.name }}
+                {{ typeof tech === 'string' ? tech : tech.name }}
               </span>
             </div>
             
@@ -229,6 +229,7 @@ const fetchProject = async () => {
 
 // Track project view
 const trackProjectView = async () => {
+
   if (!project.value) return;
   
   try {
@@ -282,17 +283,62 @@ const trackProjectView = async () => {
 // Get status classes for styling
 const getStatusClass = (status: string) => {
   switch (status?.toLowerCase()) {
-    case 'active':
+    case 'published':
     case 'completed':
       return 'bg-green-500/20 text-green-400 border border-green-500/30';
-    case 'in progress':
+    case 'draft':
+    case 'in-progress':
+    case 'ongoing':
       return 'bg-blue-500/20 text-blue-400 border border-blue-500/30';
+    case 'private':
     case 'planning':
+    case 'planned':
       return 'bg-purple-500/20 text-purple-400 border border-purple-500/30';
     case 'archived':
       return 'bg-gray-500/20 text-gray-400 border border-gray-500/30';
     default:
-      return 'bg-gray-500/20 text-gray-400 border border-gray-500/30';
+      return 'bg-blue-500/20 text-blue-400 border border-blue-500/30';
+  }
+};
+
+const { t } = useI18n();
+
+const getTranslatedStatus = (status: string) => {
+  let mappedStatus = 'in-progress';
+  switch (status?.toLowerCase()) {
+    case 'published':
+    case 'completed':
+      mappedStatus = 'completed';
+      break;
+    case 'draft':
+    case 'in-progress':
+    case 'ongoing':
+      mappedStatus = 'in-progress';
+      break;
+    case 'private':
+    case 'planning':
+    case 'planned':
+      mappedStatus = 'planned';
+      break;
+    case 'archived':
+      mappedStatus = 'archived';
+      break;
+    default:
+      mappedStatus = 'in-progress';
+  }
+
+  // Handle translation
+  switch (mappedStatus) {
+    case 'completed':
+      return t('projects.status_completed') || 'Completed';
+    case 'in-progress':
+      return t('projects.status_in_progress') || 'In Progress';
+    case 'planned':
+      return t('projects.status_planned') || 'Planned';
+    case 'archived':
+      return t('projects.status_archived') || 'Archived';
+    default:
+      return status;
   }
 };
 
