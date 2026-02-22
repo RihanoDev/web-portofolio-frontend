@@ -16,7 +16,7 @@
             :key="category"
             @click="setActiveCategory(category)"
             class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300"
-            :class="activeCategory === category ? 'bg-gradient text-white shadow-lg' : 'glass text-secondary hover:text-primary border border-white/10'"
+            :class="activeCategory === category ? 'bg-gradient text-white shadow-lg border border-transparent' : 'glass text-secondary hover:text-primary border border-white/10'"
           >
             {{ category }}
           </button>
@@ -26,7 +26,7 @@
             <button
               @click="isDropdownOpen = !isDropdownOpen"
               class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-between gap-2 min-w-[140px]"
-              :class="isHiddenCategoryActive ? 'bg-gradient text-white shadow-lg' : 'glass text-secondary hover:text-primary border border-white/10'"
+              :class="isHiddenCategoryActive ? 'bg-gradient text-white shadow-lg border border-transparent' : 'glass text-secondary hover:text-primary border border-white/10'"
             >
               <span class="truncate max-w-[120px]">{{ isHiddenCategoryActive ? activeCategory : 'More Categories' }}</span>
               <ChevronDown class="w-4 h-4 transition-transform duration-300 flex-shrink-0" :class="{ 'rotate-180': isDropdownOpen }" />
@@ -45,7 +45,7 @@
                   isDropdownOpen = false;
                 "
                 class="px-4 py-2 w-full text-left rounded-lg text-sm font-medium transition-all duration-300"
-                :class="activeCategory === category ? 'bg-white/20 text-white' : 'text-secondary hover:bg-white/10 hover:text-primary'"
+                :class="activeCategory === category ? 'bg-accent/20 text-accent font-semibold' : 'text-secondary hover:bg-white/10 hover:text-primary'"
               >
                 {{ category }}
               </button>
