@@ -412,6 +412,8 @@ onMounted(() => {
 
 :deep(.prose p) {
   margin-bottom: 1.5rem;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 :deep(.prose a) {

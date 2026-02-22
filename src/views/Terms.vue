@@ -11,7 +11,7 @@
             <h1 class="text-4xl font-bold mb-8 text-primary">{{ $t('terms.title') }}</h1>
             <div class="w-20 h-1 bg-gradient mb-10"></div>
 
-            <div class="space-y-8 text-secondary leading-relaxed">
+            <div class="space-y-8 text-secondary leading-relaxed text-justify" style="text-justify: inter-word;">
               <section>
                 <h2 class="text-2xl font-bold text-primary mb-4 flex items-center gap-3">
                   <span class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent text-sm">01</span>

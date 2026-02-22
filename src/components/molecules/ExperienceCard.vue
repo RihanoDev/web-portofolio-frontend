@@ -36,7 +36,7 @@
         </div>
         
         <div>
-          <h3 class="text-xl font-bold text-primary mb-1">{{ experience.title }}</h3>
+          <h3 class="text-xl font-bold text-primary mb-1">{{ localizedTitle }}</h3>
           <div class="flex items-center gap-2" :class="{ 'md:justify-end': !isLeft }">
             <h4 class="text-accent font-semibold">{{ experience.company }}</h4>
             <span class="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-400">
@@ -58,7 +58,7 @@
 
       <!-- Description -->
       <p class="text-secondary mb-6 leading-relaxed break-words">
-        {{ stripHtml(experience.description || '') }}
+        {{ stripHtml(localizedDesc || '') }}
       </p>
 
       <!-- Key Responsibilities -->
@@ -116,8 +116,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Trophy, CheckCircle, Code } from 'lucide-vue-next'
 import type { Experience } from '../../types/experience'
+import { getLocalized } from '../../utils/i18n'
 
 interface Props {
   experience: Experience
@@ -125,7 +128,11 @@ interface Props {
   isLeft: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+const { locale } = useI18n()
+
+const localizedTitle = computed(() => getLocalized(props.experience, 'title', locale.value))
+const localizedDesc = computed(() => getLocalized(props.experience, 'description', locale.value))
 
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement
