@@ -1,5 +1,5 @@
 <template>
-  <footer class="relative border-t border-white/5">
+  <footer class="relative border-t border-border/50">
     <!-- Glass Background with same style as navbar -->
     <div class="glass-footer py-16 px-4 relative">
       <div class="container mx-auto max-w-6xl relative z-10">
@@ -110,8 +110,8 @@
                 class="flex-1 px-4 py-3 rounded-lg glass-subtle focus:outline-none transition-colors"
                 style="color: var(--color-text-primary); border-color: rgba(var(--accent-rgb), 0.5);"
               >
-              <button class="px-6 py-3 glass-subtle border rounded-lg font-semibold transition-all duration-300 inline-flex items-center justify-center gap-2"
-                      style="border-color: var(--color-accent); color: var(--color-accent);">
+              <button class="px-6 py-3 glass-subtle border border-accent rounded-lg font-semibold transition-all duration-300 inline-flex items-center justify-center gap-2"
+                      style="color: var(--color-accent);">
                 <span>{{ $t('footer.subscribe') }}</span>
                 <i class="fas fa-paper-plane flex-shrink-0"></i>
               </button>
@@ -120,7 +120,7 @@
         </div>
 
         <!-- Footer Bottom -->
-        <div class="border-t pt-8" style="border-color: rgba(255, 255, 255, 0.05);">
+        <div class="border-t pt-8" style="border-color: var(--color-border);">
           <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div class="flex items-center space-x-4 text-sm" style="color: var(--color-text-secondary);">
               <span>&copy; 2026 RihanoDev. {{ $t('footer.rights') }}</span>
@@ -191,7 +191,7 @@ watch(locale, () => {
   background: rgba(var(--color-secondary-rgb), 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--color-border);
   box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }

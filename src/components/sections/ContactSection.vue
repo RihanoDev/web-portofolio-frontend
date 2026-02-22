@@ -260,9 +260,9 @@ const handleSubmit = async () => {
   width: 100%;
   padding: 0.75rem 1rem;
   background: rgba(var(--surface-rgb), 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-border);
   border-radius: 0.5rem;
-  color: var(--primary);
+  color: var(--color-text-primary);
   transition: all 0.3s ease;
 }
 

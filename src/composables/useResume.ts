@@ -1,4 +1,4 @@
-import resumePDF from '../assets/0654test-Rizky Haffiyan Roseno-CV.pdf'
+import resumePDF from '../assets/NEW-CV_Rizky-Haffiyan-Roseno_Full-Stack-SE.pdf'
 
 export const downloadResume = () => {
   const link = document.createElement('a')
