@@ -58,7 +58,7 @@
 
       <!-- Description -->
       <p class="text-secondary mb-6 leading-relaxed">
-        {{ experience.description }}
+        {{ stripHtml(experience.description || '') }}
       </p>
 
       <!-- Key Responsibilities -->
@@ -130,6 +130,13 @@ defineProps<Props>()
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement
   target.src = '/default-company.svg'
+}
+
+const stripHtml = (html: string) => {
+  if (!html) return '';
+  const tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
 }
 
 const formatPeriod = (experience: Experience): string => {
