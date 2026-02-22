@@ -10,7 +10,7 @@
         </div>
 
         <!-- Filter Tabs -->
-        <div class="flex flex-wrap justify-center mb-10 gap-2 relative z-20">
+        <div class="flex flex-wrap justify-center items-center mb-10 gap-2 relative z-20">
           <button
             v-for="category in visibleCategories"
             :key="category"
@@ -22,7 +22,7 @@
           </button>
 
           <!-- Dropdown for More Categories -->
-          <div v-if="hiddenCategories.length > 0" class="relative">
+          <div v-if="hiddenCategories.length > 0" class="relative" ref="dropdownRef">
             <button
               @click="isDropdownOpen = !isDropdownOpen"
               class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-between gap-2 min-w-[140px]"
@@ -31,15 +31,6 @@
               <span class="truncate max-w-[120px]">{{ isHiddenCategoryActive ? activeCategory : 'More Categories' }}</span>
               <ChevronDown class="w-4 h-4 transition-transform duration-300 flex-shrink-0" :class="{ 'rotate-180': isDropdownOpen }" />
             </button>
-
-            <!-- Backdrop -->
-            <Teleport to="body">
-              <div
-                v-if="isDropdownOpen"
-                class="fixed inset-0 z-[40] bg-black/40 backdrop-blur-sm"
-                @click="isDropdownOpen = false"
-              ></div>
-            </Teleport>
 
             <!-- Dropdown Menu -->
             <div
@@ -129,6 +120,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from "vue";
+import { onClickOutside } from '@vueuse/core';
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-vue-next";
 import ProjectCard from "../molecules/ProjectCard.vue";
 import type { ProjectListItem, ProjectCategory } from "../../types/project";
@@ -145,6 +137,13 @@ const visibleCategories = computed(() => categories.value.slice(0, 4));
 const hiddenCategories = computed(() => categories.value.slice(4));
 const isDropdownOpen = ref(false);
 const isHiddenCategoryActive = computed(() => hiddenCategories.value.includes(activeCategory.value));
+const dropdownRef = ref(null);
+
+onClickOutside(dropdownRef, () => {
+  if (isDropdownOpen.value) {
+    isDropdownOpen.value = false;
+  }
+});
 
 const projects = ref<ProjectListItem[]>([]);
 const isLoading = ref(true);
