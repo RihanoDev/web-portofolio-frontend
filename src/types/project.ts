@@ -42,12 +42,14 @@ export interface Project {
   thumbnailUrl?: string
   status: ProjectStatus
   category?: ProjectCategory
+  categories?: ProjectCategory[]
   author: ProjectAuthor
   githubUrl?: string
   liveDemoUrl?: string
   images?: ProjectImage[]
   videos?: ProjectVideo[]
   technologies: ProjectTag[]
+  tags?: ProjectTag[]
   metadata?: Record<string, any>
   createdAt: string
   updatedAt: string
@@ -63,8 +65,13 @@ export interface ProjectListItem {
   thumbnailUrl?: string
   status: ProjectStatus
   category?: string
+  categories?: string[]
+  categoryModels?: ProjectCategory[]
   authorName: string
-  technologies: string[]
+  technologies: (string | ProjectTag)[]
+  tags?: (string | ProjectTag)[]
+  tagStrs?: string[]
+  technologyStrs?: string[]
   githubUrl?: string
   liveDemoUrl?: string
   createdAt: string

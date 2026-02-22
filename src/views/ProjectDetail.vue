@@ -24,10 +24,19 @@
         <article v-else-if="project" class="project-detail">
           <!-- Project Header -->
           <header class="mb-8">
-            <!-- Category Badge -->
-            <div class="flex gap-2 mb-4">
+            <!-- Category Badges -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <template v-if="project.categories && project.categories.length > 0">
+                <span 
+                  v-for="cat in project.categories" 
+                  :key="cat.id"
+                  class="px-3 py-1 text-xs font-medium bg-accent/20 text-accent rounded-full border border-accent/30"
+                >
+                  {{ cat.name }}
+                </span>
+              </template>
               <span 
-                v-if="project.category"
+                v-else-if="project.category"
                 class="px-3 py-1 text-xs font-medium bg-accent/20 text-accent rounded-full border border-accent/30"
               >
                 {{ typeof project.category === 'string' ? project.category : project.category.name }}
@@ -63,13 +72,24 @@
             </div>
 
             <!-- Technologies -->
-            <div class="flex flex-wrap gap-2 mb-6">
+            <div class="flex flex-wrap gap-2 mb-4">
               <span 
                 v-for="(tech, index) in project.technologies" 
                 :key="typeof tech === 'string' ? index : tech.id"
                 class="px-3 py-1 text-xs font-medium bg-blue-500/20 text-blue-400 rounded border border-blue-500/30"
               >
                 {{ typeof tech === 'string' ? tech : tech.name }}
+              </span>
+            </div>
+
+            <!-- Tags -->
+            <div v-if="project.tags && project.tags.length > 0" class="flex flex-wrap gap-2 mb-6">
+              <span 
+                v-for="(tag, index) in project.tags" 
+                :key="typeof tag === 'string' ? index : tag.id"
+                class="text-sm text-secondary/70 italic hover:text-accent transition-colors"
+              >
+                #{{ typeof tag === 'string' ? tag : tag.name }}
               </span>
             </div>
             
@@ -132,7 +152,7 @@
               <div 
                 v-for="(image, index) in project.images" 
                 :key="index"
-                class="rounded-lg overflow-hidden"
+                class="rounded-lg overflow-hidden border border-white/5 bg-surface/30"
               >
                 <img 
                   :src="image.url" 
@@ -141,6 +161,39 @@
                 />
                 <p v-if="getLocalized(image, 'caption', locale)" class="py-2 px-3 text-sm text-secondary text-center">
                   {{ getLocalized(image, 'caption', locale) }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Videos -->
+          <div v-if="project.videos && project.videos.length > 0" class="mt-12">
+            <h2 class="text-2xl font-bold text-primary mb-4">Video Gallery</h2>
+            
+            <div class="grid grid-cols-1 gap-6">
+              <div 
+                v-for="(video, index) in project.videos" 
+                :key="index"
+                class="rounded-lg overflow-hidden border border-white/5 bg-surface/30"
+              >
+                <div class="aspect-video w-full">
+                  <iframe 
+                    v-if="video.url.includes('youtube.com') || video.url.includes('youtu.be')"
+                    :src="getYouTubeEmbedUrl(video.url)"
+                    class="w-full h-full"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                  <video 
+                    v-else
+                    :src="video.url" 
+                    controls 
+                    class="w-full h-full"
+                  ></video>
+                </div>
+                <p v-if="getLocalized(video, 'caption', locale)" class="py-2 px-3 text-sm text-secondary text-center">
+                  {{ getLocalized(video, 'caption', locale) }}
                 </p>
               </div>
             </div>
@@ -185,7 +238,7 @@ import type { Project } from '../types/project';
 import { fetchProjectBySlug } from '../services/projects';
 import { getLocalized } from '../utils/i18n';
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 
 // Route and params
 const route = useRoute();
@@ -220,7 +273,6 @@ const fetchProject = async () => {
       document.title = `${projectData.title} | Rizky's Portfolio`;
     }
   } catch (err) {
-    
     error.value = 'Failed to load project. Please try again later.';
   } finally {
     loading.value = false;
@@ -229,7 +281,6 @@ const fetchProject = async () => {
 
 // Track project view
 const trackProjectView = async () => {
-
   if (!project.value) return;
   
   try {
@@ -251,33 +302,36 @@ const trackProjectView = async () => {
     
     // Update view count data from the track response
     if (result.data) {
-      
       viewCount.value = result.data;
     } else {
-      
       // Fallback to getting view count if tracking doesn't return data
       try {
         const pageViewCount = await analyticsService.getViewCount(`/project/${slug.value}`);
         if (pageViewCount) {
           viewCount.value = pageViewCount;
         }
-      } catch (viewErr) {
-        
-      }
+      } catch (viewErr) {}
     }
   } catch (err) {
-    
-    
     // Try to get at least the view count on error
     try {
       const pageViewCount = await analyticsService.getViewCount(`/project/${slug.value}`);
       if (pageViewCount) {
         viewCount.value = pageViewCount;
       }
-    } catch (viewErr) {
-      
-    }
+    } catch (viewErr) {}
   }
+};
+
+// Helper for YouTube embed
+const getYouTubeEmbedUrl = (url: string) => {
+  let videoId = '';
+  if (url.includes('v=')) {
+    videoId = url.split('v=')[1].split('&')[0];
+  } else if (url.includes('youtu.be/')) {
+    videoId = url.split('youtu.be/')[1].split('?')[0];
+  }
+  return `https://www.youtube.com/embed/${videoId}`;
 };
 
 // Get status classes for styling
@@ -285,6 +339,7 @@ const getStatusClass = (status: string) => {
   switch (status?.toLowerCase()) {
     case 'published':
     case 'completed':
+    case 'finished':
       return 'bg-green-500/20 text-green-400 border border-green-500/30';
     case 'draft':
     case 'in-progress':
@@ -301,50 +356,30 @@ const getStatusClass = (status: string) => {
   }
 };
 
-const { t } = useI18n();
-
 const getTranslatedStatus = (status: string) => {
-  let mappedStatus = 'in-progress';
   switch (status?.toLowerCase()) {
     case 'published':
     case 'completed':
-      mappedStatus = 'completed';
-      break;
+    case 'finished':
+      return t('projects.status_completed') || 'Completed';
     case 'draft':
     case 'in-progress':
     case 'ongoing':
-      mappedStatus = 'in-progress';
-      break;
+      return t('projects.status_in_progress') || 'In Progress';
     case 'private':
     case 'planning':
-    case 'planned':
-      mappedStatus = 'planned';
-      break;
-    case 'archived':
-      mappedStatus = 'archived';
-      break;
-    default:
-      mappedStatus = 'in-progress';
-  }
-
-  // Handle translation
-  switch (mappedStatus) {
-    case 'completed':
-      return t('projects.status_completed') || 'Completed';
-    case 'in-progress':
-      return t('projects.status_in_progress') || 'In Progress';
     case 'planned':
       return t('projects.status_planned') || 'Planned';
     case 'archived':
       return t('projects.status_archived') || 'Archived';
     default:
-      return status;
+      return t('projects.status_unknown') || 'In Progress';
   }
 };
 
-// Basic HTML sanitizer (In production use a proper library like DOMPurify)
+// Basic HTML sanitizer
 const sanitizeHtml = (html: string) => {
-  // This is a very basic sanitization - consider using a proper library
+  if (!html) return '';
   return html
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
     .replace(/on\w+="[^"]*"/g, '');
@@ -354,7 +389,6 @@ const sanitizeHtml = (html: string) => {
 onMounted(() => {
   fetchProject();
   
-  // Initialize session ID if not present
   if (!sessionStorage.getItem('session_id')) {
     sessionStorage.setItem('session_id', `session_${Date.now()}`);
   }
