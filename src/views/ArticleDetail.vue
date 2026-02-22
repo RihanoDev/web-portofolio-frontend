@@ -94,14 +94,20 @@
           </div>
 
           <!-- Author Bio -->
-          <div class="mt-12 p-6 glass-subtle rounded-xl flex items-start gap-6 border border-white/5 hover:border-accent/20 transition-colors duration-300">
-            <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden flex items-center justify-center bg-surface shrink-0 shadow-lg border border-white/10">
-              <img v-if="article.author?.avatarUrl || profile?.avatarUrl" :src="article.author?.avatarUrl || profile?.avatarUrl" :alt="article.author?.name || profile?.name || 'Author'" class="w-full h-full object-cover">
-              <span v-else class="text-xl sm:text-2xl text-primary font-medium">{{ getInitials(article.author?.name || profile?.name || 'Anonymous Author') }}</span>
+          <div class="mt-12 p-6 glass-subtle rounded-xl flex items-center gap-6 border border-white/5 hover:border-white/10 transition-all duration-300">
+            <!-- Interactive Initials Logo -->
+            <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center shrink-0 shadow-xl bg-gradient">
+              <span class="text-2xl sm:text-3xl text-white font-bold drop-shadow-md capitalize">
+                {{ getInitials(article.author?.name || 'Author') }}
+              </span>
+              <!-- Inner ring highlight -->
+              <div class="absolute inset-0 rounded-full border-2 border-white/20"></div>
             </div>
             <div class="flex-1">
-              <h3 class="text-xl font-bold text-primary mb-2">{{ article.author?.name || profile?.name || 'Anonymous Author' }}</h3>
-              <p class="text-secondary leading-relaxed text-sm sm:text-base text-justify" style="text-justify: inter-word;">{{ profile?.bio || 'Passionate software engineer sharing thoughts on technology, system architecture, and modern backend development.' }}</p>
+              <h3 class="text-xl font-bold text-primary mb-2 capitalize">{{ article.author?.name || 'Author' }}</h3>
+              <p class="text-secondary leading-relaxed text-sm sm:text-base text-justify" style="text-justify: inter-word;">
+                {{ profile?.title || 'System Administrator and technology contributor.' }}
+              </p>
             </div>
           </div>
           
