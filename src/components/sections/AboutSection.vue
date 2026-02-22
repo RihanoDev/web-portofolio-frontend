@@ -17,14 +17,14 @@
             <div class="space-y-6">
               <h3 class="text-2xl font-bold" style="color: var(--color-text-primary);">{{ $t('about.hi_part') || 'Hi, I\'m' }} {{ profileData.name }}</h3>
               
-              <div class="space-y-4 leading-relaxed" style="color: var(--color-text-secondary);">
-                <p style="color: var(--color-text-primary);" v-if="profileData.aboutDescription1">
+              <div class="space-y-4 leading-relaxed text-justify" style="text-justify: inter-word;">
+                <p style="color: var(--color-text-secondary);" v-if="profileData.aboutDescription1">
                   {{ profileData.aboutDescription1 }}
                 </p>
-                <p style="color: var(--color-text-primary);" v-if="profileData.aboutDescription2">
+                <p style="color: var(--color-text-secondary);" v-if="profileData.aboutDescription2">
                   {{ profileData.aboutDescription2 }}
                 </p>
-                <p style="color: var(--color-text-primary);" v-if="profileData.aboutDescription3">
+                <p style="color: var(--color-text-secondary);" v-if="profileData.aboutDescription3">
                   {{ profileData.aboutDescription3 }}
                 </p>
               </div>

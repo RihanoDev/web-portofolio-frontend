@@ -20,8 +20,8 @@
           </h2>
           <div class="w-24 h-1 rounded-full mx-auto mb-6" 
                style="background: var(--gradient-primary);"></div>
-          <div class="text-xl max-w-3xl mx-auto leading-relaxed" 
-             style="color: var(--color-text-secondary);">
+          <div class="text-xl max-w-3xl mx-auto leading-relaxed text-justify" 
+             style="color: var(--color-text-secondary); text-justify: inter-word;">
             {{ profileData.aboutSubtitle || profileData.aboutDescription1 }}
           </div>
         </div>
