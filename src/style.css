@@ -130,9 +130,16 @@
     @apply leading-relaxed;
     color: var(--color-text-secondary);
     text-align: justify;
+    text-justify: inter-word;
+    overflow-wrap: break-word;
     word-wrap: break-word;
-    word-break: break-word;
+    word-break: normal;
     hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+
+  .text-center p {
+    text-align-last: center;
   }
 
   a {

@@ -20,10 +20,10 @@
           </h2>
           <div class="w-24 h-1 rounded-full mx-auto mb-6" 
                style="background: var(--gradient-primary);"></div>
-          <p class="text-xl max-w-3xl mx-auto leading-relaxed" 
+          <div class="text-xl max-w-3xl mx-auto leading-relaxed" 
              style="color: var(--color-text-secondary);">
             {{ profileData.aboutSubtitle || profileData.aboutDescription1 }}
-          </p>
+          </div>
         </div>
 
         <!-- Stats Grid -->
