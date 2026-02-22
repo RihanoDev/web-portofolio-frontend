@@ -129,6 +129,10 @@
   p {
     @apply leading-relaxed;
     color: var(--color-text-secondary);
+    text-align: justify;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   a {
