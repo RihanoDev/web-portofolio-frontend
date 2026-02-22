@@ -94,13 +94,14 @@
           </div>
 
           <!-- Author Bio -->
-          <div class="mt-12 p-6 glass-subtle rounded-xl flex items-center gap-6">
-            <div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center text-xl text-primary font-medium">
-              {{ getInitials(article.author?.name || 'Anonymous Author') }}
+          <div class="mt-12 p-6 glass-subtle rounded-xl flex items-start gap-6 border border-white/5 hover:border-accent/20 transition-colors duration-300">
+            <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden flex items-center justify-center bg-surface shrink-0 shadow-lg border border-white/10">
+              <img v-if="article.author?.avatarUrl || profile?.avatarUrl" :src="article.author?.avatarUrl || profile?.avatarUrl" :alt="article.author?.name || profile?.name || 'Author'" class="w-full h-full object-cover">
+              <span v-else class="text-xl sm:text-2xl text-primary font-medium">{{ getInitials(article.author?.name || profile?.name || 'Anonymous Author') }}</span>
             </div>
-            <div>
-              <h3 class="text-xl font-bold text-primary">{{ article.author?.name || 'Anonymous Author' }}</h3>
-              <p class="text-secondary">Article author bio information will be displayed here.</p>
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-primary mb-2">{{ article.author?.name || profile?.name || 'Anonymous Author' }}</h3>
+              <p class="text-secondary leading-relaxed text-sm sm:text-base text-justify" style="text-justify: inter-word;">{{ profile?.bio || 'Passionate software engineer sharing thoughts on technology, system architecture, and modern backend development.' }}</p>
             </div>
           </div>
           
@@ -142,6 +143,7 @@ import type { ViewCountData } from '../types/analytics';
 import type { Article } from '../types/article';
 import { fetchArticleBySlug } from '../services/articles';
 import { getLocalized } from '../utils/i18n';
+import { getProfileSettings, type ProfileData } from '../services/profile';
 
 const { locale } = useI18n();
 
@@ -153,6 +155,8 @@ const slug = computed(() => route.params.slug as string);
 const article = ref<Article | null>(null);
 const loading = ref(true);
 const error = ref<string | null>(null);
+const profile = ref<ProfileData | null>(null);
+
 const viewCount = ref<ViewCountData>({
   total: 0,
   today: 0,
@@ -160,6 +164,15 @@ const viewCount = ref<ViewCountData>({
   month: 0,
   unique: 0
 });
+
+// Fetch profile data
+const fetchProfile = async () => {
+  try {
+    profile.value = await getProfileSettings(locale.value);
+  } catch (err) {
+    // Profil default ada di logic jika error
+  }
+};
 
 // Fetch article data
 const fetchArticle = async () => {
@@ -258,12 +271,16 @@ const sanitizeHtml = (html: string) => {
 // Lifecycle hooks
 onMounted(() => {
   fetchArticle();
+  fetchProfile();
   
   // Initialize session ID if not present
   if (!sessionStorage.getItem('session_id')) {
     sessionStorage.setItem('session_id', `session_${Date.now()}`);
   }
 });
+
+import { watch } from 'vue';
+watch(locale, fetchProfile);
 </script>
 
 <style scoped>
