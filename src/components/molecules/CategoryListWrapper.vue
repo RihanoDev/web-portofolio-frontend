@@ -18,7 +18,7 @@
           class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-between gap-2 min-w-[140px] focus:outline-none"
           :class="isHiddenCategoryActive ? 'bg-gradient text-white shadow-lg border border-transparent' : 'category-btn'"
         >
-          <span class="truncate max-w-[120px] text-white">{{ isHiddenCategoryActive ? modelValue : 'More Categories' }}</span>
+          <span class="truncate max-w-[120px]" :class="{ 'text-white': isHiddenCategoryActive }">{{ isHiddenCategoryActive ? modelValue : 'More Categories' }}</span>
           <ChevronDown class="w-4 h-4 transition-transform duration-300 flex-shrink-0" :class="{ 'rotate-180': isDropdownOpen }" />
         </button>
 
