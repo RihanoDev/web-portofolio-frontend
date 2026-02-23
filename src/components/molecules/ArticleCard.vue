@@ -16,9 +16,27 @@
           <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
           
           <!-- Category Badge -->
-          <div class="absolute top-4 left-4">
-            <span class="px-3 py-1 glass-strong text-primary-400 text-xs font-semibold rounded-full border border-primary-500/30">
-              {{ article.categories[0] || 'Uncategorized' }}
+          <div class="absolute top-4 left-4 flex flex-wrap gap-1 max-w-[60%]">
+            <template v-if="article.categories && article.categories.length > 0">
+              <span 
+                v-for="(cat, index) in article.categories.slice(0, 2)" 
+                :key="index"
+                class="px-3 py-1 glass-strong text-primary-400 text-xs font-semibold rounded-full border border-primary-500/30 truncate"
+              >
+                {{ cat || 'Uncategorized' }}
+              </span>
+              <span 
+                v-if="article.categories.length > 2"
+                class="px-2 py-1 glass-strong text-primary-400 text-xs font-bold rounded-full border border-primary-500/30"
+              >
+                ...
+              </span>
+            </template>
+            <span 
+              v-else
+              class="px-3 py-1 glass-strong text-primary-400 text-xs font-semibold rounded-full border border-primary-500/30"
+            >
+              Uncategorized
             </span>
           </div>
 

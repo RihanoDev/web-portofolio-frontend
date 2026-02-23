@@ -120,7 +120,15 @@ const filteredProjects = computed(() => {
   if (activeCategory.value === "All") {
     return projects.value;
   }
-  return projects.value.filter((project) => project.category === activeCategory.value);
+  return projects.value.filter((project) => {
+    if (project.categoryModels && project.categoryModels.length > 0) {
+      return project.categoryModels.some(c => c.name === activeCategory.value);
+    }
+    if (project.categories && project.categories.length > 0) {
+      return project.categories.some(c => typeof c === 'string' ? c === activeCategory.value : (c as any).name === activeCategory.value);
+    }
+    return project.category === activeCategory.value;
+  });
 });
 
 const totalProjects = computed(() => filteredProjects.value.length);

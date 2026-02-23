@@ -57,8 +57,11 @@
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
             <div class="flex flex-wrap gap-2">
-              <span v-for="cat in project.categories" :key="cat" class="text-xs font-semibold text-accent uppercase tracking-wider">
+              <span v-for="cat in project.categories.slice(0, 2)" :key="cat" class="text-xs font-semibold text-accent uppercase tracking-wider">
                 {{ cat }}
+              </span>
+              <span v-if="project.categories.length > 2" class="text-xs font-bold text-accent uppercase tracking-wider">
+                ...
               </span>
             </div>
           </div>
