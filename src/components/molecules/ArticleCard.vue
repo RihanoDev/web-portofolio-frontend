@@ -71,10 +71,10 @@
           <div class="flex items-center justify-between pt-4 border-t border-white/5">
             <!-- Author -->
             <div class="flex items-center space-x-2">
-              <div class="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-sm text-primary font-medium">
+              <div class="w-8 h-8 rounded-full bg-gradient text-white flex items-center justify-center text-sm font-semibold shadow-md border border-white/20">
                 {{ getInitials(article.authorName) }}
               </div>
-              <span class="text-sm text-secondary">{{ article.authorName }}</span>
+              <span class="text-sm text-secondary capitalize">{{ article.authorName }}</span>
             </div>
 
             <!-- Read More -->

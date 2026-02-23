@@ -62,13 +62,9 @@ fi
 print_status "Pulling latest Docker image..."
 docker pull "$IMAGE_NAME"
 
-# Stop existing container
-print_status "Stopping existing container..."
-docker-compose down --remove-orphans
-
-# Start new container
-print_status "Starting new container..."
-docker-compose up -d
+# Stop existing container seamlessly by pulling and recreating
+print_status "Starting new container seamlessly..."
+docker-compose up -d --remove-orphans
 
 # Wait for container to be ready
 print_status "Waiting for container to be ready..."

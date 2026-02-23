@@ -194,5 +194,26 @@
         "section2_desc": "Seluruh kode sumber, desain, dan konten di website ini dilindungi hak cipta. Anda diperbolehkan melihat kode untuk tujuan evaluasi, namun tidak diizinkan untuk menyalin, memodifikasi, mendistribusikan, atau menggunakan proyek ini secara komersial tanpa izin tertulis eksplisit dari saya.",
         "section3_title": "Pelepasan Tanggung Jawab",
         "section3_desc": "Saya tidak memberikan jaminan dalam bentuk apa pun mengenai ketersediaan berkelanjutan, keakuratan, atau kelengkapan informasi di website ini. Penggunaan informasi atau sistem di sini sepenuhnya merupakan risiko pengguna sendiri."
+    },
+    "theme": {
+        "choose_theme": "Pilih Tema",
+        "names": {
+            "dark-orange": "Oranye Gelap",
+            "dark-blue": "Biru Gelap",
+            "light": "Terang",
+            "light-blue": "Biru Terang",
+            "dark-purple": "Ungu Gelap",
+            "dark-green": "Hijau Gelap",
+            "cyberpunk": "Cyberpunk"
+        },
+        "descriptions": {
+            "dark-orange": "Hangat & Penuh Energi",
+            "dark-blue": "Profesional & Bersih",
+            "light": "Cerah & Minimalis",
+            "light-blue": "Bersih & Modern",
+            "dark-purple": "Kreatif & Modern",
+            "dark-green": "Segar & Natural",
+            "cyberpunk": "Futuristik & Berani"
+        }
     }
 }

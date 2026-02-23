@@ -10,48 +10,11 @@
         </div>
 
         <!-- Filter Tabs -->
-        <div class="flex flex-wrap justify-center items-center mb-10 gap-2 relative z-20">
-          <button
-            v-for="category in visibleCategories"
-            :key="category"
-            @click="setActiveCategory(category)"
-            class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300"
-            :class="activeCategory === category ? 'bg-gradient text-white shadow-lg' : 'glass text-secondary hover:text-primary border border-white/10'"
-          >
-            {{ category }}
-          </button>
-
-          <!-- Dropdown for More Categories -->
-          <div v-if="hiddenCategories.length > 0" class="relative" ref="dropdownRef">
-            <button
-              @click="isDropdownOpen = !isDropdownOpen"
-              class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-between gap-2 min-w-[140px]"
-              :class="isHiddenCategoryActive ? 'bg-gradient text-white shadow-lg' : 'glass text-secondary hover:text-primary border border-white/10'"
-            >
-              <span class="truncate max-w-[120px]">{{ isHiddenCategoryActive ? activeCategory : 'More Categories' }}</span>
-              <ChevronDown class="w-4 h-4 transition-transform duration-300 flex-shrink-0" :class="{ 'rotate-180': isDropdownOpen }" />
-            </button>
-
-            <!-- Dropdown Menu -->
-            <div
-              v-if="isDropdownOpen"
-              class="absolute left-1/2 -translate-x-1/2 mt-2 w-56 p-2 z-[50] rounded-xl glass border border-white/10 shadow-2xl flex flex-col gap-1 max-h-60 overflow-y-auto"
-            >
-              <button
-                v-for="category in hiddenCategories"
-                :key="category"
-                @click="
-                  setActiveCategory(category);
-                  isDropdownOpen = false;
-                "
-                class="px-4 py-2 w-full text-left rounded-lg text-sm font-medium transition-all duration-300"
-                :class="activeCategory === category ? 'bg-white/20 text-white' : 'text-secondary hover:bg-white/10 hover:text-primary'"
-              >
-                {{ category }}
-              </button>
-            </div>
-          </div>
-        </div>
+        <CategoryListWrapper
+          :categories="categories"
+          :modelValue="activeCategory"
+          @update:modelValue="setActiveCategory($event)"
+        />
 
         <!-- Projects Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -120,9 +83,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from "vue";
-import { onClickOutside } from '@vueuse/core';
-import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-vue-next";
+import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 import ProjectCard from "../molecules/ProjectCard.vue";
+import CategoryListWrapper from "../molecules/CategoryListWrapper.vue";
 import type { ProjectListItem, ProjectCategory } from "../../types/project";
 import { fetchProjects, fetchProjectCategories } from "../../services/projects";
 
@@ -132,18 +95,6 @@ const projectsPerPage = 6;
 
 const categories = ref<string[]>(["All"]);
 const categoryData = ref<ProjectCategory[]>([]);
-
-const visibleCategories = computed(() => categories.value.slice(0, 4));
-const hiddenCategories = computed(() => categories.value.slice(4));
-const isDropdownOpen = ref(false);
-const isHiddenCategoryActive = computed(() => hiddenCategories.value.includes(activeCategory.value));
-const dropdownRef = ref(null);
-
-onClickOutside(dropdownRef, () => {
-  if (isDropdownOpen.value) {
-    isDropdownOpen.value = false;
-  }
-});
 
 const projects = ref<ProjectListItem[]>([]);
 const isLoading = ref(true);
