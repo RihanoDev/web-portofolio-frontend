@@ -36,24 +36,34 @@
             </button>
 
             <!-- Dropdown Menu -->
-            <div
-              v-if="isDropdownOpen"
-              class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 p-2 z-[50] rounded-xl glass border border-white/10 shadow-2xl flex flex-col gap-1 max-h-60 overflow-y-auto"
+            <transition
+              enter-active-class="transition duration-200 ease-out"
+              enter-from-class="transform scale-95 opacity-0"
+              enter-to-class="transform scale-100 opacity-100"
+              leave-active-class="transition duration-150 ease-in"
+              leave-from-class="transform scale-100 opacity-100"
+              leave-to-class="transform scale-95 opacity-0"
             >
-              <button
-                v-for="category in hiddenCategories"
-                :key="category"
-                @click="
-                  activeCategory = category;
-                  currentPage = 1;
-                  isDropdownOpen = false;
-                "
-                class="px-4 py-2 w-full text-left rounded-lg text-sm font-medium transition-all duration-300"
-                :class="activeCategory === category ? 'bg-gradient text-white font-semibold' : 'text-secondary hover:bg-white/10 hover:text-primary'"
+              <div
+                v-if="isDropdownOpen"
+                class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 p-2 z-[9999] rounded-xl glass border border-white/10 shadow-2xl flex flex-col gap-1 max-h-60 overflow-y-auto"
+                style="min-width: 14rem; background: rgba(var(--color-secondary-rgb), 0.95); backdrop-filter: blur(20px);"
               >
-                {{ category }}
-              </button>
-            </div>
+                <button
+                  v-for="category in hiddenCategories"
+                  :key="category"
+                  @click="
+                    activeCategory = category;
+                    currentPage = 1;
+                    isDropdownOpen = false;
+                  "
+                  class="px-4 py-2 w-full text-left rounded-lg text-sm font-medium transition-all duration-300"
+                  :class="activeCategory === category ? 'bg-gradient text-white font-semibold' : 'text-secondary hover:bg-white/10 hover:text-primary'"
+                >
+                  {{ category }}
+                </button>
+              </div>
+            </transition>
           </div>
         </div>
 
