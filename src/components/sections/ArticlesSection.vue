@@ -10,62 +10,14 @@
         </div>
 
         <!-- Filter Tabs -->
-        <div class="flex flex-wrap justify-center items-start mb-10 gap-2 relative z-20">
-          <button
-            v-for="category in visibleCategories"
-            :key="category"
-            @click="
-              activeCategory = category;
-              currentPage = 1;
-            "
-            class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300"
-            :class="activeCategory === category ? 'bg-gradient text-white shadow-lg border border-transparent' : 'glass text-secondary hover:text-primary border border-white/10'"
-          >
-            {{ category }}
-          </button>
-
-          <!-- Dropdown for More Categories -->
-          <div v-if="hiddenCategories.length > 0" class="relative" ref="dropdownRef">
-            <button
-              @click="isDropdownOpen = !isDropdownOpen"
-              class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-between gap-2 min-w-[140px]"
-              :class="isHiddenCategoryActive ? 'bg-gradient text-white shadow-lg border border-transparent' : 'glass text-secondary hover:text-primary border border-white/10'"
-            >
-              <span class="truncate max-w-[120px]">{{ isHiddenCategoryActive ? activeCategory : 'More Categories' }}</span>
-              <ChevronDown class="w-4 h-4 transition-transform duration-300 flex-shrink-0" :class="{ 'rotate-180': isDropdownOpen }" />
-            </button>
-
-            <!-- Dropdown Menu -->
-            <transition
-              enter-active-class="transition duration-200 ease-out"
-              enter-from-class="transform scale-95 opacity-0"
-              enter-to-class="transform scale-100 opacity-100"
-              leave-active-class="transition duration-150 ease-in"
-              leave-from-class="transform scale-100 opacity-100"
-              leave-to-class="transform scale-95 opacity-0"
-            >
-              <div
-                v-if="isDropdownOpen"
-                class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 p-2 z-[9999] rounded-xl glass border border-white/10 shadow-2xl flex flex-col gap-1 max-h-60 overflow-y-auto"
-                style="min-width: 14rem; background: rgba(var(--color-secondary-rgb), 0.95); backdrop-filter: blur(20px);"
-              >
-                <button
-                  v-for="category in hiddenCategories"
-                  :key="category"
-                  @click="
-                    activeCategory = category;
-                    currentPage = 1;
-                    isDropdownOpen = false;
-                  "
-                  class="px-4 py-2 w-full text-left rounded-lg text-sm font-medium transition-all duration-300"
-                  :class="activeCategory === category ? 'bg-gradient text-white font-semibold' : 'text-secondary hover:bg-white/10 hover:text-primary'"
-                >
-                  {{ category }}
-                </button>
-              </div>
-            </transition>
-          </div>
-        </div>
+        <CategoryListWrapper
+          :categories="categories"
+          :modelValue="activeCategory"
+          @update:modelValue="
+            activeCategory = $event;
+            currentPage = 1;
+          "
+        />
 
         <!-- Articles Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
@@ -134,9 +86,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { onClickOutside } from '@vueuse/core';
-import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-vue-next";
+import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 import ArticleCard from "../molecules/ArticleCard.vue";
+import CategoryListWrapper from "../molecules/CategoryListWrapper.vue";
 import type { ArticleListItem, ArticleCategory } from "../../types/article";
 import { fetchArticles, fetchArticleCategories } from "../../services/articles";
 
@@ -150,18 +102,6 @@ const isLoading = ref(true);
 // Categories
 const categories = ref<string[]>(["All"]);
 const categoryData = ref<ArticleCategory[]>([]);
-
-const visibleCategories = computed(() => categories.value.slice(0, 4));
-const hiddenCategories = computed(() => categories.value.slice(4));
-const isDropdownOpen = ref(false);
-const isHiddenCategoryActive = computed(() => hiddenCategories.value.includes(activeCategory.value));
-const dropdownRef = ref(null);
-
-onClickOutside(dropdownRef, () => {
-  if (isDropdownOpen.value) {
-    isDropdownOpen.value = false;
-  }
-});
 
 // Load articles and categories on component mount
 onMounted(async () => {

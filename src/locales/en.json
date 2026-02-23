@@ -194,5 +194,26 @@
         "section2_desc": "All source code, designs, and content on this website are protected by copyright. You are allowed to view the code for evaluation purposes, but are not permitted to copy, modify, distribute, or use this project commercially without my explicit written permission.",
         "section3_title": "Disclaimer of Liability",
         "section3_desc": "I provide no warranties of any kind regarding the continuous availability, accuracy, or completeness of the information on this website. The use of information or systems herein is entirely at the user's own risk."
+    },
+    "theme": {
+        "choose_theme": "Choose Theme",
+        "names": {
+            "dark-orange": "Dark Orange",
+            "dark-blue": "Dark Blue",
+            "light": "Light",
+            "light-blue": "Light Blue",
+            "dark-purple": "Dark Purple",
+            "dark-green": "Dark Green",
+            "cyberpunk": "Cyberpunk"
+        },
+        "descriptions": {
+            "dark-orange": "Warm & Energetic",
+            "dark-blue": "Professional & Clean",
+            "light": "Bright & Minimal",
+            "light-blue": "Clean & Modern",
+            "dark-purple": "Creative & Modern",
+            "dark-green": "Fresh & Natural",
+            "cyberpunk": "Futuristic & Bold"
+        }
     }
 }

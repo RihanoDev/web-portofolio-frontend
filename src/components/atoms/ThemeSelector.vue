@@ -10,7 +10,7 @@
       <Palette class="w-4 h-4" style="color: var(--color-accent);" />
       
       <!-- Theme Name (hidden on mobile) -->
-      <span class="hidden sm:block text-sm font-medium" style="color: var(--color-text-primary);">{{ currentTheme.name }}</span>
+      <span class="hidden sm:block text-sm font-medium" style="color: var(--color-text-primary);">{{ t(`theme.names.${currentTheme.id}`) || currentTheme.name }}</span>
       
       <!-- Dropdown Arrow -->
       <ChevronDown 
@@ -36,7 +36,7 @@
         <div class="p-2">
           <div class="text-xs font-semibold uppercase tracking-wide px-3 py-2"
                style="color: var(--color-text-secondary);">
-            Choose Theme
+            {{ t('theme.choose_theme') || 'Choose Theme' }}
           </div>
           
           <div class="space-y-1">
@@ -63,8 +63,8 @@
               
               <!-- Theme Info -->
               <div class="flex-1 text-left">
-                <div class="text-sm font-medium" style="color: var(--color-text-primary);">{{ theme.name }}</div>
-                <div class="text-xs" style="color: var(--color-text-secondary);">{{ getThemeDescription(theme.id) }}</div>
+                <div class="text-sm font-medium" style="color: var(--color-text-primary);">{{ t(`theme.names.${theme.id}`) || theme.name }}</div>
+                <div class="text-xs" style="color: var(--color-text-secondary);">{{ t(`theme.descriptions.${theme.id}`) || 'Custom Theme' }}</div>
               </div>
               
               <!-- Selected Indicator -->
@@ -84,9 +84,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { ChevronDown, Check, Palette } from 'lucide-vue-next'
 import { useTheme } from '../../composables/useTheme'
 
+const { t } = useI18n()
 const { themes, currentTheme, currentThemeId, setTheme } = useTheme()
 
 const isOpen = ref(false)
@@ -95,19 +97,6 @@ const dropdownRef = ref<HTMLElement | null>(null)
 const selectTheme = (themeId: string) => {
   setTheme(themeId)
   isOpen.value = false
-}
-
-const getThemeDescription = (themeId: string) => {
-  const descriptions: Record<string, string> = {
-    'dark-orange': 'Warm & Energetic',
-    'dark-blue': 'Professional & Clean',
-    'dark-purple': 'Creative & Modern',
-    'dark-green': 'Fresh & Natural',
-    'cyberpunk': 'Futuristic & Bold',
-    'light': 'Bright & Minimal',
-    'light-blue': 'Clean & Modern'
-  }
-  return descriptions[themeId] || 'Custom Theme'
 }
 
 // Close dropdown when clicking outside
